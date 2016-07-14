@@ -10,20 +10,26 @@ public class Main {
 
         /**
          * Wichtig:
-         * todo: Optische Achse und Bilder
+         * todo: Optische Achse und Bilder [X]
+         *  -> Nach einem ebenen Spiegel und einer folgenden Linse werden Bilder ungenau gezeichnet
+         * todo: Hohlspiegel Hauptebene
+
          * todo: Auge
+         * todo: Blende
          * todo: Eigenschaftenpanel
+         * todo: Parallellicht
          * todo: Speichern xml
 
          * todo: Kommentieren
          * todo: Strahlen einzeln löschen
          * todo: Strahlen pro lampe aktualisieren/ einzeln aktualisieren
-         * todo: Hohlspiegel Hauptebene
+
          *
          * todo: float zu double
          * todo: get gib einheitlich
          *
          * todo: Ausschnitt und Scrollen optimieren
+         * todo: Maßstab
          * todo: Parallel-, Zenit-, Brennpunktstrahl markieren
          * todo: Strahlen nummerieren
          *

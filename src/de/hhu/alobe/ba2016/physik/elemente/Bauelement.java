@@ -32,6 +32,14 @@ public abstract class Bauelement extends Auswahlobjekt {
         this.typ = typ;
     }
 
+    public boolean fangModusOptischeAchseAn() {
+        return (typ != Bauelement.TYP_LAMPE);
+    }
+
+    public void setzeMittelpunktNeu(Vektor nMittelpunkt) {
+        verschiebeUm(Vektor.subtrahiere(nMittelpunkt, mittelPunkt));
+    }
+
     public abstract void verschiebeUm(Vektor verschiebung);
 
     public int getTyp() {

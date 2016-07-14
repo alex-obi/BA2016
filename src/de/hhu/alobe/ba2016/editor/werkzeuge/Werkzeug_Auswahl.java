@@ -1,5 +1,6 @@
 package de.hhu.alobe.ba2016.editor.werkzeuge;
 
+import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion_BauelementVerschieben;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion_NeuerStrahl;
@@ -18,6 +19,7 @@ public class Werkzeug_Auswahl extends Werkzeug{
 
     private Bauelement ausgewaehltesElement;
     private Vektor erstePosition;
+    private Vektor ersterMittelpunktBauel;
 
     private boolean ersteVerschiebung = true;
 
@@ -54,6 +56,7 @@ public class Werkzeug_Auswahl extends Werkzeug{
                 if(cBauEl.istAngeklickt(realePosition)) {
                     auswahlAufheben();
                     ausgewaehltesElement = cBauEl;
+                    ersterMittelpunktBauel = cBauEl.getMittelPunkt().kopiere();
                     break;
                 }
             }
@@ -66,7 +69,11 @@ public class Werkzeug_Auswahl extends Werkzeug{
 
     @Override
     public void mouseReleased(MouseEvent e, Vektor realePosition) {
-        ersteVerschiebung = true;
+        if(!ersteVerschiebung) {
+            ausgewaehltesElement = null;
+            ersteVerschiebung = true;
+        }
+
         if(SwingUtilities.isRightMouseButton(e)) {
             auswahlAufheben();
         }
@@ -77,13 +84,22 @@ public class Werkzeug_Auswahl extends Werkzeug{
     public void mouseDragged(MouseEvent e, Vektor realePosition) {
         if(SwingUtilities.isLeftMouseButton(e)) {
             if(ausgewaehltesElement != null) {
+
                 Vektor verschiebung = Vektor.subtrahiere(realePosition, erstePosition);
+
+                if(Math.abs(ersterMittelpunktBauel.getYint() + verschiebung.getYint() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG) {
+                    if(ausgewaehltesElement.fangModusOptischeAchseAn()) {
+                        verschiebung.setY(optischeBank.getOptischeAchse().getHoehe() - ersterMittelpunktBauel.getYint());
+                    }
+                }
+
                 if (ersteVerschiebung) {
                     optischeBank.neueAktionDurchfuehren(new Aktion_BauelementVerschieben(ausgewaehltesElement, verschiebung));
                     ersteVerschiebung = false;
                 } else {
                     optischeBank.letzteAktionUeberschreiben(new Aktion_BauelementVerschieben(ausgewaehltesElement, verschiebung));
                 }
+
             }
         }
     }

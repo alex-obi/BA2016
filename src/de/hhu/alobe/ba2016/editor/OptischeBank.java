@@ -1,7 +1,6 @@
 package de.hhu.alobe.ba2016.editor;
 
 
-import com.sun.prism.image.ViewPort;
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion;
 import de.hhu.alobe.ba2016.editor.aktionen.AktionsListe;
@@ -10,6 +9,7 @@ import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_Auswahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.mathe.VektorInt;
+import de.hhu.alobe.ba2016.grafik.OptischeAchse;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import de.hhu.alobe.ba2016.physik.elemente.*;
@@ -18,7 +18,6 @@ import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.concurrent.RunnableFuture;
 
 /**
  * Panel beinhaltet die gesamte graphische Anzeige der optischen Bank
@@ -53,6 +52,8 @@ public class OptischeBank extends JPanel {
 
     private AktionsListe aktionsListe;
 
+    private OptischeAchse optischeAchse;
+
     //Aktuell ausgewaehltes Werkzeug zur Tastatur-/ Mausinteraktion
 
     Werkzeug aktuellesWerkzeug;
@@ -70,6 +71,9 @@ public class OptischeBank extends JPanel {
         groesse = new VektorInt(2000, 600);
         zeichenBrett.setPreferredSize(new Dimension(groesse.getXint(), groesse.getYint()));
         this.add(zeichenRahmen, BorderLayout.CENTER);
+
+        optischeAchse = new OptischeAchse(300);
+        zeichenBrett.neuesZeichenObjekt(optischeAchse);
 
         eigenschaften = new Eigenschaften(this);
         this.add(eigenschaften, BorderLayout.WEST);
@@ -221,6 +225,10 @@ public class OptischeBank extends JPanel {
         this.zoom = zoom;
         zeichenBrett.setPreferredSize(new Dimension((int)(groesse.getXfloat() * zoom), (int)(groesse.getYfloat() * zoom)));
         zeichenBrett.revalidate();
+    }
+
+    public OptischeAchse getOptischeAchse() {
+        return optischeAchse;
     }
 
     public Zeichenbrett getZeichenBrett() {

@@ -57,6 +57,10 @@ public abstract class Auswahlobjekt implements Zeichenbar {
         rahmenSichtbar = false;
     }
 
+    public Vektor getMittelPunkt() {
+        return mittelPunkt;
+    }
+
     @Override
     public void paintComponent(Graphics2D g) {
         if(rahmenSichtbar) {

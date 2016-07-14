@@ -50,6 +50,21 @@ public class Strahlengang implements Zeichenbar{
         strahlenAbschnitte = new ArrayList<>();
     }
 
+    public ArrayList<Vektor> gibBildpunkte() {
+        ArrayList<Vektor> retList = new ArrayList<>();
+        for(Gerade g : strahlenAbschnitte) {
+            if(g.getQuellEntfernung() != 0 && g.getQuellEntfernung() < g.getLaenge()) {
+                retList.add(g.gibQuellPunkt());
+            }
+        }
+        if(aktuellerStrahl != null) {
+            if (aktuellerStrahl.getQuellEntfernung() != 0) {
+                retList.add(aktuellerStrahl.gibQuellPunkt());
+            }
+        }
+        return retList;
+    }
+
     @Override
     public void paintComponent(Graphics2D g) {
         for(int i = 0; i < strahlenAbschnitte.size(); i++) {

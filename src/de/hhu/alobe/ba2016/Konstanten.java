@@ -16,6 +16,8 @@ public abstract class Konstanten {
     public static final int LINIENDICKE = 1;
 
     public static final double ZOOM_STUFE = 0.1; //Zoomveränderung pro Zoomstufe in Prozent
+
+    public static final int OPTISCHEACHSE_FANGENTFERNUNG = 50; //Distanz, bis Bauelemente direkt auf die Achse gesetzt werden
     /**
      * Legt die Groesse des Fensters beim Start fest
      */

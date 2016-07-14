@@ -62,7 +62,7 @@ public class Strahl extends GeomertrischeFigur {
 
     @Override
     public void paintComponent(Graphics2D g) {
-        Vektor bisVektor = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, 1500));
+        Vektor bisVektor = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, 10000));
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
         g.drawLine(basisVektor.getXint(),
                 basisVektor.getYint(),
