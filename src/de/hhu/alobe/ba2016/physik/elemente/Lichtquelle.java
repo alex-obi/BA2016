@@ -11,6 +11,7 @@ import de.hhu.alobe.ba2016.mathe.VektorInt;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 import java.awt.*;
+import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 
 public class Lichtquelle extends Bauelement {
@@ -60,17 +61,18 @@ public class Lichtquelle extends Bauelement {
     }
 
     public ArrayList<Vektor> gibBildpunkte() {
+        ArrayList<Vektor> pruefList = new ArrayList<>();
         ArrayList<Vektor> retList = new ArrayList<>();
         for(Strahlengang cStrG : strahlengaenge) {
             for(Vektor cBildpunkt : cStrG.gibBildpunkte()) {
-                boolean gibtEsSchon = false;
-                for(Vektor cVergleichsBildpunkt : retList) {
+                int anzahlGleicherPunkte = 1;
+                for(Vektor cVergleichsBildpunkt : pruefList) {
                     if(Vektor.gibAbstand(cVergleichsBildpunkt, cBildpunkt) < 1) {
-                        gibtEsSchon = true;
-                        break;
+                        anzahlGleicherPunkte++;
                     }
                 }
-                if(!gibtEsSchon) {
+                pruefList.add(cBildpunkt);
+                if(anzahlGleicherPunkte == 2) {
                     retList.add(cBildpunkt);
                 }
             }
@@ -82,11 +84,13 @@ public class Lichtquelle extends Bauelement {
     public void paintComponent(Graphics2D g) {
         strahlenZeichnen(g);
         g.setColor(farbe);
-        g.fillArc(mittelPunkt.getXint() - groesse / 2, mittelPunkt.getYint() - groesse / 2, groesse, groesse, 0, 360);
+        Arc2D zeichenKreis = new Arc2D.Float(mittelPunkt.getXint() - groesse / 2, mittelPunkt.getYint() - groesse / 2, groesse, groesse, 0, 360, Arc2D.OPEN);
+        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
+        g.draw(zeichenKreis);
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
         g.drawLine(mittelPunkt.getXint(), optischeBank.getOptischeAchse().getHoehe(), mittelPunkt.getXint(), mittelPunkt.getYint());
         for(Vektor bildPunkt : gibBildpunkte()) {
-            g.fillArc(bildPunkt.getXint() - groesse / 2, bildPunkt.getYint() - groesse / 2, groesse, groesse, 0, 360);
+            //g.fillArc(bildPunkt.getXint() - groesse / 2, bildPunkt.getYint() - groesse / 2, groesse, groesse, 0, 360);
             g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
             g.drawLine(bildPunkt.getXint(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getXint(), bildPunkt.getYint());
         }

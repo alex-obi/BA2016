@@ -91,7 +91,10 @@ public class OptischeBank extends JPanel {
         //########### Erzeuge Testszenario
 
         bauelementHinzufuegen(new Lichtquelle(this, new VektorInt(50, 300), Color.BLACK));
-        bauelementHinzufuegen(new Spiegel(this, new VektorInt(500, 500), 0, 200));
+        bauelementHinzufuegen(new Spiegel(this, new VektorInt(500, 500), -300, 200));
+        /*bauelementHinzufuegen(new Spiegel(this, new VektorInt(700, 500), 300, 200));
+        bauelementHinzufuegen(new Spiegel(this, new VektorInt(300, 500), 100, 200));
+        bauelementHinzufuegen(new Spiegel(this, new VektorInt(900, 500), 0, 200));*/
         bauelementHinzufuegen(new Schirm(this, new VektorInt(650, 500), 300, 200));
         bauelementHinzufuegen(new Linse(this, new VektorFloat(50, 500), 1.8, 150, 10, 300, -120));
         bauelementHinzufuegen(new Linse(this, new VektorFloat(350, 500), 1.8, 150, 10, 300, 250));

@@ -16,12 +16,6 @@ public abstract class Grenzflaeche extends Flaeche {
     protected double n1; //Brechzahl aussen (Richtung, in die Normalenvektor zeigt)
     protected double n2; //Brechzahl innen
 
-    protected int modus;
-
-    public static final int MODUS_ABSORB = 1; //Absorbiert den Strahl
-    public static final int MODUS_REFLEKT = 2; //Reflektiert den Strahl nur
-    public static final int MODUS_BRECHUNG = 3; //Bricht den Strahl nur
-
     public Grenzflaeche(int modus) {
         this.n1 = 1;
         this.n2 = 1;
@@ -84,7 +78,7 @@ public abstract class Grenzflaeche extends Flaeche {
         if (modus == MODUS_REFLEKT) {
             Vektor reflektion = gibReflektiertenVektor(cStrGng.getAktuellerStrahl().getRichtungsVektor(), position);
             Vektor vonBis = Vektor.subtrahiere(position, cStrGng.getAktuellerStrahl().getBasisVektor());
-            Strahl reflektionsStrahl = new Strahl(position, reflektion, -vonBis.gibLaenge() + cStrGng.getAktuellerStrahl().getQuellEntfernung());
+            Strahl reflektionsStrahl = new Strahl(position, reflektion);
             cStrGng.neuenStrahlAnhaengen(reflektionsStrahl);
         }
         if (modus == MODUS_BRECHUNG) {

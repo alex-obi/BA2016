@@ -4,14 +4,13 @@ import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.mathe.VektorInt;
-import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche;
-import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Ebene;
-import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Sphaerisch;
+import de.hhu.alobe.ba2016.physik.flaechen.*;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Spiegel extends Bauelement implements KannKollision{
 
@@ -20,14 +19,17 @@ public class Spiegel extends Bauelement implements KannKollision{
 
     private Grenzflaeche spiegelFlaeche;
 
+    private Hauptebene hauptebene;
+
     public Spiegel(OptischeBank optischeBank, Vektor mittelPunkt, float radius, float hoehe) {
         super(optischeBank, mittelPunkt, TYP_SPIEGEL);
         if(radius != 0) {
-            this.hoehe = Math.min(hoehe, radius);
+            this.hoehe = Math.min(hoehe, Math.abs(radius * 2));
         } else {
             this.hoehe = hoehe;
         }
         setRadius(radius);
+        hauptebene = new Hauptebene(Flaeche.MODUS_REFLEKT, mittelPunkt, radius / 2, hoehe);
     }
 
     public void setRadius(float radius) {
@@ -49,25 +51,25 @@ public class Spiegel extends Bauelement implements KannKollision{
             float c = (float)Math.sqrt(radius * radius - (hoehe * hoehe) / 4);
             breite = Math.abs(radius) - c;
             if(radius > 0) {
-                Vektor mp = new VektorFloat(mittelPunkt.getXfloat() - radius + breite, mittelPunkt.getYfloat());
+                Vektor mp = new VektorFloat(mittelPunkt.getXfloat() - radius, mittelPunkt.getYfloat());
                 spiegelFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_REFLEKT, mp, radius, Math.PI * 2 - winkel, 2 * winkel);
-
-                Rahmen rahmen = new Rahmen(mittelPunkt);
-                rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
-                rahmen.rahmenErweitern(new VektorInt(breite + 5, hoehe / 2));
-                rahmen.rahmenErweitern(new VektorInt(breite + 5, -hoehe / 2));
-                rahmen.rahmenErweitern(new VektorInt(-5, -hoehe / 2));
-                setRahmen(rahmen);
-
-            } else {
-                Vektor mp = new VektorFloat(mittelPunkt.getXfloat() - radius - breite, mittelPunkt.getYfloat());
-                spiegelFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_REFLEKT, mp, -radius, Math.PI - winkel, 2 * winkel);
 
                 Rahmen rahmen = new Rahmen(mittelPunkt);
                 rahmen.rahmenErweitern(new VektorInt(5, hoehe / 2));
                 rahmen.rahmenErweitern(new VektorInt(-breite - 5, hoehe / 2));
                 rahmen.rahmenErweitern(new VektorInt(-breite - 5, -hoehe / 2));
                 rahmen.rahmenErweitern(new VektorInt(5, -hoehe / 2));
+                setRahmen(rahmen);
+
+            } else {
+                Vektor mp = new VektorFloat(mittelPunkt.getXfloat() - radius, mittelPunkt.getYfloat());
+                spiegelFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_REFLEKT, mp, -radius, Math.PI - winkel, 2 * winkel);
+
+                Rahmen rahmen = new Rahmen(mittelPunkt);
+                rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
+                rahmen.rahmenErweitern(new VektorInt(breite + 5, hoehe / 2));
+                rahmen.rahmenErweitern(new VektorInt(breite + 5, -hoehe / 2));
+                rahmen.rahmenErweitern(new VektorInt(-5, -hoehe / 2));
                 setRahmen(rahmen);
 
             }
@@ -83,19 +85,42 @@ public class Spiegel extends Bauelement implements KannKollision{
 
     @Override
     public void paintComponent(Graphics2D g) {
+
+        switch (optischeBank.getModus()) {
+            case OptischeBank.MODUS_SNELLIUS:
+                g.setColor(new Color(0, 7, 244));
+                spiegelFlaeche.paintComponent(g);
+                break;
+            case OptischeBank.MODUS_HAUPTEBENE:
+                g.setColor(Color.GRAY);
+                spiegelFlaeche.paintComponent(g);
+                g.setColor(Color.BLACK);
+                hauptebene.paintComponent(g);
+                break;
+        }
         super.paintComponent(g);
-        g.setColor(new Color(0, 7, 244));
-        spiegelFlaeche.paintComponent(g);
+
     }
 
     @Override
     public StrahlenKollision kollisionUeberpruefen(Strahlengang cStrGng) {
-        return spiegelFlaeche.gibKollision(cStrGng);
+        switch (optischeBank.getModus()) {
+            case OptischeBank.MODUS_SNELLIUS:
+                return spiegelFlaeche.gibKollision(cStrGng);
+            case OptischeBank.MODUS_HAUPTEBENE:
+                StrahlenKollision sK = spiegelFlaeche.gibKollision(cStrGng);
+                if(sK != null) {
+                    return new StrahlenKollision(sK.getDistanz(), cStrGng, hauptebene);
+                }
+
+        }
+        return null;
     }
 
     @Override
     public void verschiebeUm(Vektor verschiebung) {
         mittelPunkt.addiere(verschiebung);
         spiegelFlaeche.verschiebeUm(verschiebung);
+        hauptebene.verschiebeUm(verschiebung);
     }
 }

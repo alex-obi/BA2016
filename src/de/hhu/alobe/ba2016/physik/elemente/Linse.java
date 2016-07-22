@@ -40,7 +40,7 @@ public class Linse extends Bauelement implements KannKollision {
         this.brennweite = brennweite;
         radius1 = radius2 = brennweite;
         formatNeuBestimmen(1.5, Math.abs(radius1) / 2, 0, radius1, radius2);
-        hauptebene = new Hauptebene(mittelPunkt, brennweite, hoehe);
+        hauptebene = new Hauptebene(Flaeche.MODUS_BRECHUNG, mittelPunkt, brennweite, hoehe);
     }
 
     public Linse (OptischeBank optischeBank, Vektor mittelPunkt, double brechzahl, float hoehe, float dicke, float radius1, float radius2) {
@@ -49,7 +49,7 @@ public class Linse extends Bauelement implements KannKollision {
         this.radius1 = radius1;
         this.radius2 = radius2;
         formatNeuBestimmen(brechzahl, hoehe, dicke, radius1, radius2);
-        hauptebene = new Hauptebene(mittelPunkt, brennweite, hoehe);
+        hauptebene = new Hauptebene(Flaeche.MODUS_BRECHUNG, mittelPunkt, brennweite, hoehe);
     }
 
     public void formatNeuBestimmen(double brechzahl, float nHoehe, float nDicke, float r1, float r2) {
@@ -182,7 +182,7 @@ public class Linse extends Bauelement implements KannKollision {
     public void verschiebeUm(Vektor verschiebung) {
         mittelPunkt.addiere(verschiebung);
         formatNeuBestimmen(brechzahl, hoehe, dicke, radius1, radius2);
-        hauptebene.getHauptebene().getBasisVektor().addiere(verschiebung);
+        hauptebene.verschiebeUm(verschiebung);
     }
 
     public float getRadius1() {

@@ -8,6 +8,12 @@ import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 public abstract class Flaeche extends GeomertrischeFigur {
 
+    protected int modus;
+
+    public static final int MODUS_ABSORB = 1; //Absorbiert den Strahl
+    public static final int MODUS_REFLEKT = 2; //Reflektiert den Strahl nur
+    public static final int MODUS_BRECHUNG = 3; //Bricht den Strahl nur
+
     public StrahlenKollision gibKollision(Strahlengang cStrGng) {
         if(cStrGng.getAktuellerStrahl() == null) return null;
         float entfernung = kollisionUeberpruefen(cStrGng);
