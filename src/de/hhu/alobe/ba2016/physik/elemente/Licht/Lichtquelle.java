@@ -1,4 +1,4 @@
-package de.hhu.alobe.ba2016.physik.elemente;
+package de.hhu.alobe.ba2016.physik.elemente.Licht;
 
 
 import de.hhu.alobe.ba2016.Konstanten;
@@ -8,41 +8,29 @@ import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.mathe.VektorInt;
+import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
+import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 import java.awt.*;
 import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 
-public class Lichtquelle extends Bauelement {
-
-    public static int groesse = 20;
+public abstract class Lichtquelle extends Bauelement {
 
     //Strahlengaenge, die durch diese Lichtquelle erzeugt werden
-    private ArrayList<Strahlengang> strahlengaenge;
+    protected ArrayList<Strahlengang> strahlengaenge;
 
     //Farbe dieser Lichtquelle
-    private Color farbe;
+    protected Color farbe;
 
     public Lichtquelle (OptischeBank optischeBank, Vektor mittelPunkt, Color farbe) {
         super(optischeBank, mittelPunkt, TYP_LAMPE);
-
-        Rahmen rahmen = new Rahmen(mittelPunkt);
-        rahmen.rahmenErweitern(new VektorInt(-groesse / 2, -groesse / 2));
-        rahmen.rahmenErweitern(new VektorInt(groesse / 2, -groesse / 2));
-        rahmen.rahmenErweitern(new VektorInt(groesse / 2, groesse / 2));
-        rahmen.rahmenErweitern(new VektorInt(-groesse / 2, groesse / 2));
-        setRahmen(rahmen);
-
         strahlengaenge = new ArrayList<>();
         this.farbe = farbe;
     }
 
-    public Strahlengang berechneNeuenStrahl (Vektor strahlPunkt) {
-        VektorFloat richtungsPunkt = new VektorFloat(strahlPunkt.getXfloat(), strahlPunkt.getYfloat());
-        Vektor richtungsVektor = Vektor.subtrahiere(richtungsPunkt, mittelPunkt);
-        return new Strahlengang(new Strahl(mittelPunkt, richtungsVektor));
-    }
+    public abstract Strahlengang berechneNeuenStrahl (Vektor strahlPunkt);
 
     public void neuerStrahl(Strahlengang strahl) {
         strahlengaenge.add(strahl);
@@ -81,32 +69,21 @@ public class Lichtquelle extends Bauelement {
     }
 
     @Override
-    public void paintComponent(Graphics2D g) {
-        strahlenZeichnen(g);
-        g.setColor(farbe);
-        Arc2D zeichenKreis = new Arc2D.Float(mittelPunkt.getXint() - groesse / 2, mittelPunkt.getYint() - groesse / 2, groesse, groesse, 0, 360, Arc2D.OPEN);
-        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-        g.draw(zeichenKreis);
-        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-        g.drawLine(mittelPunkt.getXint(), optischeBank.getOptischeAchse().getHoehe(), mittelPunkt.getXint(), mittelPunkt.getYint());
-        for(Vektor bildPunkt : gibBildpunkte()) {
-            //g.fillArc(bildPunkt.getXint() - groesse / 2, bildPunkt.getYint() - groesse / 2, groesse, groesse, 0, 360);
-            g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-            g.drawLine(bildPunkt.getXint(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getXint(), bildPunkt.getYint());
-        }
-
-        super.paintComponent(g);
-    }
-
-    @Override
     public void waehleAus() {
         optischeBank.werkzeugWechseln(new Werkzeug_NeuerStrahl(optischeBank, this) {
         });
     }
 
     @Override
-    public void verschiebeUm(Vektor verschiebung) {
-        mittelPunkt.addiere(verschiebung);
+    public abstract void verschiebeUm(Vektor verschiebung);
+
+    @Override
+    public void paintComponent(Graphics2D g) {
+        for(Vektor bildPunkt : gibBildpunkte()) {
+            g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
+            g.drawLine(bildPunkt.getXint(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getXint(), bildPunkt.getYint());
+        }
+        super.paintComponent(g);
     }
 
     public Color getFarbe() {

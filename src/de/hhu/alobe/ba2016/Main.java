@@ -16,19 +16,27 @@ public class Main {
          * -> Liegt der Brennpunkt hinter dem Strahlenauftreffen wird der Strahl gebrochen und virtuell [X]
 
          Mittwoch:
-         * todo: Blende
+
 
          Donnerstag:
-         * todo: Auge
+
 
          Freitag:
-         * todo: Eigenschaftenpanel
-         * todo: Parallellicht
+         * Blende [X]
+         * todo: -> Werkzeugfenster
+         * Auge [X]
+         * todo: -> Parameter
+         * Parallellicht [X]
 
          Samstag:
-         * todo: Strahlen einzeln löschen
-         * todo: Strahlen pro lampe aktualisieren/ einzeln aktualisieren
+         * todo: Eigenschaftenpanel
          * todo: Speichern xml
+
+         *
+         Sonntag:
+         * todo: Strahlen einzeln löschen
+         * todo: Lampe deaktivieren aktivieren
+         * todo: Strahlen pro lampe aktualisieren/ einzeln aktualisieren
          * todo: Maßstab
 
          Während dem schriftlichen Teil:
@@ -44,7 +52,16 @@ public class Main {
          * todo: Mehrere Tabs
          * todo: Nullpointer verhindern
          * todo: this vermeiden
+
+         Bugs:
+         * todo: Auswahl Cursor ändert sich nicht
+         * Virtuelle und reelle Bilder aus dem unendlichen werden nicht angezeigt [X]
+         * todo: -> bilder nur noch bei spiegeln aus dem unendlichen nicht angezeigt
+         * todo: Rahmen werden nach scrollen ausgeblendet
+         * todo: Bei Auge wird Brennweite mitgezeichnet
          */
+
+
     }
 
 }

@@ -1,7 +1,14 @@
 package de.hhu.alobe.ba2016.physik.elemente.Auge;
 
-/**
- * Created by Alexander on 22.07.2016.
- */
-public class Augenlinse {
+import de.hhu.alobe.ba2016.editor.OptischeBank;
+import de.hhu.alobe.ba2016.mathe.Vektor;
+import de.hhu.alobe.ba2016.physik.elemente.Linse;
+
+
+public class Augenlinse extends Linse {
+
+    public Augenlinse(Auge auge, Vektor position, double brechzahl, float hoehe, float radius) {
+        super(auge.getOptischeBank(), position, brechzahl, hoehe, 0, radius, radius);
+    }
+
 }

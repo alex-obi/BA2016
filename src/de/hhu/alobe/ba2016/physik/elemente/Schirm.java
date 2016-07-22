@@ -19,7 +19,7 @@ public class Schirm extends Bauelement implements KannKollision {
     private float hoehe;
     private float breite;
 
-    private Grenzflaeche spiegelFlaeche;
+    private Grenzflaeche schirmFlaeche;
 
     public Schirm(OptischeBank optischeBank, Vektor mittelPunkt, float radius, float hoehe) {
         super(optischeBank, mittelPunkt, TYP_SCHIRM);
@@ -36,7 +36,7 @@ public class Schirm extends Bauelement implements KannKollision {
             breite = 0;
             Vektor von = new VektorFloat(mittelPunkt.getXfloat(), mittelPunkt.getYfloat() + hoehe / 2);
             Vektor bis = new VektorFloat(mittelPunkt.getXfloat(), mittelPunkt.getYfloat() - hoehe / 2);
-            spiegelFlaeche = new Grenzflaeche_Ebene(Grenzflaeche.MODUS_ABSORB, von, bis);
+            schirmFlaeche = new Grenzflaeche_Ebene(Grenzflaeche.MODUS_ABSORB, von, bis);
 
             Rahmen rahmen = new Rahmen(mittelPunkt);
             rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
@@ -51,7 +51,7 @@ public class Schirm extends Bauelement implements KannKollision {
             breite = Math.abs(radius) - c;
             if(radius > 0) {
                 Vektor mp = new VektorFloat(mittelPunkt.getXfloat() - radius + breite, mittelPunkt.getYfloat());
-                spiegelFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_ABSORB, mp, radius, Math.PI * 2 - winkel, 2 * winkel);
+                schirmFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_ABSORB, mp, radius, Math.PI * 2 - winkel, 2 * winkel);
 
                 Rahmen rahmen = new Rahmen(mittelPunkt);
                 rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
@@ -62,7 +62,7 @@ public class Schirm extends Bauelement implements KannKollision {
 
             } else {
                 Vektor mp = new VektorFloat(mittelPunkt.getXfloat() - radius - breite, mittelPunkt.getYfloat());
-                spiegelFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_ABSORB, mp, -radius, Math.PI - winkel, 2 * winkel);
+                schirmFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_ABSORB, mp, -radius, Math.PI - winkel, 2 * winkel);
 
                 Rahmen rahmen = new Rahmen(mittelPunkt);
                 rahmen.rahmenErweitern(new VektorInt(5, hoehe / 2));
@@ -86,17 +86,17 @@ public class Schirm extends Bauelement implements KannKollision {
     public void paintComponent(Graphics2D g) {
         super.paintComponent(g);
         g.setColor(new Color(62, 8, 0));
-        spiegelFlaeche.paintComponent(g);
+        schirmFlaeche.paintComponent(g);
     }
 
     @Override
     public StrahlenKollision kollisionUeberpruefen(Strahlengang cStrGng) {
-        return spiegelFlaeche.gibKollision(cStrGng);
+        return schirmFlaeche.gibKollision(cStrGng);
     }
 
     @Override
     public void verschiebeUm(Vektor verschiebung) {
         mittelPunkt.addiere(verschiebung);
-        spiegelFlaeche.verschiebeUm(verschiebung);
+        schirmFlaeche.verschiebeUm(verschiebung);
     }
 }

@@ -1,16 +1,10 @@
 package de.hhu.alobe.ba2016.editor;
 
 
-import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.grafik.Zeichenbar;
-import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
-import de.hhu.alobe.ba2016.physik.elemente.Lichtquelle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class Zeichenbrett extends JPanel {

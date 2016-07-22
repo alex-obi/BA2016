@@ -4,7 +4,8 @@ package de.hhu.alobe.ba2016.editor;
 import de.hhu.alobe.ba2016.HauptFenster;
 import de.hhu.alobe.ba2016.editor.werkzeuge.*;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
-import de.hhu.alobe.ba2016.physik.elemente.Lichtquelle;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.PunktLichtquelle;
 import de.hhu.alobe.ba2016.physik.elemente.Linse;
 import de.hhu.alobe.ba2016.physik.elemente.Schirm;
 import de.hhu.alobe.ba2016.physik.elemente.Spiegel;
@@ -122,7 +123,7 @@ public class Fenster_Werkzeuge extends JDialog implements ActionListener{
                 } else if (farbenString.equals("Blau")) {
                     farbe = Color.BLUE;
                 }
-                Lichtquelle lampe = new Lichtquelle(optikSimulator.gibAktuelleOptischeBank(), new VektorFloat(0, 0), farbe);
+                Lichtquelle lampe = new PunktLichtquelle(optikSimulator.gibAktuelleOptischeBank(), new VektorFloat(0, 0), farbe);
                 optikSimulator.gibAktuelleOptischeBank().werkzeugWechseln(new Werkzeug_NeuesBauelement(optikSimulator.gibAktuelleOptischeBank(), lampe));
             }
         }

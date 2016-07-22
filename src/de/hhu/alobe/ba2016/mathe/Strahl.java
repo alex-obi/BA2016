@@ -14,6 +14,7 @@ public class Strahl extends GeomertrischeFigur {
 
     //Variable zum Speichern der Entfernung, von welchem Bildpunkt (reell oder virtuell) aus der Strahl bei Berechnung durch Hauptebenen erzeugt wird
     protected float quellEntfernung;
+    protected boolean ausDemUnendlichen;
 
     public Strahl(Vektor basisVektor, Vektor richtung) {
         this.basisVektor = basisVektor;
@@ -21,10 +22,11 @@ public class Strahl extends GeomertrischeFigur {
         this.quellEntfernung = 0;
     }
 
-    public Strahl(Vektor basisVektor, Vektor richtung, float quellEntfernung) {
+    public Strahl(Vektor basisVektor, Vektor richtung, float quellEntfernung, boolean ausDemUnendlichen) {
         this.basisVektor = basisVektor;
         this.richtungsVektor = richtung.gibEinheitsVektor();
         this.quellEntfernung = quellEntfernung;
+        this.ausDemUnendlichen = ausDemUnendlichen;
     }
 
     /**
@@ -68,7 +70,7 @@ public class Strahl extends GeomertrischeFigur {
                 basisVektor.getYint(),
                 bisVektor.getXint(),
                 bisVektor.getYint());
-        if(quellEntfernung < 0) {
+        if(quellEntfernung < 0 && !isAusDemUnendlichen()) {
             g.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 5.0f, new float[] {10.0f,4.0f}, 0.0f));
             g.drawLine(basisVektor.getXint(),
                     basisVektor.getYint(),
@@ -110,5 +112,12 @@ public class Strahl extends GeomertrischeFigur {
         this.quellEntfernung = quellEntfernung;
     }
 
+    public boolean isAusDemUnendlichen() {
+        return ausDemUnendlichen;
+    }
+
+    public void setAusDemUnendlichen(boolean ausDemUnendlichen) {
+        this.ausDemUnendlichen = ausDemUnendlichen;
+    }
 }
 

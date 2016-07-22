@@ -20,6 +20,7 @@ public abstract class Konstanten {
     public static final int OPTISCHEACHSE_FANGENTFERNUNG = 25; //Distanz, bis Bauelemente direkt auf die Achse gesetzt werden
 
     public static final double BRECHZAHL_KAMMERWASSER = 1.336;
+
     /**
      * Legt die Groesse des Fensters beim Start fest
      */

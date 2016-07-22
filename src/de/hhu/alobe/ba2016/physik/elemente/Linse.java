@@ -152,6 +152,10 @@ public class Linse extends Bauelement implements KannKollision {
     @Override
     public void paintComponent(Graphics2D g) {
         super.paintComponent(g);
+        g.setColor(Color.GRAY);
+        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
+        g.drawLine(mittelPunkt.getXint() + (int)brennweite, mittelPunkt.getYint() + 5, mittelPunkt.getXint() + (int)brennweite, mittelPunkt.getYint() - 5);
+        g.drawLine(mittelPunkt.getXint() - (int)brennweite, mittelPunkt.getYint() + 5, mittelPunkt.getXint() - (int)brennweite, mittelPunkt.getYint() - 5);
         switch (optischeBank.getModus()) {
             case OptischeBank.MODUS_SNELLIUS:
                 g.setColor(Color.BLUE);

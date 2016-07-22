@@ -3,9 +3,8 @@ package de.hhu.alobe.ba2016.editor.werkzeuge;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion_NeuerStrahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
-import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
-import de.hhu.alobe.ba2016.physik.elemente.Lichtquelle;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
+import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 import javax.swing.*;
 import java.awt.Cursor;
@@ -36,7 +35,10 @@ public class Werkzeug_NeuerStrahl extends  Werkzeug{
     @Override
     public void mouseReleased(MouseEvent e, Vektor realePosition) {
         if(SwingUtilities.isLeftMouseButton(e)) {
-            optischeBank.neueAktionDurchfuehren(new Aktion_NeuerStrahl(lichtquelle, realePosition.kopiere()));
+            Strahlengang erzeugterStrahlengang = lichtquelle.berechneNeuenStrahl(realePosition);
+            if(erzeugterStrahlengang != null) {
+                optischeBank.neueAktionDurchfuehren(new Aktion_NeuerStrahl(lichtquelle, erzeugterStrahlengang));
+            }
         }
         if(SwingUtilities.isRightMouseButton(e)) {
             lichtquelle.rahmenAusblenden();

@@ -14,7 +14,7 @@ public class Gerade extends Strahl implements KannStrahlenSchnitt {
     private float laenge;
 
     public Gerade(Strahl strahl, float laenge) {
-        super(strahl.getBasisVektor(), strahl.getRichtungsVektor(), strahl.getQuellEntfernung());
+        super(strahl.getBasisVektor(), strahl.getRichtungsVektor(), strahl.getQuellEntfernung(), strahl.isAusDemUnendlichen());
         this.laenge = laenge;
     }
 

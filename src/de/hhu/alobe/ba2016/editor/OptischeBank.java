@@ -10,6 +10,10 @@ import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.mathe.VektorInt;
 import de.hhu.alobe.ba2016.grafik.OptischeAchse;
+import de.hhu.alobe.ba2016.physik.elemente.Auge.Auge;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.ParrallelLichtquelle;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.PunktLichtquelle;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import de.hhu.alobe.ba2016.physik.elemente.*;
@@ -90,15 +94,18 @@ public class OptischeBank extends JPanel {
 
         //########### Erzeuge Testszenario
 
-        bauelementHinzufuegen(new Lichtquelle(this, new VektorInt(50, 300), Color.BLACK));
+        bauelementHinzufuegen(new PunktLichtquelle(this, new VektorInt(50, 300), Color.BLACK));
+        bauelementHinzufuegen(new ParrallelLichtquelle(this, new VektorInt(50, 300), Color.BLACK, 200, 0));
         bauelementHinzufuegen(new Spiegel(this, new VektorInt(500, 500), -300, 200));
         /*bauelementHinzufuegen(new Spiegel(this, new VektorInt(700, 500), 300, 200));
         bauelementHinzufuegen(new Spiegel(this, new VektorInt(300, 500), 100, 200));
         bauelementHinzufuegen(new Spiegel(this, new VektorInt(900, 500), 0, 200));*/
         bauelementHinzufuegen(new Schirm(this, new VektorInt(650, 500), 300, 200));
         bauelementHinzufuegen(new Linse(this, new VektorFloat(50, 500), 1.8, 150, 10, 300, -120));
-        bauelementHinzufuegen(new Linse(this, new VektorFloat(350, 500), 1.8, 150, 10, 300, 250));
+        bauelementHinzufuegen(new Linse(this, new VektorFloat(350, 500), 2.5, 150, 10, 300, 250));
         bauelementHinzufuegen(new Linse(this, new VektorFloat(200, 500), 1.8, 150, 10, -300, -250));
+        bauelementHinzufuegen(new Blende(this, new VektorFloat(800, 500), 300, 50));
+        bauelementHinzufuegen(new Auge(this, new VektorFloat(800, 300)));
 
     }
 
@@ -130,6 +137,11 @@ public class OptischeBank extends JPanel {
             case Bauelement.TYP_SCHIRM:
                 kollisionsObjekte.add((Schirm)bauelement);
                 break;
+            case Bauelement.TYP_BLENDE:
+                kollisionsObjekte.add((Blende)bauelement);
+                break;
+            case Bauelement.TYP_AUGE:
+                kollisionsObjekte.add((Auge)bauelement);
         }
         zeichenBrett.neuesZeichenObjekt(bauelement);
         bauelemente.add(bauelement);

@@ -64,20 +64,27 @@ public class Hauptebene extends Flaeche {
             if(modus == Flaeche.MODUS_REFLEKT) {
                 bildweite *= -1;
             }
-            neueRichtung = Vektor.addiere(Vektor.subtrahiere(position, mittelpunkt), new VektorFloat(-(richtungsvorzeichen * bildweite), -(richtungsvorzeichen * bildgroesse)));
-
+            Vektor relativerSchnittpunkt = Vektor.subtrahiere(position, mittelpunkt);
+            neueRichtung = Vektor.addiere(relativerSchnittpunkt, new VektorFloat(-(richtungsvorzeichen * bildweite), -(richtungsvorzeichen * bildgroesse)));
+            if(cStrGng.getAktuellerStrahl().isAusDemUnendlichen()) {
+                neueRichtung.multipliziere(Math.abs(brennweite / bildweite));
+                //todo: position offset einbingen was wenn x- == bildweite ?
+            }
             if(bildweite < 0) {
-                cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, faktor), -faktor * neueRichtung.gibLaenge()));
+                if(!cStrGng.getAktuellerStrahl().isAusDemUnendlichen() || brennweite < 0) {
+                    cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, faktor), -faktor * neueRichtung.gibLaenge(), false));
+                } else {
+                    cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, faktor), faktor * neueRichtung.gibLaenge(), false));
+                }
             } else {
-                cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, -faktor), faktor * neueRichtung.gibLaenge()));
+                cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, -faktor), faktor * neueRichtung.gibLaenge(), false));
             }
         } else { //gegenstand ungefähr in brennweite
-
             neueRichtung = new VektorFloat(faktor * cBrennweite, gegenstandshoehe);
             if(richtungsvorzeichen > 0) {
-                cStrGng.neuenStrahlAnhaengen(new Strahl(position, neueRichtung, 0));
+                cStrGng.neuenStrahlAnhaengen(new Strahl(position, neueRichtung, 0, true));
             } else {
-                cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, -1), 0));
+                cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, -1), 0, true));
             }
 
         }
