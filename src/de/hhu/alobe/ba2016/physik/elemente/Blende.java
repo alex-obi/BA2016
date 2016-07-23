@@ -2,6 +2,7 @@ package de.hhu.alobe.ba2016.physik.elemente;
 
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.mathe.VektorInt;
@@ -13,22 +14,56 @@ import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.util.ArrayList;
 
 public class Blende extends Bauelement implements KannKollision {
 
-    float durchmesser;
-    float hoehe;
+
+
+    int durchmesser;
+    int hoehe;
 
     public static final float MIND_HOEHE = 10;
+    public static final float MAX_HOEHE = 510;
+
+    public static final float MIND_DURCHMESSER = 0;
+    public static final float MAX_DURCHMESSER = 500;
 
     Grenzflaeche obereHaelfte;
     Grenzflaeche untereHaelfte;
 
-    public Blende(OptischeBank optischeBank, Vektor mittelPunkt, float hoehe, float durchmesser) {
+    public Blende(OptischeBank optischeBank, Vektor mittelPunkt, int hoehe, int durchmesser) {
         super(optischeBank, mittelPunkt, Bauelement.TYP_BLENDE);
         this.hoehe = Math.max(10, hoehe);
+        setzeDurchmesser(durchmesser);
+    }
+
+    public void setzeDurchmesser(int nDurchmesser) {
+        if(Math.abs(nDurchmesser) + 10 > hoehe) {
+            durchmesser = hoehe - 10;
+        } else {
+            durchmesser = Math.abs(nDurchmesser);
+        }
+        formatAktualisieren();
+    }
+
+    public void setHoehe(int nHoehe) {
+        if(nHoehe > durchmesser + 10) {
+            hoehe = nHoehe;
+        } else {
+            hoehe = durchmesser + 10;
+        }
+        formatAktualisieren();
+    }
+
+    public void formatAktualisieren() {
+        Vektor vonVekt = new VektorFloat(0, durchmesser / 2);
+        Vektor bisVekt = new VektorFloat(0, hoehe / 2);
+        obereHaelfte = new Grenzflaeche_Ebene(Flaeche.MODUS_ABSORB, Vektor.addiere(mittelPunkt, vonVekt), Vektor.addiere(mittelPunkt, bisVekt));
+        untereHaelfte = new Grenzflaeche_Ebene(Flaeche.MODUS_ABSORB, Vektor.subtrahiere(mittelPunkt, vonVekt), Vektor.subtrahiere(mittelPunkt, bisVekt));
 
         Rahmen rahmen = new Rahmen(mittelPunkt);
         rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
@@ -36,20 +71,6 @@ public class Blende extends Bauelement implements KannKollision {
         rahmen.rahmenErweitern(new VektorInt(+5, -hoehe / 2));
         rahmen.rahmenErweitern(new VektorInt(-5, -hoehe / 2));
         setRahmen(rahmen);
-
-        setzeDurchmesser(durchmesser);
-    }
-
-    public void setzeDurchmesser(float nDurchmesser) {
-        if(Math.abs(nDurchmesser) + 10 > hoehe) {
-            durchmesser = hoehe - 10;
-        } else {
-            durchmesser = Math.abs(nDurchmesser);
-        }
-        Vektor vonVekt = new VektorFloat(0, durchmesser / 2);
-        Vektor bisVekt = new VektorFloat(0, hoehe / 2);
-        obereHaelfte = new Grenzflaeche_Ebene(Flaeche.MODUS_ABSORB, Vektor.addiere(mittelPunkt, vonVekt), Vektor.addiere(mittelPunkt, bisVekt));
-        untereHaelfte = new Grenzflaeche_Ebene(Flaeche.MODUS_ABSORB, Vektor.subtrahiere(mittelPunkt, vonVekt), Vektor.subtrahiere(mittelPunkt, bisVekt));
     }
 
     @Override
@@ -61,7 +82,27 @@ public class Blende extends Bauelement implements KannKollision {
 
     @Override
     public void waehleAus() {
+        ArrayList<Eigenschaftenregler> regler = new ArrayList<>();
 
+        JSlider slide_hoehe = new JSlider (10, 510, hoehe );
+        slide_hoehe.setPaintTicks(true);
+        slide_hoehe.setMajorTickSpacing(20);
+        slide_hoehe.addChangeListener(e -> {
+            setHoehe( ((JSlider) e.getSource()).getValue());
+            optischeBank.aktualisieren();
+        });
+        regler.add(new Eigenschaftenregler("Höhe", slide_hoehe));
+
+        JSlider slide_durchmesser = new JSlider (0, 500, durchmesser );
+        slide_durchmesser.setPaintTicks(true);
+        slide_durchmesser.setMajorTickSpacing(20);
+        slide_durchmesser.addChangeListener(e -> {
+            setzeDurchmesser( ((JSlider) e.getSource()).getValue());
+            optischeBank.aktualisieren();
+        });
+        regler.add(new Eigenschaftenregler("Durchmesser", slide_durchmesser));
+
+        optischeBank.getEigenschaften().setOptionen("Blende", regler);
     }
 
     @Override

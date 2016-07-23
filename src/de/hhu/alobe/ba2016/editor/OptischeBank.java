@@ -4,6 +4,7 @@ package de.hhu.alobe.ba2016.editor;
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion;
 import de.hhu.alobe.ba2016.editor.aktionen.AktionsListe;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_Auswahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
@@ -34,6 +35,8 @@ public class OptischeBank extends JPanel {
 
     private JScrollPane zeichenRahmen;
     private Zeichenbrett zeichenBrett;
+
+    private Werkzeuge werkzeuge;
 
     private Eigenschaften eigenschaften;
 
@@ -76,11 +79,14 @@ public class OptischeBank extends JPanel {
         zeichenBrett.setPreferredSize(new Dimension(groesse.getXint(), groesse.getYint()));
         this.add(zeichenRahmen, BorderLayout.CENTER);
 
-        optischeAchse = new OptischeAchse(300);
+        optischeAchse = new OptischeAchse(250);
         zeichenBrett.neuesZeichenObjekt(optischeAchse);
 
+        werkzeuge = new Werkzeuge(this);
+        this.add(werkzeuge, BorderLayout.NORTH);
+
         eigenschaften = new Eigenschaften(this);
-        this.add(eigenschaften, BorderLayout.WEST);
+        this.add(eigenschaften, BorderLayout.SOUTH);
 
         positionOffset = new VektorInt(0, 0);
 
@@ -94,18 +100,18 @@ public class OptischeBank extends JPanel {
 
         //########### Erzeuge Testszenario
 
-        bauelementHinzufuegen(new PunktLichtquelle(this, new VektorInt(50, 300), Color.BLACK));
-        bauelementHinzufuegen(new ParrallelLichtquelle(this, new VektorInt(50, 300), Color.BLACK, 200, 0));
-        bauelementHinzufuegen(new Spiegel(this, new VektorInt(500, 500), -300, 200));
+        bauelementHinzufuegen(new PunktLichtquelle(this, new VektorInt(50, 250), Color.BLACK));
+        bauelementHinzufuegen(new ParrallelLichtquelle(this, new VektorInt(50, 250), Color.BLACK, 200, 0));
+        bauelementHinzufuegen(new Spiegel(this, new VektorInt(500, 450), -300, 150));
         /*bauelementHinzufuegen(new Spiegel(this, new VektorInt(700, 500), 300, 200));
         bauelementHinzufuegen(new Spiegel(this, new VektorInt(300, 500), 100, 200));
         bauelementHinzufuegen(new Spiegel(this, new VektorInt(900, 500), 0, 200));*/
-        bauelementHinzufuegen(new Schirm(this, new VektorInt(650, 500), 300, 200));
-        bauelementHinzufuegen(new Linse(this, new VektorFloat(50, 500), 1.8, 150, 10, 300, -120));
-        bauelementHinzufuegen(new Linse(this, new VektorFloat(350, 500), 2.5, 150, 10, 300, 250));
-        bauelementHinzufuegen(new Linse(this, new VektorFloat(200, 500), 1.8, 150, 10, -300, -250));
-        bauelementHinzufuegen(new Blende(this, new VektorFloat(800, 500), 300, 50));
-        bauelementHinzufuegen(new Auge(this, new VektorFloat(800, 300)));
+        bauelementHinzufuegen(new Schirm(this, new VektorInt(650, 450), 300, 150));
+        bauelementHinzufuegen(new Linse(this, new VektorFloat(50, 450), 1.8, 200, 10, 50, -60));
+        bauelementHinzufuegen(new Linse(this, new VektorFloat(350, 450), 2.5, 150, 10, 300, 250));
+        bauelementHinzufuegen(new Linse(this, new VektorFloat(200, 450), 1.8, 150, 10, -300, -250));
+        bauelementHinzufuegen(new Blende(this, new VektorFloat(800, 450), 150, 50));
+        bauelementHinzufuegen(new Auge(this, new VektorFloat(700, 250)));
 
     }
 
@@ -274,4 +280,7 @@ public class OptischeBank extends JPanel {
         return bauelemente;
     }
 
+    public Eigenschaften getEigenschaften() {
+        return eigenschaften;
+    }
 }

@@ -32,6 +32,7 @@ public class Zeichenbrett extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
+        g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2D.scale(optischeBank.getZoom(), optischeBank.getZoom());
         for(Zeichenbar zeichenObjekt: zeichenObjekte) {
             zeichenObjekt.paintComponent(g2D);

@@ -25,24 +25,36 @@ public class Main {
          * Blende [X]
          * todo: -> Werkzeugfenster
          * Auge [X]
-         * todo: -> Parameter
+         * todo: -> Begrenzungen
          * Parallellicht [X]
 
          Samstag:
          * todo: Eigenschaftenpanel
-         * todo: Speichern xml
+         * todo: Maßstab
 
          *
          Sonntag:
+         * todo: Speichern xml
          * todo: Strahlen einzeln löschen
-         * todo: Lampe deaktivieren aktivieren
+         * Rahmen bei Formatänderung mit ändern [X]
          * todo: Strahlen pro lampe aktualisieren/ einzeln aktualisieren
-         * todo: Maßstab
+
 
          Während dem schriftlichen Teil:
          * todo: Kommentieren
+         * todo: Menüführung
          * todo: float zu double
          * todo: get gib einheitlich
+
+         Bugs:
+         * todo: Senkrechter Einfall bei Hauptebene führt zu Absturz
+         * todo: Brennweite bei dicken Linsen
+         * Virtuelle und reelle Bilder aus dem unendlichen werden nicht angezeigt [X]
+         * todo: -> bilder nur noch bei spiegeln aus dem unendlichen nicht angezeigt
+         * todo: Rahmen werden nach scrollen ausgeblendet
+         * todo: Bei Auge wird Brennweite mitgezeichnet
+         * todo: Auswahl Cursor ändert sich nicht
+
 
          Optional:
          * todo: Spiegel schräg
@@ -52,13 +64,6 @@ public class Main {
          * todo: Mehrere Tabs
          * todo: Nullpointer verhindern
          * todo: this vermeiden
-
-         Bugs:
-         * todo: Auswahl Cursor ändert sich nicht
-         * Virtuelle und reelle Bilder aus dem unendlichen werden nicht angezeigt [X]
-         * todo: -> bilder nur noch bei spiegeln aus dem unendlichen nicht angezeigt
-         * todo: Rahmen werden nach scrollen ausgeblendet
-         * todo: Bei Auge wird Brennweite mitgezeichnet
          */
 
 

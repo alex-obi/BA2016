@@ -89,10 +89,10 @@ public class Fenster_Werkzeuge extends JDialog implements ActionListener{
             }
         }
         if(e.getSource().equals(werkzeug_schirm_neu)) {
-            float hoehe = 0;
+            int hoehe = 0;
             String eingabe = JOptionPane.showInputDialog(HauptFenster.get(), "Hoehe des Schirms:", "Neuen Schirm erstellen", JOptionPane.QUESTION_MESSAGE);
             if(eingabe != null) {
-                hoehe = Float.parseFloat(eingabe);
+                hoehe = Integer.parseInt(eingabe);
             }
             if(hoehe != 0) {
                 Schirm neuerSchirm = new Schirm(optikSimulator.gibAktuelleOptischeBank(), new VektorFloat(0, 0), 0, hoehe);

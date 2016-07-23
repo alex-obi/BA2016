@@ -1,6 +1,7 @@
 package de.hhu.alobe.ba2016.physik.elemente;
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.mathe.VektorInt;
@@ -9,6 +10,7 @@ import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -16,6 +18,7 @@ public class Spiegel extends Bauelement implements KannKollision{
 
     private float hoehe;
     private float breite;
+    private float radius;
 
     private Grenzflaeche spiegelFlaeche;
 
@@ -23,13 +26,18 @@ public class Spiegel extends Bauelement implements KannKollision{
 
     public Spiegel(OptischeBank optischeBank, Vektor mittelPunkt, float radius, float hoehe) {
         super(optischeBank, mittelPunkt, TYP_SPIEGEL);
+        this.radius = radius;
+        setHoehe(hoehe);
+        hauptebene = new Hauptebene(Flaeche.MODUS_REFLEKT, mittelPunkt, radius / 2, hoehe);
+    }
+
+    public void setHoehe(float nHoehe) {
         if(radius != 0) {
-            this.hoehe = Math.min(hoehe, Math.abs(radius * 2));
+            this.hoehe = Math.min(nHoehe, Math.abs(radius * 2));
         } else {
-            this.hoehe = hoehe;
+            this.hoehe = nHoehe;
         }
         setRadius(radius);
-        hauptebene = new Hauptebene(Flaeche.MODUS_REFLEKT, mittelPunkt, radius / 2, hoehe);
     }
 
     public void setRadius(float radius) {
@@ -80,7 +88,18 @@ public class Spiegel extends Bauelement implements KannKollision{
 
     @Override
     public void waehleAus() {
+        ArrayList<Eigenschaftenregler> regler = new ArrayList<>();
 
+        JSlider slide_hoehe = new JSlider (10, 510, (int)hoehe);
+        slide_hoehe.setPaintTicks(true);
+        slide_hoehe.setMajorTickSpacing(20);
+        slide_hoehe.addChangeListener(e -> {
+            setHoehe( ((JSlider) e.getSource()).getValue());
+            optischeBank.aktualisieren();
+        });
+        regler.add(new Eigenschaftenregler("Höhe", slide_hoehe));
+
+        optischeBank.getEigenschaften().setOptionen("Spiegel", regler);
     }
 
     @Override

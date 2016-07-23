@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Eigenschaften extends JPanel implements ActionListener {
+public class Werkzeuge extends JPanel implements ActionListener {
 
     private OptischeBank optischeBank;
 
@@ -23,9 +23,9 @@ public class Eigenschaften extends JPanel implements ActionListener {
     private JButton button_zoom_raus;
     private JButton button_zoom_100;
 
-    public Eigenschaften(OptischeBank optischeBank) {
+    public Werkzeuge(OptischeBank optischeBank) {
         this.optischeBank = optischeBank;
-        setPreferredSize(new Dimension(200, 200));
+        setPreferredSize(new Dimension(0, 35));
 
         button_rueckgaengig =  new JButton("Zurück");
         button_rueckgaengig.addActionListener(this);

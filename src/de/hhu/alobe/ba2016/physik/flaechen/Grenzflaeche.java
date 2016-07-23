@@ -67,7 +67,7 @@ public abstract class Grenzflaeche extends Flaeche {
     }
 
     /**
-     * Manipuliert den eintreffenden Strahlengang abhaengig von den physikalischen Eigenschaften des Objekts.
+     * Manipuliert den eintreffenden Strahlengang abhaengig von den physikalischen Werkzeuge des Objekts.
      * @param cStrGng Zu manipulierender Strahlengang
      * @param position Schnittpunkt mit der Grenzflaeche
      */

@@ -29,7 +29,7 @@ public class HauptFenster extends JFrame implements ActionListener {
         optikSimulator = this;
 
         this.setSize(Konstanten.FENSTER_X, Konstanten.FENSTER_Y);
-        this.setMinimumSize(new Dimension(400, 400));
+        this.setMinimumSize(new Dimension(600, 400));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());

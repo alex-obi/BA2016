@@ -13,7 +13,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
- * Einfaches Werkzeug zum Auswaehlen eines Elements und dessen Anzeige im Eigenschaften Fenster
+ * Einfaches Werkzeug zum Auswaehlen eines Elements und dessen Anzeige im Werkzeuge Fenster
  */
 public class Werkzeug_Auswahl extends Werkzeug{
 
