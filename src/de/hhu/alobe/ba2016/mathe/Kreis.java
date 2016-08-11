@@ -73,6 +73,16 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
         }
     }
 
+    public boolean schneidetStrahl(Strahl strahl) {
+        float entfernung = gibSchnittEntfernung(strahl);
+        return (entfernung >= 0);
+    }
+
+    public boolean schneidetGerade(Gerade gerade) {
+        float entfernung = gibSchnittEntfernung(gerade);
+        return (entfernung >= 0 && entfernung <= gerade.getLaenge());
+    }
+
     /**
      * Gibt den Schnittpunkt einer Geraden mit diesem Kreis zurueck, wenn dieser existiert
      * @param strahl Strahl

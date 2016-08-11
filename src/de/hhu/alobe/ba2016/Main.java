@@ -8,62 +8,53 @@ public class Main {
     public static void main(String[] args) {
         new HauptFenster();
 
-        /** Dienstag:
-         * Optische Achse und Bilder [X]
-         * -> Nach einem ebenen Spiegel und einer folgenden Linse werden Bilder ungenau gezeichnet [X]
-         * Hohlspiegel Hauptebene [X]
-         * todo: -> Strahlen können nicht mehrfach vom selbem Spiegel reflektiert werden -> sinnvoll?
-         * -> Liegt der Brennpunkt hinter dem Strahlenauftreffen wird der Strahl gebrochen und virtuell [X]
-
-         Mittwoch:
-
-
-         Donnerstag:
-
-
-         Freitag:
-         * Blende [X]
-         * todo: -> Werkzeugfenster
-         * Auge [X]
-         * todo: -> Begrenzungen
-         * Parallellicht [X]
-
-         Samstag:
-         * todo: Eigenschaftenpanel
-         * todo: Maßstab
-
+        /*
+        Todoliste:
+         * todo: Eigenschaftenpanel für alle Bauelemente. Rücknehmbar.
          *
-         Sonntag:
-         * todo: Speichern xml
-         * todo: Strahlen einzeln löschen
-         * Rahmen bei Formatänderung mit ändern [X]
-         * todo: Strahlen pro lampe aktualisieren/ einzeln aktualisieren
+         * todo: Werkzeugfenster für alle Bauelemente. Geeignete Startwerte. Grafische Aufarbeitung
+         *
+         * todo: Strahlen einzeln aktualisieren
+         *
+         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
+         *
+         * todo: Brennweite und Position der Hauptebene bei dicken Linsen. Linse über kleine Brennweite zu klein dargestellt.
 
-
-         Während dem schriftlichen Teil:
-         * todo: Kommentieren
+         * todo: Maßstab
+         *
+         * todo: Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren.
+         *
+         * todo: Kommentieren und Funktionen überprüfen. Mit Formeln belegen und aufschreiben.
+         *
+         * todo: Speichern und Laden xml
+         *
          * todo: Menüführung
-         * todo: float zu double
-         * todo: get gib einheitlich
+         *
 
          Bugs:
+         * Wichtig:
          * todo: Senkrechter Einfall bei Hauptebene führt zu Absturz
-         * todo: Brennweite bei dicken Linsen
-         * Virtuelle und reelle Bilder aus dem unendlichen werden nicht angezeigt [X]
-         * todo: -> bilder nur noch bei spiegeln aus dem unendlichen nicht angezeigt
+         * todo: bilder nur noch bei spiegeln aus dem unendlichen nicht angezeigt und ins unendliche mehrere bilder
+         * todo: Lichtquelle genau auf Spiegelhauptebene -> Absturz
+         *
+         * Zweitrangig:
          * todo: Rahmen werden nach scrollen ausgeblendet
          * todo: Bei Auge wird Brennweite mitgezeichnet
          * todo: Auswahl Cursor ändert sich nicht
 
 
          Optional:
-         * todo: Spiegel schräg
+         * todo: Schirm Spiegel Linse Grafisch Abgrenzen
          * todo: Parallel-, Zenit-, Brennpunktstrahl markieren
          * todo: Strahlen nummerieren
-         * todo: Ausschnitt und Scrollen optimieren
          * todo: Mehrere Tabs
+         * todo: Ausschnitt und Scrollen optimieren
+         * todo: Spiegel schräg
+
          * todo: Nullpointer verhindern
          * todo: this vermeiden
+         * todo: float zu double
+         * todo: get gib einheitlich
          */
 
 

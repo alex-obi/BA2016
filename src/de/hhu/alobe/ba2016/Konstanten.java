@@ -21,6 +21,8 @@ public abstract class Konstanten {
 
     public static final double BRECHZAHL_KAMMERWASSER = 1.336;
 
+    public static final int HAUPTEBENE_MINDESTHOEHE = 100;
+
     /**
      * Legt die Groesse des Fensters beim Start fest
      */

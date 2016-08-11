@@ -39,13 +39,18 @@ public class Linse extends Bauelement implements KannKollision {
         super(optischeBank, mittelPunkt, TYP_LINSE);
         this.brennweite = brennweite;
         radius1 = radius2 = brennweite;
-        hauptebene = new Hauptebene(Flaeche.MODUS_BRECHUNG, mittelPunkt, brennweite, hoehe);
+        this.hoehe = Math.abs(radius1 / 2);
+        hauptebene = new Hauptebene(Flaeche.MODUS_BRECHUNG, mittelPunkt, brennweite, Math.max(hoehe, Konstanten.HAUPTEBENE_MINDESTHOEHE));
         formatNeuBestimmen(1.5, Math.abs(radius1) / 2, 0, radius1, radius2);
     }
 
     public Linse (OptischeBank optischeBank, Vektor mittelPunkt, double brechzahl, float hoehe, float dicke, float radius1, float radius2) {
         super(optischeBank, mittelPunkt, TYP_LINSE);
-        this.brennweite = (float)Math.pow((brechzahl - 1) * (1 / radius1 + 1 / radius2), -1); //Keine dicke Linsen!
+        if(radius1 == radius2) {
+            brennweite = 0;
+        } else {
+            this.brennweite = (float) Math.pow((brechzahl - 1) * (1 / radius1 + 1 / radius2), -1); //Keine dicke Linsen!
+        }
         this.radius1 = radius1;
         this.radius2 = radius2;
         hauptebene = new Hauptebene(Flaeche.MODUS_BRECHUNG, mittelPunkt, brennweite, hoehe);

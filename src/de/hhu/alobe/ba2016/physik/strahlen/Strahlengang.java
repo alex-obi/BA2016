@@ -4,6 +4,7 @@ package de.hhu.alobe.ba2016.physik.strahlen;
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.grafik.Zeichenbar;
 import de.hhu.alobe.ba2016.mathe.Gerade;
+import de.hhu.alobe.ba2016.mathe.Kreis;
 import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 
@@ -16,6 +17,8 @@ public class Strahlengang implements Zeichenbar{
 
     //Speichert die Startwerte um Strahlengang zurücksetzen zu können
     private Strahl anfangsStrahl;
+
+    private boolean aktiviert;
 
     /**
      * Speichert aktuelle Strahlenabschnitte und die Richtung des letzten, ungehinderten Abschnittes, der das Bild verlässt.
@@ -65,14 +68,37 @@ public class Strahlengang implements Zeichenbar{
         return retList;
     }
 
+    public boolean istAngeklickt(Kreis pruefKreis) {
+        if(aktuellerStrahl != null) {
+            if (pruefKreis.schneidetStrahl(aktuellerStrahl)) return true;
+        }
+        for(Gerade gerade : strahlenAbschnitte) {
+            if(pruefKreis.schneidetGerade(gerade)) return true;
+        }
+        return false;
+    }
+
     @Override
     public void paintComponent(Graphics2D g) {
+        Color alteFarbe = g.getColor();
+        if(aktiviert) {
+            g.setColor(Color.RED);
+        }
         for(int i = 0; i < strahlenAbschnitte.size(); i++) {
             strahlenAbschnitte.get(i).paintComponent(g);
         }
         if(aktuellerStrahl != null) {
             aktuellerStrahl.paintComponent(g);
         }
+        g.setColor(alteFarbe);
+    }
+
+    public boolean isAktiviert() {
+        return aktiviert;
+    }
+
+    public void setAktiviert(boolean aktiviert) {
+        this.aktiviert = aktiviert;
     }
 
     public Strahl getAnfangsStrahl() {
