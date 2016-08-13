@@ -15,6 +15,10 @@ import de.hhu.alobe.ba2016.physik.elemente.Auge.Auge;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.ParrallelLichtquelle;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.PunktLichtquelle;
+import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Blende;
+import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Schirm;
+import de.hhu.alobe.ba2016.physik.elemente.glasskoerper.Linse;
+import de.hhu.alobe.ba2016.physik.elemente.spiegel.Hohlspiegel;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import de.hhu.alobe.ba2016.physik.elemente.*;
@@ -101,12 +105,12 @@ public class OptischeBank extends JPanel {
         //########### Erzeuge Testszenario
 
         bauelementHinzufuegen(new PunktLichtquelle(this, new VektorInt(50, 250), Color.BLACK));
-        bauelementHinzufuegen(new ParrallelLichtquelle(this, new VektorInt(50, 250), Color.BLACK, 200, 0));
-        bauelementHinzufuegen(new Spiegel(this, new VektorInt(500, 450), -300, 150));
-        /*bauelementHinzufuegen(new Spiegel(this, new VektorInt(700, 500), 300, 200));
-        bauelementHinzufuegen(new Spiegel(this, new VektorInt(300, 500), 100, 200));
-        bauelementHinzufuegen(new Spiegel(this, new VektorInt(900, 500), 0, 200));*/
-        bauelementHinzufuegen(new Schirm(this, new VektorInt(650, 450), 300, 150));
+        bauelementHinzufuegen(new ParrallelLichtquelle(this, new VektorInt(50, 250), Color.BLACK, 250, 0));
+        bauelementHinzufuegen(new Hohlspiegel(this, new VektorInt(500, 450), -300, 150));
+        /*bauelementHinzufuegen(new Hohlspiegel(this, new VektorInt(700, 500), 300, 200));
+        bauelementHinzufuegen(new Hohlspiegel(this, new VektorInt(300, 500), 100, 200));
+        bauelementHinzufuegen(new Hohlspiegel(this, new VektorInt(900, 500), 0, 200));*/
+        bauelementHinzufuegen(new Schirm(this, new VektorInt(650, 450), 150));
         bauelementHinzufuegen(new Linse(this, new VektorFloat(50, 450), 1.8, 200, 10, 50, -60));
         bauelementHinzufuegen(new Linse(this, new VektorFloat(350, 450), 2.5, 150, 10, 300, 250));
         bauelementHinzufuegen(new Linse(this, new VektorFloat(200, 450), 1.8, 150, 10, -300, -250));
@@ -138,7 +142,7 @@ public class OptischeBank extends JPanel {
                 kollisionsObjekte.add((Linse)bauelement);
                 break;
             case Bauelement.TYP_SPIEGEL:
-                kollisionsObjekte.add((Spiegel)bauelement);
+                kollisionsObjekte.add((Hohlspiegel)bauelement);
                 break;
             case Bauelement.TYP_SCHIRM:
                 kollisionsObjekte.add((Schirm)bauelement);
@@ -184,27 +188,29 @@ public class OptischeBank extends JPanel {
 
     public void strahlenNeuBerechnen() {
         for(Lichtquelle cLicht : lichtquellen) {
-            ArrayList<Strahlengang> strahlen = cLicht.getStrahlengaenge();
-            for(Strahlengang cStrahl : strahlen) {
-                cStrahl.resetteStrahlengang();
-            }
-            int i = 0;
-            while(i < strahlen.size()) {
-                //Finde Erstkollision
-                StrahlenKollision ersteKoll = null;
-                for (KannKollision cElement : kollisionsObjekte) {
-                    StrahlenKollision nKoll = cElement.kollisionUeberpruefen(strahlen.get(i));
-                    if (nKoll != null) {
-                        if (ersteKoll == null || nKoll.getDistanz() < ersteKoll.getDistanz()) {
-                            ersteKoll = nKoll;
+            if(cLicht.isAktiv()) {
+                ArrayList<Strahlengang> strahlen = cLicht.getStrahlengaenge();
+                for (Strahlengang cStrahl : strahlen) {
+                    cStrahl.resetteStrahlengang();
+                }
+                int i = 0;
+                while (i < strahlen.size()) {
+                    //Finde Erstkollision
+                    StrahlenKollision ersteKoll = null;
+                    for (KannKollision cElement : kollisionsObjekte) {
+                        StrahlenKollision nKoll = cElement.kollisionUeberpruefen(strahlen.get(i));
+                        if (nKoll != null) {
+                            if (ersteKoll == null || nKoll.getDistanz() < ersteKoll.getDistanz()) {
+                                ersteKoll = nKoll;
+                            }
                         }
                     }
-                }
 
-                if (ersteKoll != null) {
-                    ersteKoll.kollisionDurchfuehren();
-                } else {
-                    i++;
+                    if (ersteKoll != null) {
+                        ersteKoll.kollisionDurchfuehren();
+                    } else {
+                        i++;
+                    }
                 }
             }
         }

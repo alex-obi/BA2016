@@ -1,4 +1,4 @@
-package de.hhu.alobe.ba2016.physik.elemente;
+package de.hhu.alobe.ba2016.physik.elemente.absorbtion;
 
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
@@ -6,6 +6,8 @@ import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.mathe.VektorInt;
+import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
+import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.flaechen.Flaeche;
 import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche;
 import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Ebene;
@@ -26,11 +28,11 @@ public class Blende extends Bauelement implements KannKollision {
     int durchmesser;
     int hoehe;
 
-    public static final float MIND_HOEHE = 10;
-    public static final float MAX_HOEHE = 510;
+    public static final int MIND_HOEHE = 10;
+    public static final int MAX_HOEHE = 510;
 
-    public static final float MIND_DURCHMESSER = 0;
-    public static final float MAX_DURCHMESSER = 500;
+    public static final int MIND_DURCHMESSER = 0;
+    public static final int MAX_DURCHMESSER = 500;
 
     Grenzflaeche obereHaelfte;
     Grenzflaeche untereHaelfte;
@@ -65,12 +67,8 @@ public class Blende extends Bauelement implements KannKollision {
         obereHaelfte = new Grenzflaeche_Ebene(Flaeche.MODUS_ABSORB, Vektor.addiere(mittelPunkt, vonVekt), Vektor.addiere(mittelPunkt, bisVekt));
         untereHaelfte = new Grenzflaeche_Ebene(Flaeche.MODUS_ABSORB, Vektor.subtrahiere(mittelPunkt, vonVekt), Vektor.subtrahiere(mittelPunkt, bisVekt));
 
-        Rahmen rahmen = new Rahmen(mittelPunkt);
-        rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
-        rahmen.rahmenErweitern(new VektorInt(+5 , hoehe / 2));
-        rahmen.rahmenErweitern(new VektorInt(+5, -hoehe / 2));
-        rahmen.rahmenErweitern(new VektorInt(-5, -hoehe / 2));
-        setRahmen(rahmen);
+
+        setRahmen(generiereRahmen());
     }
 
     @Override
@@ -81,10 +79,20 @@ public class Blende extends Bauelement implements KannKollision {
     }
 
     @Override
+    public Rahmen generiereRahmen() {
+        Rahmen rahmen = new Rahmen(mittelPunkt);
+        rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
+        rahmen.rahmenErweitern(new VektorInt(+5 , hoehe / 2));
+        rahmen.rahmenErweitern(new VektorInt(+5, -hoehe / 2));
+        rahmen.rahmenErweitern(new VektorInt(-5, -hoehe / 2));
+        return rahmen;
+    }
+
+    @Override
     public void waehleAus() {
         ArrayList<Eigenschaftenregler> regler = new ArrayList<>();
 
-        JSlider slide_hoehe = new JSlider (10, 510, hoehe );
+        JSlider slide_hoehe = new JSlider (MIND_HOEHE, MAX_HOEHE, hoehe);
         slide_hoehe.setPaintTicks(true);
         slide_hoehe.setMajorTickSpacing(20);
         slide_hoehe.addChangeListener(e -> {
@@ -93,7 +101,7 @@ public class Blende extends Bauelement implements KannKollision {
         });
         regler.add(new Eigenschaftenregler("Höhe", slide_hoehe));
 
-        JSlider slide_durchmesser = new JSlider (0, 500, durchmesser );
+        JSlider slide_durchmesser = new JSlider (MIND_DURCHMESSER, MAX_DURCHMESSER, durchmesser );
         slide_durchmesser.setPaintTicks(true);
         slide_durchmesser.setMajorTickSpacing(20);
         slide_durchmesser.addChangeListener(e -> {

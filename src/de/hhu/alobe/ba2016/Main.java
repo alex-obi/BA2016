@@ -10,41 +10,61 @@ public class Main {
 
         /*
         Todoliste:
-         * todo: Eigenschaftenpanel für alle Bauelemente. Rücknehmbar.
-         *
-         * todo: Werkzeugfenster für alle Bauelemente. Geeignete Startwerte. Grafische Aufarbeitung
-         *
-         * todo: Strahlen einzeln aktualisieren
-         *
-         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
-         *
-         * todo: Brennweite und Position der Hauptebene bei dicken Linsen. Linse über kleine Brennweite zu klein dargestellt.
 
-         * todo: Maßstab
+        Features:
+
+        Freitag:
+         * todo: Eigenschaftenpanel für alle Bauelemente.(~ 4 Std)
          *
-         * todo: Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren.
+        Samstag:
+         * todo: Werkzeugfenster für alle Bauelemente. Geeignete Startwerte. Grafische Aufarbeitung (~ 2 Std)
          *
-         * todo: Kommentieren und Funktionen überprüfen. Mit Formeln belegen und aufschreiben.
+         * todo: Strahlen einzeln aktualisieren (~ 1 Std)
          *
-         * todo: Speichern und Laden xml
+         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren (~ 2 Std)
+
+         Montag und Dienstag:
+         * todo: Brennweite und Position der Hauptebene bei dicken Linsen. Linse über kleine Brennweite zu klein dargestellt -> ab mindesthöhe brechzahl editieren(~ 4 Std)
+
+         * todo: Maßstab und Einheiten (~ 3 Std)
          *
-         * todo: Menüführung
+         * todo: Virtuelle Bilder an/aus (~ 1 Std)
          *
+         * todo: Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren. (~ 5 Std)
+
+         Mittwoch und Donnerstag:
+         * todo: Kommentieren und Funktionen überprüfen. Mit Formeln belegen und aufschreiben. (~ 12 Std)
+
+         Freitag:
+         * todo: Speichern und Laden xml (~ 6 Std)
+
+         Samstag:
+         * todo: Menüführung (~ 4 Std)
+         * todo: Bugfixes1 (~ 2 Std)
+         *
+         Sonntag:
+         * todo: Bugfixes2 (~ 6 Std)
 
          Bugs:
          * Wichtig:
-         * todo: Senkrechter Einfall bei Hauptebene führt zu Absturz
+         * todo: Strahlen machen kleinen Sprung an Hornhaut
+         * todo: Hauptebene Brennweite -> unendlich Reflexion mit Bild?!
+         * todo: Senkrechter Einfall bei Hauptebene -> Absturz!
          * todo: bilder nur noch bei spiegeln aus dem unendlichen nicht angezeigt und ins unendliche mehrere bilder
-         * todo: Lichtquelle genau auf Spiegelhauptebene -> Absturz
+         * todo: spiegel bei unendlich keine reflexion
+         * todo: Lichtquelle genau auf Spiegelhauptebene -> Absturz!
+         * todo: Bei KonkavKonvexen werden bei r -> unendlich beide Seiten vertauscht
          *
          * Zweitrangig:
+         * todo: Bei Radiusänderung unter Höhe wird Spiegel erst nach loslassen des Reglers aktualisiert
          * todo: Rahmen werden nach scrollen ausgeblendet
          * todo: Bei Auge wird Brennweite mitgezeichnet
          * todo: Auswahl Cursor ändert sich nicht
 
 
          Optional:
-         * todo: Schirm Spiegel Linse Grafisch Abgrenzen
+         * todo: Eigenschaftenänderung rücknehmbar
+         * todo: Schirm Hohlspiegel Linse Grafisch Abgrenzen
          * todo: Parallel-, Zenit-, Brennpunktstrahl markieren
          * todo: Strahlen nummerieren
          * todo: Mehrere Tabs

@@ -1,4 +1,4 @@
-package de.hhu.alobe.ba2016.physik.elemente;
+package de.hhu.alobe.ba2016.physik.elemente.absorbtion;
 
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
@@ -6,6 +6,8 @@ import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.mathe.VektorInt;
+import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
+import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche;
 import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Ebene;
 import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Sphaerisch;
@@ -28,6 +30,12 @@ public class Schirm extends Bauelement implements KannKollision {
     public Schirm(OptischeBank optischeBank, Vektor mittelPunkt, float radius, float hoehe) {
         super(optischeBank, mittelPunkt, TYP_SCHIRM);
         this. radius = radius;
+        setHoehe(hoehe);
+    }
+
+    public Schirm(OptischeBank optischeBank, Vektor mittelPunkt, float hoehe) {
+        super(optischeBank, mittelPunkt, TYP_SCHIRM);
+        this. radius = 0;
         setHoehe(hoehe);
     }
 
@@ -73,12 +81,8 @@ public class Schirm extends Bauelement implements KannKollision {
                 Vektor mp = new VektorFloat(mittelPunkt.getXfloat() - radius, mittelPunkt.getYfloat());
                 schirmFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_ABSORB, mp, -radius, Math.PI - winkel, 2 * winkel);
 
-                Rahmen rahmen = new Rahmen(mittelPunkt);
-                rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
-                rahmen.rahmenErweitern(new VektorInt(+breite + 5, hoehe / 2));
-                rahmen.rahmenErweitern(new VektorInt(+breite + 5, -hoehe / 2));
-                rahmen.rahmenErweitern(new VektorInt(-5, -hoehe / 2));
-                setRahmen(rahmen);
+
+                setRahmen(generiereRahmen());
 
             }
         }
@@ -119,4 +123,15 @@ public class Schirm extends Bauelement implements KannKollision {
         mittelPunkt.addiere(verschiebung);
         schirmFlaeche.verschiebeUm(verschiebung);
     }
+
+    @Override
+    public Rahmen generiereRahmen() {
+        Rahmen rahmen = new Rahmen(mittelPunkt);
+        rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
+        rahmen.rahmenErweitern(new VektorInt(+breite + 5, hoehe / 2));
+        rahmen.rahmenErweitern(new VektorInt(+breite + 5, -hoehe / 2));
+        rahmen.rahmenErweitern(new VektorInt(-5, -hoehe / 2));
+        return rahmen;
+    }
+
 }

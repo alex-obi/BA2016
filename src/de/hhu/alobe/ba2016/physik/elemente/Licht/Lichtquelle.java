@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public abstract class Lichtquelle extends Bauelement {
 
+    private boolean aktiv;
+
     //Strahlengaenge, die durch diese Lichtquelle erzeugt werden
     protected ArrayList<Strahlengang> strahlengaenge;
 
@@ -26,6 +28,7 @@ public abstract class Lichtquelle extends Bauelement {
 
     public Lichtquelle (OptischeBank optischeBank, Vektor mittelPunkt, Color farbe) {
         super(optischeBank, mittelPunkt, TYP_LAMPE);
+        aktiv = true;
         strahlengaenge = new ArrayList<>();
         this.farbe = farbe;
     }
@@ -79,9 +82,12 @@ public abstract class Lichtquelle extends Bauelement {
 
     @Override
     public void paintComponent(Graphics2D g) {
-        for(Vektor bildPunkt : gibBildpunkte()) {
-            g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-            g.drawLine(bildPunkt.getXint(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getXint(), bildPunkt.getYint());
+        if(aktiv) {
+            strahlenZeichnen(g);
+            for (Vektor bildPunkt : gibBildpunkte()) {
+                g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
+                g.drawLine(bildPunkt.getXint(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getXint(), bildPunkt.getYint());
+            }
         }
         super.paintComponent(g);
     }
@@ -96,6 +102,14 @@ public abstract class Lichtquelle extends Bauelement {
 
     public ArrayList<Strahlengang> getStrahlengaenge() {
         return strahlengaenge;
+    }
+
+    public boolean isAktiv() {
+        return aktiv;
+    }
+
+    public void setAktiv(boolean aktiv) {
+        this.aktiv = aktiv;
     }
 
     public void setStrahlengaenge(ArrayList<Strahlengang> strahlengaenge) {

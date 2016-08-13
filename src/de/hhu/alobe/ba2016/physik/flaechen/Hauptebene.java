@@ -90,12 +90,21 @@ public class Hauptebene extends Flaeche {
         }
     }
 
+    public void setHoehe(float nHoehe) {
+        hauptebene.verschiebeUm(new VektorFloat(0, (nHoehe - hauptebene.getLaenge()) / 2));
+        hauptebene.setLaenge(nHoehe);
+    }
+
     public Gerade getHauptebene() {
         return hauptebene;
     }
 
     public void setHauptebene(Gerade hauptebene) {
         this.hauptebene = hauptebene;
+    }
+
+    public void setBrennweite(float nBrennweite) {
+        brennweite = nBrennweite;
     }
 
     @Override

@@ -4,7 +4,6 @@ import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion_BauelementHinzufuegen;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
-import de.hhu.alobe.ba2016.physik.elemente.Linse;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;

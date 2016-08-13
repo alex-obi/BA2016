@@ -33,7 +33,7 @@ public class Hornhaut implements KannKollision, Zeichenbar {
         this.radius = radius;
         this.position = position;
         this.hauptebene = new Hauptebene(Hauptebene.MODUS_BRECHUNG, position, 248, radius * 1.5f);
-        this.grenzflaeche = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_BRECHUNG, 1, Konstanten.BRECHZAHL_KAMMERWASSER, new VektorFloat(position.getXfloat() + radius, position.getYfloat()), radius, 2.36, 1.57);
+        this.grenzflaeche = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_BRECHUNG, 1, Auge.BRECHZAHL_KAMMERWASSER, new VektorFloat(position.getXfloat() + radius, position.getYfloat()), radius, 2.36, 1.57);
     }
 
     public void verschiebeUm(Vektor verschiebung) {

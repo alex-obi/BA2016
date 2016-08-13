@@ -1,5 +1,7 @@
 package de.hhu.alobe.ba2016.mathe;
 
+import java.awt.geom.Point2D;
+
 public abstract class Vektor {
 
     public abstract Vektor kopiere();
@@ -57,6 +59,10 @@ public abstract class Vektor {
     public abstract double gibSchnittwinkel(Vektor schnitMitVektor);
     public static double gibSchnittwinkel(Vektor vonVektor, Vektor zuVektor) {
         return vonVektor.gibSchnittwinkel(zuVektor);
+    }
+
+    public Point2D toPoint2D() {
+        return new Point2D.Float(getXfloat(), getYfloat());
     }
 
     public abstract int getXint();

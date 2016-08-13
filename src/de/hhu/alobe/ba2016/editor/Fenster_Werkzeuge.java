@@ -4,11 +4,13 @@ package de.hhu.alobe.ba2016.editor;
 import de.hhu.alobe.ba2016.HauptFenster;
 import de.hhu.alobe.ba2016.editor.werkzeuge.*;
 import de.hhu.alobe.ba2016.mathe.VektorFloat;
+import de.hhu.alobe.ba2016.physik.elemente.spiegel.Hohlspiegel;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.Farbe;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.PunktLichtquelle;
-import de.hhu.alobe.ba2016.physik.elemente.Linse;
-import de.hhu.alobe.ba2016.physik.elemente.Schirm;
-import de.hhu.alobe.ba2016.physik.elemente.Spiegel;
+import de.hhu.alobe.ba2016.physik.elemente.glasskoerper.Linse;
+import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Schirm;
+import de.hhu.alobe.ba2016.physik.elemente.spiegel.Spiegel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,7 +47,7 @@ public class Fenster_Werkzeuge extends JDialog implements ActionListener{
         werkzeug_linse_neu = new JButton("Linse");
         werkzeug_linse_neu.addActionListener(this);
         add(werkzeug_linse_neu);
-        werkzeug_spiegel_neu = new JButton("Spiegel");
+        werkzeug_spiegel_neu = new JButton("Hohlspiegel");
         werkzeug_spiegel_neu.addActionListener(this);
         add(werkzeug_spiegel_neu);
         werkzeug_schirm_neu = new JButton("Schirm");
@@ -79,12 +81,12 @@ public class Fenster_Werkzeuge extends JDialog implements ActionListener{
         }
         if(e.getSource().equals(werkzeug_spiegel_neu)) {
             float hoehe = 0;
-            String eingabe = JOptionPane.showInputDialog(HauptFenster.get(), "Hoehe des Spiegels:", "Neuen Spiegel erstellen", JOptionPane.QUESTION_MESSAGE);
+            String eingabe = JOptionPane.showInputDialog(HauptFenster.get(), "Hoehe des Spiegels:", "Neuen Hohlspiegel erstellen", JOptionPane.QUESTION_MESSAGE);
             if(eingabe != null) {
                 hoehe = Float.parseFloat(eingabe);
             }
             if(hoehe != 0) {
-                Spiegel neuerSpiegel = new Spiegel(optikSimulator.gibAktuelleOptischeBank(), new VektorFloat(0, 0), 0, hoehe);
+                Spiegel neuerSpiegel = new Spiegel(optikSimulator.gibAktuelleOptischeBank(), new VektorFloat(0, 0), hoehe);
                 optikSimulator.gibAktuelleOptischeBank().werkzeugWechseln(new Werkzeug_NeuesBauelement(optikSimulator.gibAktuelleOptischeBank(), neuerSpiegel));
             }
         }
@@ -95,35 +97,22 @@ public class Fenster_Werkzeuge extends JDialog implements ActionListener{
                 hoehe = Integer.parseInt(eingabe);
             }
             if(hoehe != 0) {
-                Schirm neuerSchirm = new Schirm(optikSimulator.gibAktuelleOptischeBank(), new VektorFloat(0, 0), 0, hoehe);
+                Schirm neuerSchirm = new Schirm(optikSimulator.gibAktuelleOptischeBank(), new VektorFloat(0, 0), hoehe);
                 optikSimulator.gibAktuelleOptischeBank().werkzeugWechseln(new Werkzeug_NeuesBauelement(optikSimulator.gibAktuelleOptischeBank(), neuerSchirm));
             }
         }
         if(e.getSource().equals(werkzeug_lampe_neu)) {
-            Color farbe = Color.BLACK;
-
-            String[] auswahl = {"Schwarz", "Rot", "Grün", "Gelb", "Blau"};
             String farbenString = (String)JOptionPane.showInputDialog(
                     HauptFenster.get(),
                     "Farbe der Lampe:",
                     "Neue Lampe erstellen",
                     JOptionPane.PLAIN_MESSAGE,
                     null,
-                    auswahl,
+                    Farbe.farbenpalette.keySet().toArray(),
                     "Schwarz");
             if(farbenString != null) {
-                if (farbenString.equals("Schwarz")) {
-                    farbe = Color.BLACK;
-                } else if (farbenString.equals("Rot")) {
-                    farbe = Color.RED;
-                } else if (farbenString.equals("Grün")) {
-                    farbe = Color.GREEN;
-                } else if (farbenString.equals("Gelb")) {
-                    farbe = Color.YELLOW;
-                } else if (farbenString.equals("Blau")) {
-                    farbe = Color.BLUE;
-                }
-                Lichtquelle lampe = new PunktLichtquelle(optikSimulator.gibAktuelleOptischeBank(), new VektorFloat(0, 0), farbe);
+
+                Lichtquelle lampe = new PunktLichtquelle(optikSimulator.gibAktuelleOptischeBank(), new VektorFloat(0, 0), Farbe.getColor(farbenString));
                 optikSimulator.gibAktuelleOptischeBank().werkzeugWechseln(new Werkzeug_NeuesBauelement(optikSimulator.gibAktuelleOptischeBank(), lampe));
             }
         }

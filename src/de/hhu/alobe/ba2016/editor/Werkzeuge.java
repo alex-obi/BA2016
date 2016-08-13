@@ -1,9 +1,6 @@
 package de.hhu.alobe.ba2016.editor;
 
 
-import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
-import de.hhu.alobe.ba2016.physik.elemente.Linse;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

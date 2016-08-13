@@ -1,11 +1,13 @@
 package de.hhu.alobe.ba2016.physik.elemente;
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.grafik.Zeichenbar;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.mathe.VektorInt;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Ein Bauelement hat eine Interaktion mit Strahlen
@@ -50,4 +52,11 @@ public abstract class Bauelement extends Auswahlobjekt {
     public OptischeBank getOptischeBank() {
         return optischeBank;
     }
+
+    public void rahmenAktualisieren() {
+        setRahmen(generiereRahmen());
+    }
+
+    public abstract Rahmen generiereRahmen();
+
 }

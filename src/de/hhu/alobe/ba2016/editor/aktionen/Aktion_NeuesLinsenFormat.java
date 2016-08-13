@@ -1,6 +1,6 @@
 package de.hhu.alobe.ba2016.editor.aktionen;
 
-import de.hhu.alobe.ba2016.physik.elemente.Linse;
+import de.hhu.alobe.ba2016.physik.elemente.glasskoerper.Linse;
 
 public class Aktion_NeuesLinsenFormat extends Aktion {
 
