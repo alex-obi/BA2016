@@ -16,7 +16,7 @@ public abstract class Flaeche extends GeomertrischeFigur {
 
     public StrahlenKollision gibKollision(Strahlengang cStrGng) {
         if(cStrGng.getAktuellerStrahl() == null) return null;
-        float entfernung = kollisionUeberpruefen(cStrGng);
+        double entfernung = kollisionUeberpruefen(cStrGng);
         if (entfernung >= Konstanten.MIND_ENTFERNUNG_STRAHL) {
             return new StrahlenKollision(entfernung, cStrGng, this);
         } else {
@@ -24,7 +24,7 @@ public abstract class Flaeche extends GeomertrischeFigur {
         }
     }
 
-    public abstract float kollisionUeberpruefen(Strahlengang cStrGng);
+    public abstract double kollisionUeberpruefen(Strahlengang cStrGng);
 
     public abstract void kollisionDurchfuehren(Strahlengang cStrGng, Vektor position);
 

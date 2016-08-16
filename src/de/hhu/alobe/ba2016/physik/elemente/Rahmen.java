@@ -2,9 +2,9 @@ package de.hhu.alobe.ba2016.physik.elemente;
 
 import de.hhu.alobe.ba2016.grafik.Zeichenbar;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Rahmen extends Polygon implements Zeichenbar {
@@ -14,26 +14,26 @@ public class Rahmen extends Polygon implements Zeichenbar {
     Vektor mittelpunkt;
 
     public Rahmen() {
-        mittelpunkt = new VektorInt(0, 0);
+        mittelpunkt = new Vektor(0, 0);
     }
 
     public Rahmen(Vektor nMittelpunkt) {
         mittelpunkt = nMittelpunkt;
     }
 
-    public Rahmen(Vektor mittelpunkt, ArrayList<Vektor> punkte) {
-        for(Vektor punkt : punkte) {
-            addPoint(punkt.getXint(), punkt.getXint());
+    public Rahmen(Vektor mittelpunkt, ArrayList<Point2D.Double> punkte) {
+        for(Point2D.Double punkt : punkte) {
+            addPoint((int)punkt.x, (int)punkt.y);
         }
     }
 
-    public void rahmenErweitern(Vektor nPunkt) {
-        addPoint(nPunkt.getXint(), nPunkt.getYint());
+    public void rahmenErweitern(Point2D.Double nPunkt) {
+        addPoint((int)nPunkt.x, (int)nPunkt.y);
     }
 
     public boolean istVektorInRahmen(Vektor pruefVektor) {
         Vektor verschoben = Vektor.subtrahiere(pruefVektor, mittelpunkt);
-        return this.contains(verschoben.getXint(), verschoben.getYint());
+        return this.contains(verschoben.getX(), verschoben.getY());
     }
 
     @Override

@@ -4,6 +4,7 @@ import de.hhu.alobe.ba2016.Konstanten;
 
 import java.awt.*;
 import java.awt.geom.Arc2D;
+import java.util.ArrayList;
 
 /**
  * Ein Kreis definiert durch einen Mittelpunkt und Radius
@@ -12,20 +13,20 @@ import java.awt.geom.Arc2D;
 public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
 
     private Vektor mittelpunkt;
-    private float radius;
+    private double radius;
 
     //Gibt den Bereich eines Kreisbogens an. vonWinkel gibt den Startwinkel an. extWinkel die Laenge als Bogenmass in math. pos. Richtung
     private double vonWinkel;
     private double extWinkel;
 
-    public Kreis (Vektor mittelpunktVektor, float radius) {
+    public Kreis (Vektor mittelpunktVektor, double radius) {
         this.mittelpunkt = mittelpunktVektor;
         this.radius = radius;
         vonWinkel = 0;
         extWinkel = 2 * Math.PI;
     }
 
-    public Kreis (Vektor mittelpunktVektor, float radius, double vonWinkel, double extWinkel) {
+    public Kreis (Vektor mittelpunktVektor, double radius, double vonWinkel, double extWinkel) {
         this.mittelpunkt = mittelpunktVektor;
         this.radius = radius;
         this.vonWinkel = vonWinkel;
@@ -38,16 +39,16 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
      * -1 als Rueckgabe bedeutet, dass kein Schnittpunkt gefunden wurde
      */
     @Override
-    public float gibSchnittEntfernung (Strahl strahl) {
+    public double gibSchnittEntfernung (Strahl strahl) {
         Vektor normalenVektor = strahl.getRichtungsVektor().gibNormalenVektor();
         Strahl tempStrahl = new Strahl(mittelpunkt, normalenVektor);
 
-        float tempLamdas[] = Strahl.gibSchnittentfernungen(tempStrahl, strahl);
+        double tempLamdas[] = Strahl.gibSchnittentfernungen(tempStrahl, strahl);
         if (tempLamdas == null) return -1; //Bei der Berechnung ist ein Fehler passiert
 
         if(Math.abs(tempLamdas[0]) > radius) return -1; //Strahl passiert den Kreis ohne Beruehrung
 
-        float offsetLamda = (float)Math.pow(radius * radius - tempLamdas[0] * tempLamdas[0], 0.5);
+        double offsetLamda = Math.pow(radius * radius - tempLamdas[0] * tempLamdas[0], 0.5);
 
         Vektor schnittpunkt1 = Vektor.addiere(Vektor.multipliziere(strahl.getRichtungsVektor(), tempLamdas[1] - offsetLamda), strahl.getBasisVektor());
         schnittpunkt1.subtrahiere(mittelpunkt);
@@ -74,12 +75,12 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
     }
 
     public boolean schneidetStrahl(Strahl strahl) {
-        float entfernung = gibSchnittEntfernung(strahl);
+        double entfernung = gibSchnittEntfernung(strahl);
         return (entfernung >= 0);
     }
 
     public boolean schneidetGerade(Gerade gerade) {
-        float entfernung = gibSchnittEntfernung(gerade);
+        double entfernung = gibSchnittEntfernung(gerade);
         return (entfernung >= 0 && entfernung <= gerade.getLaenge());
     }
 
@@ -91,7 +92,7 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
      */
     @Override
     public Vektor gibSchnittpunkt (Strahl strahl) {
-        float entfernung = gibSchnittEntfernung(strahl);
+        double entfernung = gibSchnittEntfernung(strahl);
         if (entfernung < 0) return null;
         Vektor schnittpunkt = Vektor.addiere(strahl.getBasisVektor(), Vektor.multipliziere(strahl.getRichtungsVektor(), entfernung));
         return schnittpunkt;
@@ -104,11 +105,10 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
 
     @Override
     public void paintComponent(Graphics2D g) {
-        Vektor obenLinks = Vektor.addiere(mittelpunkt, new VektorInt(-radius, -radius));
-        float start = (float)Math.toDegrees(vonWinkel);
-        float extend = (float)Math.toDegrees(extWinkel);
-        Arc2D zeichenKreis = new Arc2D.Float(obenLinks.getXfloat(), obenLinks.getYfloat(), radius * 2, radius * 2, start, extend, Arc2D.OPEN);
-
+        Vektor obenLinks = Vektor.addiere(mittelpunkt, new Vektor(-radius, -radius));
+        double start = Math.toDegrees(vonWinkel);
+        double extend = Math.toDegrees(extWinkel);
+        Arc2D zeichenKreis = new Arc2D.Double(obenLinks.getX(), obenLinks.getY(), radius * 2, radius * 2, start, extend, Arc2D.OPEN);
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
         g.draw(zeichenKreis);
     }
@@ -121,11 +121,11 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
         this.mittelpunkt = mittelpunkt;
     }
 
-    public float getRadius() {
+    public double getRadius() {
         return radius;
     }
 
-    public void setRadius(float radius) {
+    public void setRadius(double radius) {
         this.radius = radius;
     }
 

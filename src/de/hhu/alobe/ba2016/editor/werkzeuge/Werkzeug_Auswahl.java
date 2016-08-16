@@ -3,9 +3,7 @@ package de.hhu.alobe.ba2016.editor.werkzeuge;
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion_BauelementVerschieben;
-import de.hhu.alobe.ba2016.editor.aktionen.Aktion_NeuerStrahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 
 import javax.swing.*;
@@ -13,7 +11,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
- * Einfaches Werkzeug zum Auswaehlen eines Elements und dessen Anzeige im Werkzeuge Fenster
+ * Einfaches Werkzeug zum Auswaehlen eines Elements und dessen Anzeige im Panel_Werkzeuge Fenster
  */
 public class Werkzeug_Auswahl extends Werkzeug{
 
@@ -87,9 +85,9 @@ public class Werkzeug_Auswahl extends Werkzeug{
 
                 Vektor verschiebung = Vektor.subtrahiere(realePosition, erstePosition);
 
-                if(Math.abs(ersterMittelpunktBauel.getYint() + verschiebung.getYint() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG) {
+                if(Math.abs(ersterMittelpunktBauel.getY() + verschiebung.getY() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG) {
                     if(ausgewaehltesElement.fangModusOptischeAchseAn()) {
-                        verschiebung.setY(optischeBank.getOptischeAchse().getHoehe() - ersterMittelpunktBauel.getYint());
+                        verschiebung.setY(optischeBank.getOptischeAchse().getHoehe() - ersterMittelpunktBauel.getY());
                     }
                 }
 

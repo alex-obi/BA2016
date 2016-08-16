@@ -5,9 +5,6 @@ import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * Implementierende Klassen stellen Methoden zur Verfügung um Kollisionen mit Strahlen zu verarbeiten
  */
@@ -35,8 +32,8 @@ public abstract class Grenzflaeche extends Flaeche {
     public Vektor gibReflektiertenVektor (Vektor einfallVektor, Vektor position) {
         Vektor normalVektor = gibNormalenVektor(position);
         Vektor tangentialVektor = gibTangentialVektor(position);
-        float normalAnteil = -Vektor.skalarprodukt(einfallVektor, normalVektor);
-        float tangentialAnteil = Vektor.skalarprodukt(einfallVektor, tangentialVektor);
+        double normalAnteil = -Vektor.skalarprodukt(einfallVektor, normalVektor);
+        double tangentialAnteil = Vektor.skalarprodukt(einfallVektor, tangentialVektor);
         Vektor normalAnteilVektor = Vektor.multipliziere(normalVektor, normalAnteil);
         Vektor tangentialAnteilVektor = Vektor.multipliziere(tangentialVektor, tangentialAnteil);
         Vektor ausfallsVektor = Vektor.addiere(normalAnteilVektor, tangentialAnteilVektor);
@@ -52,22 +49,22 @@ public abstract class Grenzflaeche extends Flaeche {
         Vektor tangentialAnteilAusfall;
         if(Vektor.skalarprodukt(einfallVektor, normalVektor) < 0) {
             ausfallsWinkel = Math.asin((n1 * Math.sin(einfallsWinkel) / n2));
-            normalAnteilAusfall = Vektor.multipliziere(normalVektor, -(float)Math.cos(ausfallsWinkel));
+            normalAnteilAusfall = Vektor.multipliziere(normalVektor, -Math.cos(ausfallsWinkel));
         } else {
             ausfallsWinkel = Math.asin((n2 * Math.sin(einfallsWinkel) / n1));
-            normalAnteilAusfall = Vektor.multipliziere(normalVektor, (float)Math.cos(ausfallsWinkel));
+            normalAnteilAusfall = Vektor.multipliziere(normalVektor, Math.cos(ausfallsWinkel));
         }
         if(Double.isNaN(ausfallsWinkel)) return null; //Totalreflexion (ausfallsWinkel nicht berechenbar)
         if(Vektor.skalarprodukt(einfallVektor, tangentialVektor) >= 0) {
-            tangentialAnteilAusfall = Vektor.multipliziere(tangentialVektor, (float)Math.sin(ausfallsWinkel));
+            tangentialAnteilAusfall = Vektor.multipliziere(tangentialVektor, Math.sin(ausfallsWinkel));
         } else {
-            tangentialAnteilAusfall = Vektor.multipliziere(tangentialVektor, -(float)Math.sin(ausfallsWinkel));
+            tangentialAnteilAusfall = Vektor.multipliziere(tangentialVektor, -Math.sin(ausfallsWinkel));
         }
         return Vektor.addiere(normalAnteilAusfall, tangentialAnteilAusfall);
     }
 
     /**
-     * Manipuliert den eintreffenden Strahlengang abhaengig von den physikalischen Werkzeuge des Objekts.
+     * Manipuliert den eintreffenden Strahlengang abhaengig von den physikalischen Panel_Werkzeuge des Objekts.
      * @param cStrGng Zu manipulierender Strahlengang
      * @param position Schnittpunkt mit der Grenzflaeche
      */

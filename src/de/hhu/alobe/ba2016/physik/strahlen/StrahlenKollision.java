@@ -9,14 +9,14 @@ import java.util.ArrayList;
 public class StrahlenKollision {
 
     //Distanz, die der aktuelle Strahl des Strahlengangs bis zur KannStrahlenSchnitt zurueckgelegt hat
-    private float distanz;
+    private double distanz;
 
     private Strahlengang strahlengang;
 
     private Flaeche kollFlaeche;
 
 
-    public StrahlenKollision(float distanz, Strahlengang strahlengang, Flaeche kollFlaeche) {
+    public StrahlenKollision(double distanz, Strahlengang strahlengang, Flaeche kollFlaeche) {
         this.distanz = distanz;
         this.strahlengang = strahlengang;
         this.kollFlaeche = kollFlaeche;
@@ -42,11 +42,11 @@ public class StrahlenKollision {
         return cKHandler;
     }
 
-    public float getDistanz() {
+    public double getDistanz() {
         return distanz;
     }
 
-    public void setDistanz(float distanz) {
+    public void setDistanz(double distanz) {
         this.distanz = distanz;
     }
 

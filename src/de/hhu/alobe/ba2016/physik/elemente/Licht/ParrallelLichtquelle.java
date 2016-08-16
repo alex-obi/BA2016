@@ -1,13 +1,9 @@
 package de.hhu.alobe.ba2016.physik.elemente.Licht;
 
-import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
-import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_NeuerStrahl;
 import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorFloat;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
@@ -17,14 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.geom.Arc2D;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class ParrallelLichtquelle extends Lichtquelle {
 
-    private int breite = 20;
-    private int hoehe;
+    private double breite = 20;
+    private double hoehe;
 
     public static final int MIND_HOEHE = 100;
     public static final int MAX_HOEHE = 600;
@@ -44,9 +40,9 @@ public class ParrallelLichtquelle extends Lichtquelle {
 
     @Override
     public Strahlengang berechneNeuenStrahl(Vektor strahlPunkt) {
-        Vektor richtung = new VektorFloat(Math.signum(strahlPunkt.getXfloat() - mittelPunkt.getXfloat()), 0);
+        Vektor richtung = new Vektor(Math.signum(strahlPunkt.getX() - mittelPunkt.getX()), 0);
         richtung.dreheUmWinkel(neigungsWinkel);
-        Vektor basis = new VektorFloat(-Math.cos(neigungsWinkel) * (strahlPunkt.getXfloat() - mittelPunkt.getXfloat()), -Math.sin(neigungsWinkel) * (strahlPunkt.getXfloat() - mittelPunkt.getXfloat()));
+        Vektor basis = new Vektor(-Math.cos(neigungsWinkel) * (strahlPunkt.getX() - mittelPunkt.getX()), -Math.sin(neigungsWinkel) * (strahlPunkt.getX() - mittelPunkt.getX()));
         basis.addiere(strahlPunkt);
         if(Math.abs(basis.getYint() - mittelPunkt.getYint()) < hoehe / 2) {
             return new Strahlengang(new Strahl(basis, richtung, 0, true));
@@ -66,10 +62,10 @@ public class ParrallelLichtquelle extends Lichtquelle {
     @Override
     public Rahmen generiereRahmen() {
         Rahmen rahmen = new Rahmen(mittelPunkt);
-        rahmen.rahmenErweitern(new VektorInt(-breite / 2, -hoehe / 2));
-        rahmen.rahmenErweitern(new VektorInt(breite / 2, -hoehe / 2));
-        rahmen.rahmenErweitern(new VektorInt(breite / 2, hoehe / 2));
-        rahmen.rahmenErweitern(new VektorInt(-breite / 2, hoehe / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(-breite / 2, -hoehe / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(breite / 2, -hoehe / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(breite / 2, hoehe / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(-breite / 2, hoehe / 2));
         return rahmen;
     }
 
@@ -113,7 +109,7 @@ public class ParrallelLichtquelle extends Lichtquelle {
         });
         regler.add(new Eigenschaftenregler("Neigungswinkel", slide_neigung));
 
-        JSlider slide_hoehe = new JSlider (MIND_HOEHE, MAX_HOEHE, hoehe);
+        JSlider slide_hoehe = new JSlider (MIND_HOEHE, MAX_HOEHE, (int)hoehe);
         slide_hoehe.setPaintTicks(true);
         slide_hoehe.setMajorTickSpacing(50);
         slide_hoehe.addChangeListener(e -> {
@@ -131,7 +127,7 @@ public class ParrallelLichtquelle extends Lichtquelle {
         for(Strahlengang cStrg : strahlengaenge) {
             cStrg.resetteStrahlengang();
             double relativeNeigung;
-            if(cStrg.getAnfangsStrahl().getRichtungsVektor().getXfloat() < 0) { //Strahl geht in Richtung linker Seite
+            if(cStrg.getAnfangsStrahl().getRichtungsVektor().getX() < 0) { //Strahl geht in Richtung linker Seite
                 System.out.println(cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel());
                 relativeNeigung = (nNeigungsWinkel + Math.PI) - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
             } else {
@@ -144,9 +140,9 @@ public class ParrallelLichtquelle extends Lichtquelle {
 
     public void setHoehe(int nHoehe) {
         hoehe = nHoehe;
-        Rectangle2D hitbox = new Rectangle(mittelPunkt.getXint() - breite / 2, mittelPunkt.getYint() - hoehe / 2, breite, hoehe);
+        Rectangle2D hitbox = new Rectangle.Double(mittelPunkt.getX() - breite / 2, mittelPunkt.getY() - hoehe / 2, breite, hoehe);
         for(int i = 0;i < strahlengaenge.size(); i++) {
-            if(!hitbox.contains(strahlengaenge.get(i).getAnfangsStrahl().getBasisVektor().toPoint2D())) {
+            if(!hitbox.contains(strahlengaenge.get(i).getAnfangsStrahl().getBasisVektor())) {
                 strahlengaenge.remove(i);
             }
         }
@@ -156,7 +152,8 @@ public class ParrallelLichtquelle extends Lichtquelle {
     @Override
     public void paintComponent(Graphics2D g) {
         g.setColor(farbe);
-        g.fillRect(mittelPunkt.getXint() - breite / 2, mittelPunkt.getYint() - hoehe / 2, breite, hoehe);
+
+        g.draw(new Rectangle2D.Double(mittelPunkt.getX() - breite / 2, mittelPunkt.getY() - hoehe / 2, breite, hoehe));
         super.paintComponent(g);
 
     }

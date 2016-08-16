@@ -4,25 +4,23 @@ import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.grafik.Zeichenbar;
 
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 public class OptischeAchse implements Zeichenbar {
 
-    private int hoehe;
+    private double hoehe;
 
-    public OptischeAchse(int hoehe) {
+    public OptischeAchse(double hoehe) {
         this.hoehe = hoehe;
     }
 
-    public int getHoehe() {
+    public double getHoehe() {
         return hoehe;
     }
 
     @Override
     public void paintComponent(Graphics2D g) {
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-        g.drawLine(0,
-                hoehe,
-                10000,
-                hoehe);
+        g.draw(new Line2D.Double(0, hoehe, 100000, hoehe));
     }
 }

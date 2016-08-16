@@ -1,10 +1,10 @@
 package de.hhu.alobe.ba2016;
 
 
-import de.hhu.alobe.ba2016.editor.Fenster_Werkzeuge;
+import de.hhu.alobe.ba2016.editor.Fenster_Bauelemente;
 import de.hhu.alobe.ba2016.editor.Menueleiste;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
+import de.hhu.alobe.ba2016.editor.Panel_Werkzeuge;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,33 +17,48 @@ import java.awt.event.MouseEvent;
  */
 public class HauptFenster extends JFrame implements ActionListener {
 
+    public static final int MIND_BREITE = 600;
+    public static final int MIND_HOEHE = 400;
+
     //Statische Referenz zum globalen Aufruf von allen Klassen
     private static HauptFenster optikSimulator;
 
-    private OptischeBank optBank;
+    private JPanel fensterInhalt;
+
     private Menueleiste menueleiste;
-    private Fenster_Werkzeuge fenster_werkzeuge;
+    private Panel_Werkzeuge werkzeuge;
+    private OptischeBank optBank;
+
+    private Fenster_Bauelemente fenster_bauelemente;
+
+
 
     public HauptFenster() {
         super("Optischer Baukasten");
         optikSimulator = this;
 
         this.setSize(Konstanten.FENSTER_X, Konstanten.FENSTER_Y);
-        this.setMinimumSize(new Dimension(600, 400));
+        this.setMinimumSize(new Dimension(MIND_BREITE, MIND_HOEHE));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setLayout(new BorderLayout());
+
+        fensterInhalt = new JPanel(new BorderLayout());
+        fensterInhalt.setOpaque(true);
+
+        optBank = new OptischeBank();
+        fensterInhalt.add(optBank, BorderLayout.CENTER);
+
+        fenster_bauelemente = new Fenster_Bauelemente(this);
 
         menueleiste = new Menueleiste(this);
         this.setJMenuBar(menueleiste);
 
-        fenster_werkzeuge = new Fenster_Werkzeuge(this);
+        werkzeuge = new Panel_Werkzeuge(this);
+        fensterInhalt.add(werkzeuge, BorderLayout.NORTH);
 
-        optBank = new OptischeBank();
-        optBank.setOpaque(true);
-        this.setContentPane(optBank);
+        this.setContentPane(fensterInhalt);
 
-        fenster_werkzeuge.setVisible(true);
+        fenster_bauelemente.setVisible(true);
         this.setVisible(true);
     }
 
@@ -51,8 +66,8 @@ public class HauptFenster extends JFrame implements ActionListener {
         return optBank;
     }
 
-    private VektorInt gibMausPosition(MouseEvent e) {
-        return new VektorInt(e.getX() - 4, e.getY() - 26);
+    private Point gibMausPosition(MouseEvent e) {
+        return new Point(e.getX() - 4, e.getY() - 26);
     }
 
     public static HauptFenster get() {

@@ -16,10 +16,10 @@ public class Viereck extends GeomertrischeFigur implements KannStrahlenSchnitt {
     }
 
     @Override
-    public float gibSchnittEntfernung(Strahl strahl) {
-        float minimumEntfernung = geraden.get(0).gibSchnittEntfernung(strahl);
+    public double gibSchnittEntfernung(Strahl strahl) {
+        double minimumEntfernung = geraden.get(0).gibSchnittEntfernung(strahl);
         for(int i = 1; i < geraden.size(); i++) {
-            float neueEntfernung = geraden.get(i).gibSchnittEntfernung(strahl);
+            double neueEntfernung = geraden.get(i).gibSchnittEntfernung(strahl);
             if (neueEntfernung >= 0) {
                 if(minimumEntfernung >= 0) {
                     minimumEntfernung = Math.min(neueEntfernung, minimumEntfernung);
@@ -33,7 +33,7 @@ public class Viereck extends GeomertrischeFigur implements KannStrahlenSchnitt {
 
     @Override
     public Vektor gibSchnittpunkt(Strahl strahl) {
-        float entfernung = gibSchnittEntfernung(strahl);
+        double entfernung = gibSchnittEntfernung(strahl);
         if (entfernung < 0) return null;
         Vektor schnittpunkt = Vektor.addiere(strahl.getBasisVektor(), Vektor.multipliziere(strahl.getRichtungsVektor(), entfernung));
         return schnittpunkt;

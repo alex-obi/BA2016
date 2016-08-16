@@ -3,7 +3,6 @@ package de.hhu.alobe.ba2016.physik.elemente.spiegel;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.physik.elemente.Auge.Hornhaut;
 
 import javax.swing.*;
 import java.util.ArrayList;

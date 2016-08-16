@@ -5,29 +5,28 @@ import de.hhu.alobe.ba2016.mathe.Kreis;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class Grenzflaeche_Sphaerisch extends Grenzflaeche {
 
     private Kreis kreis;
 
-    public Grenzflaeche_Sphaerisch (int modus, double n1, double n2, Vektor mittelpunkt, float radius) {
+    public Grenzflaeche_Sphaerisch (int modus, double n1, double n2, Vektor mittelpunkt, double radius) {
         super(modus, n1, n2);
         kreis = new Kreis(mittelpunkt, radius);
     }
 
-    public Grenzflaeche_Sphaerisch (int modus, double n1, double n2, Vektor mittelpunkt, float radius, double vonWinkel, double extWinkel) {
+    public Grenzflaeche_Sphaerisch (int modus, double n1, double n2, Vektor mittelpunkt, double radius, double vonWinkel, double extWinkel) {
         super(modus, n1, n2);
         kreis = new Kreis(mittelpunkt, radius, vonWinkel, extWinkel);
     }
 
-    public Grenzflaeche_Sphaerisch (int modus, Vektor mittelpunkt, float radius) {
+    public Grenzflaeche_Sphaerisch (int modus, Vektor mittelpunkt, double radius) {
         super(modus);
         kreis = new Kreis(mittelpunkt, radius);
     }
 
-    public Grenzflaeche_Sphaerisch (int modus, Vektor mittelpunkt, float radius, double vonWinkel, double extWinkel) {
+    public Grenzflaeche_Sphaerisch (int modus, Vektor mittelpunkt, double radius, double vonWinkel, double extWinkel) {
         super(modus);
         kreis = new Kreis(mittelpunkt, radius, vonWinkel, extWinkel);
     }
@@ -44,11 +43,11 @@ public class Grenzflaeche_Sphaerisch extends Grenzflaeche {
     }
 
     @Override
-    public float kollisionUeberpruefen(Strahlengang cStrGng) {
+    public double kollisionUeberpruefen(Strahlengang cStrGng) {
         return kreis.gibSchnittEntfernung(cStrGng.getAktuellerStrahl());
     }
 
-    public float getRadius() {
+    public double getRadius() {
         return kreis.getRadius();
     }
 

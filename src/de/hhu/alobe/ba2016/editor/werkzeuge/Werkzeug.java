@@ -2,14 +2,8 @@ package de.hhu.alobe.ba2016.editor.werkzeuge;
 
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
-import de.hhu.alobe.ba2016.editor.aktionen.Aktion_BauelementVerschieben;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorFloat;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
-import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
-import jdk.nashorn.internal.runtime.regexp.joni.encoding.ObjPtr;
 
-import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -27,31 +21,31 @@ public abstract class Werkzeug extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        Vektor positionAufZeichenbrett = new VektorFloat((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
+        Vektor positionAufZeichenbrett = new Vektor((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
         mouseClicked(e, positionAufZeichenbrett);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        Vektor positionAufZeichenbrett = new VektorFloat((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
+        Vektor positionAufZeichenbrett = new Vektor((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
         mousePressed(e, positionAufZeichenbrett);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        Vektor positionAufZeichenbrett = new VektorFloat((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
+        Vektor positionAufZeichenbrett = new Vektor((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
         mouseReleased(e, positionAufZeichenbrett);
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        Vektor positionAufZeichenbrett = new VektorFloat((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
+        Vektor positionAufZeichenbrett = new Vektor((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
         mouseDragged(e, positionAufZeichenbrett);
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        Vektor positionAufZeichenbrett = new VektorFloat((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
+        Vektor positionAufZeichenbrett = new Vektor((double)e.getX() / optischeBank.getZoom(), (double)e.getY() / optischeBank.getZoom());
         mouseMoved(e, positionAufZeichenbrett);
     }
 

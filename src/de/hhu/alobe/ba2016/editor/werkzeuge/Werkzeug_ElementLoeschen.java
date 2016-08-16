@@ -6,7 +6,6 @@ import de.hhu.alobe.ba2016.editor.aktionen.Aktion_BauelementLoeschen;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion_StrahlengangLoeschen;
 import de.hhu.alobe.ba2016.mathe.Kreis;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
@@ -19,7 +18,7 @@ import java.util.Objects;
 
 public class Werkzeug_ElementLoeschen extends Werkzeug {
 
-    Object auswahl;
+    private Strahlengang letzterStrahlengang;
 
     public Werkzeug_ElementLoeschen(OptischeBank optischeBank) {
         super(optischeBank);
@@ -60,20 +59,25 @@ public class Werkzeug_ElementLoeschen extends Werkzeug {
             Kreis pruefKreis = new Kreis(realePosition, 10);
             if(!elementGefunden) {
                 for(Lichtquelle lichtquelle : optischeBank.getLichtquellen()) {
-                    ArrayList<Strahlengang> strahlengaenge = lichtquelle.getStrahlengaenge();
-                    for(int i = 0; i < strahlengaenge.size(); i++) {
-                        if(strahlengaenge.get(i).istAngeklickt(pruefKreis)) {
-                            strahlengaenge.get(i).setAktiviert(false);
-                            optischeBank.neueAktionDurchfuehren(new Aktion_StrahlengangLoeschen(optischeBank, lichtquelle, strahlengaenge.get(i)));
-                            elementGefunden = true;
-                            break;
+                    if(lichtquelle.isAktiv()) {
+                        ArrayList<Strahlengang> strahlengaenge = lichtquelle.getStrahlengaenge();
+                        for (int i = 0; i < strahlengaenge.size(); i++) {
+                            if (strahlengaenge.get(i).istAngeklickt(pruefKreis)) {
+                                strahlengaenge.get(i).setAktiviert(false);
+                                optischeBank.neueAktionDurchfuehren(new Aktion_StrahlengangLoeschen(optischeBank, lichtquelle, strahlengaenge.get(i)));
+                                elementGefunden = true;
+                                break;
+                            }
                         }
+                        if (elementGefunden) break;
                     }
-                    if(elementGefunden) break;
                 }
             }
         }
         if(SwingUtilities.isRightMouseButton(e)) {
+            if(letzterStrahlengang != null) {
+                letzterStrahlengang.setAktiviert(false);
+            }
             optischeBank.werkzeugWechseln(new Werkzeug_Auswahl(optischeBank));
         }
         optischeBank.aktualisieren();
@@ -83,8 +87,6 @@ public class Werkzeug_ElementLoeschen extends Werkzeug {
     public void mouseDragged(MouseEvent e, Vektor realePosition) {
 
     }
-
-    private Strahlengang letzterStrahlengang;
 
     @Override
     public void mouseMoved(MouseEvent e, Vektor realePosition) {
@@ -103,15 +105,17 @@ public class Werkzeug_ElementLoeschen extends Werkzeug {
         }
         if(!elementGefunden) {
             for(Lichtquelle lichtquelle : optischeBank.getLichtquellen()) {
-                for(Strahlengang strahlengang : lichtquelle.getStrahlengaenge()) {
-                    if(strahlengang.istAngeklickt(pruefKreis)) {
-                        strahlengang.setAktiviert(true);
-                        letzterStrahlengang = strahlengang;
-                        elementGefunden = true;
-                        break;
+                if(lichtquelle.isAktiv()) {
+                    for (Strahlengang strahlengang : lichtquelle.getStrahlengaenge()) {
+                        if (strahlengang.istAngeklickt(pruefKreis)) {
+                            strahlengang.setAktiviert(true);
+                            letzterStrahlengang = strahlengang;
+                            elementGefunden = true;
+                            break;
+                        }
                     }
+                    if (elementGefunden) break;
                 }
-                if(elementGefunden) break;
             }
 
         }

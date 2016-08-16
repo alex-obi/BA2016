@@ -4,16 +4,12 @@ package de.hhu.alobe.ba2016.physik.elemente.Licht;
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_NeuerStrahl;
-import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorFloat;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
-import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 import java.awt.*;
-import java.awt.geom.Arc2D;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
 public abstract class Lichtquelle extends Bauelement {
@@ -84,9 +80,12 @@ public abstract class Lichtquelle extends Bauelement {
     public void paintComponent(Graphics2D g) {
         if(aktiv) {
             strahlenZeichnen(g);
-            for (Vektor bildPunkt : gibBildpunkte()) {
-                g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-                g.drawLine(bildPunkt.getXint(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getXint(), bildPunkt.getYint());
+            //Bilder Zeichnen, die von dieser Lampe entstehen
+            if(optischeBank.isVirtuelleStrahlenAktiv()) {
+                for (Vektor bildPunkt : gibBildpunkte()) {
+                    g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
+                    g.draw(new Line2D.Double(bildPunkt.getX(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getX(), bildPunkt.getY()));
+                }
             }
         }
         super.paintComponent(g);

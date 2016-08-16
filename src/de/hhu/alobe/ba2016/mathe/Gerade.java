@@ -1,9 +1,11 @@
 package de.hhu.alobe.ba2016.mathe;
 
+import de.hhu.alobe.ba2016.HauptFenster;
 import de.hhu.alobe.ba2016.Konstanten;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Line2D;
 
 /**
  * Gerade, definiert durch Verbindung zweier Punkte
@@ -11,9 +13,9 @@ import java.awt.*;
  */
 public class Gerade extends Strahl implements KannStrahlenSchnitt {
 
-    private float laenge;
+    private double laenge;
 
-    public Gerade(Strahl strahl, float laenge) {
+    public Gerade(Strahl strahl, double laenge) {
         super(strahl.getBasisVektor(), strahl.getRichtungsVektor(), strahl.getQuellEntfernung(), strahl.isAusDemUnendlichen());
         this.laenge = laenge;
     }
@@ -29,8 +31,8 @@ public class Gerade extends Strahl implements KannStrahlenSchnitt {
      * -1 als Rueckgabe bedeutet, dass kein Schnittpunkt gefunden wurde
      */
     @Override
-    public float gibSchnittEntfernung(Strahl strahl) {
-        float[] lamdas = gibSchnittentfernungen(strahl);
+    public double gibSchnittEntfernung(Strahl strahl) {
+        double[] lamdas = gibSchnittentfernungen(strahl);
         if (lamdas == null) return -1; //Die Strahlen sind parallel
 
         if (lamdas[0] >= 0 && lamdas[0] <= laenge && lamdas[1] >= 0) {
@@ -48,7 +50,7 @@ public class Gerade extends Strahl implements KannStrahlenSchnitt {
      */
     @Override
     public Vektor gibSchnittpunkt(Strahl strahl) {
-        float entfernung = gibSchnittEntfernung(strahl);
+        double entfernung = gibSchnittEntfernung(strahl);
         if (entfernung < 0) return null;
         Vektor schnittpunkt = Vektor.addiere(strahl.getBasisVektor(), Vektor.multipliziere(strahl.getRichtungsVektor(), entfernung));
         return schnittpunkt;
@@ -58,24 +60,21 @@ public class Gerade extends Strahl implements KannStrahlenSchnitt {
     public void paintComponent(Graphics2D g) {
         Vektor bisVektor = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, laenge));
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-        g.drawLine(basisVektor.getXint(),
-                basisVektor.getYint(),
-                bisVektor.getXint(),
-                bisVektor.getYint());
-        if(quellEntfernung < 0) {
+        Line2D line = new Line2D.Double(basisVektor, bisVektor);
+        g.draw(line);
+        if(quellEntfernung < 0 && HauptFenster.get().gibAktuelleOptischeBank().isVirtuelleStrahlenAktiv()) {
+            Vektor bisVektorVirtuell = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, quellEntfernung));
             g.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 5.0f, new float[] {10.0f,4.0f}, 0.0f));
-            g.drawLine(basisVektor.getXint(),
-                    basisVektor.getYint(),
-                    basisVektor.getXint() + (int)((richtungsVektor.getXfloat() * quellEntfernung)),
-                    basisVektor.getYint() + (int)((richtungsVektor.getYfloat() * quellEntfernung)));
+            Line2D lineVirtuell = new Line2D.Double(basisVektor, bisVektorVirtuell);
+            g.draw(lineVirtuell);
         }
     }
 
-    public float getLaenge() {
+    public double getLaenge() {
         return laenge;
     }
 
-    public void setLaenge(float laenge) {
+    public void setLaenge(double laenge) {
         this.laenge = laenge;
     }
 

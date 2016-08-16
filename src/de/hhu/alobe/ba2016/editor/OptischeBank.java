@@ -8,12 +8,9 @@ import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_Auswahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorFloat;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
 import de.hhu.alobe.ba2016.grafik.OptischeAchse;
 import de.hhu.alobe.ba2016.physik.elemente.Auge.Auge;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
-import de.hhu.alobe.ba2016.physik.elemente.Licht.ParrallelLichtquelle;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.PunktLichtquelle;
 import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Blende;
 import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Schirm;
@@ -35,22 +32,21 @@ public class OptischeBank extends JPanel {
 
     private double zoom;
 
-    private Vektor groesse;
+    private Point groesse;
 
     private JScrollPane zeichenRahmen;
     private Zeichenbrett zeichenBrett;
 
-    private Werkzeuge werkzeuge;
-
     private Eigenschaften eigenschaften;
 
     //Offset zum verschieben des Bildausschnittes
-    private Vektor positionOffset;
+    private Point positionOffset;
 
+    private int modus = MODUS_HAUPTEBENE;
     public static final int MODUS_SNELLIUS = 1;
     public static final int MODUS_HAUPTEBENE = 2;
 
-    private int modus = MODUS_HAUPTEBENE;
+    private boolean virtuelleStrahlenAktiv = false;
 
     private ArrayList<Bauelement> bauelemente;
 
@@ -79,20 +75,17 @@ public class OptischeBank extends JPanel {
         zeichenBrett =  new Zeichenbrett(this);
 
         zeichenRahmen = new JScrollPane(zeichenBrett);
-        groesse = new VektorInt(2000, 600);
-        zeichenBrett.setPreferredSize(new Dimension(groesse.getXint(), groesse.getYint()));
+        groesse = new Point(2000, 600);
+        zeichenBrett.setPreferredSize(new Dimension(groesse.x, groesse.y));
         this.add(zeichenRahmen, BorderLayout.CENTER);
 
         optischeAchse = new OptischeAchse(250);
         zeichenBrett.neuesZeichenObjekt(optischeAchse);
 
-        werkzeuge = new Werkzeuge(this);
-        this.add(werkzeuge, BorderLayout.NORTH);
-
         eigenschaften = new Eigenschaften(this);
         this.add(eigenschaften, BorderLayout.SOUTH);
 
-        positionOffset = new VektorInt(0, 0);
+        positionOffset = new Point(0, 0);
 
         bauelemente =  new ArrayList<>();
         lichtquellen =  new ArrayList<>();
@@ -104,18 +97,18 @@ public class OptischeBank extends JPanel {
 
         //########### Erzeuge Testszenario
 
-        bauelementHinzufuegen(new PunktLichtquelle(this, new VektorInt(50, 250), Color.BLACK));
-        bauelementHinzufuegen(new ParrallelLichtquelle(this, new VektorInt(50, 250), Color.BLACK, 250, 0));
-        bauelementHinzufuegen(new Hohlspiegel(this, new VektorInt(500, 450), -300, 150));
-        /*bauelementHinzufuegen(new Hohlspiegel(this, new VektorInt(700, 500), 300, 200));
-        bauelementHinzufuegen(new Hohlspiegel(this, new VektorInt(300, 500), 100, 200));
-        bauelementHinzufuegen(new Hohlspiegel(this, new VektorInt(900, 500), 0, 200));*/
-        bauelementHinzufuegen(new Schirm(this, new VektorInt(650, 450), 150));
-        bauelementHinzufuegen(new Linse(this, new VektorFloat(50, 450), 1.8, 200, 10, 50, -60));
-        bauelementHinzufuegen(new Linse(this, new VektorFloat(350, 450), 2.5, 150, 10, 300, 250));
-        bauelementHinzufuegen(new Linse(this, new VektorFloat(200, 450), 1.8, 150, 10, -300, -250));
-        bauelementHinzufuegen(new Blende(this, new VektorFloat(800, 450), 150, 50));
-        bauelementHinzufuegen(new Auge(this, new VektorFloat(700, 250)));
+        bauelementHinzufuegen(new PunktLichtquelle(this, new Vektor(50, 150), Color.BLACK));
+        /*bauelementHinzufuegen(new ParrallelLichtquelle(this, new Vektor(50, 250), Color.BLACK, 250, 0));
+        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(500, 450), -300, 150));
+        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(700, 500), 300, 200));
+        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(300, 500), 100, 200));
+        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(900, 500), 0, 200));
+        bauelementHinzufuegen(new Schirm(this, new Vektor(650, 450), 150));
+        bauelementHinzufuegen(new Linse(this, new Vektor(50, 450), 1.8, 200, 10, 50, -60));
+        bauelementHinzufuegen(new Linse(this, new Vektor(350, 450), 2.5, 150, 10, 300, 250));
+        bauelementHinzufuegen(new Linse(this, new Vektor(200, 450), 1.8, 150, 10, -300, -250));
+        bauelementHinzufuegen(new Blende(this, new Vektor(800, 450), 150, 50));
+        bauelementHinzufuegen(new Auge(this, new Vektor(700, 250)));*/
 
     }
 
@@ -189,29 +182,30 @@ public class OptischeBank extends JPanel {
     public void strahlenNeuBerechnen() {
         for(Lichtquelle cLicht : lichtquellen) {
             if(cLicht.isAktiv()) {
-                ArrayList<Strahlengang> strahlen = cLicht.getStrahlengaenge();
-                for (Strahlengang cStrahl : strahlen) {
-                    cStrahl.resetteStrahlengang();
+                for (Strahlengang cStrahl : cLicht.getStrahlengaenge()) {
+                    einzelStrahlNeuBerechnen(cStrahl);
                 }
-                int i = 0;
-                while (i < strahlen.size()) {
-                    //Finde Erstkollision
-                    StrahlenKollision ersteKoll = null;
-                    for (KannKollision cElement : kollisionsObjekte) {
-                        StrahlenKollision nKoll = cElement.kollisionUeberpruefen(strahlen.get(i));
-                        if (nKoll != null) {
-                            if (ersteKoll == null || nKoll.getDistanz() < ersteKoll.getDistanz()) {
-                                ersteKoll = nKoll;
-                            }
-                        }
-                    }
+            }
+        }
+    }
 
-                    if (ersteKoll != null) {
-                        ersteKoll.kollisionDurchfuehren();
-                    } else {
-                        i++;
+    public void einzelStrahlNeuBerechnen(Strahlengang strahlengang) {
+        strahlengang.resetteStrahlengang();
+        for(int i = 0; i < Konstanten.MAX_STRAHLLAENGE; i++) {
+            StrahlenKollision ersteKoll = null;
+            //Finde die erste Kollision unter allen Kollisionsobjekten:
+            for (KannKollision cElement : kollisionsObjekte) {
+                StrahlenKollision nKoll = cElement.kollisionUeberpruefen(strahlengang);
+                if (nKoll != null) {
+                    if (ersteKoll == null || nKoll.getDistanz() < ersteKoll.getDistanz()) {
+                        ersteKoll = nKoll;
                     }
                 }
+            }
+            if (ersteKoll != null) {
+                ersteKoll.kollisionDurchfuehren();
+            } else {
+                break;
             }
         }
     }
@@ -237,20 +231,20 @@ public class OptischeBank extends JPanel {
     public void zoomStufeRein() {
         zoom *= (1 + Konstanten.ZOOM_STUFE);
 
-        zeichenBrett.setPreferredSize(new Dimension((int)(groesse.getXfloat() * zoom), (int)(groesse.getYfloat() * zoom)));
+        zeichenBrett.setPreferredSize(new Dimension((int)(groesse.getX() * zoom), (int)(groesse.getY() * zoom)));
         zeichenBrett.revalidate();
     }
 
     public void zoomStufeRaus() {
         zoom /= (1 + Konstanten.ZOOM_STUFE);
 
-        zeichenBrett.setPreferredSize(new Dimension((int)(groesse.getXfloat() * zoom), (int)(groesse.getYfloat() * zoom)));
+        zeichenBrett.setPreferredSize(new Dimension((int)(groesse.getX() * zoom), (int)(groesse.getY() * zoom)));
         zeichenBrett.revalidate();
     }
 
     public void setZoom(double zoom) {
         this.zoom = zoom;
-        zeichenBrett.setPreferredSize(new Dimension((int)(groesse.getXfloat() * zoom), (int)(groesse.getYfloat() * zoom)));
+        zeichenBrett.setPreferredSize(new Dimension((int)(groesse.getX() * zoom), (int)(groesse.getY() * zoom)));
         zeichenBrett.revalidate();
     }
 
@@ -270,11 +264,11 @@ public class OptischeBank extends JPanel {
         this.modus = modus;
     }
 
-    public Vektor getPositionOffset() {
+    public Point getPositionOffset() {
         return positionOffset;
     }
 
-    public void setPositionOffset(Vektor positionOffset) {
+    public void setPositionOffset(Point positionOffset) {
         this.positionOffset = positionOffset;
     }
 
@@ -288,5 +282,13 @@ public class OptischeBank extends JPanel {
 
     public Eigenschaften getEigenschaften() {
         return eigenschaften;
+    }
+
+    public boolean isVirtuelleStrahlenAktiv() {
+        return virtuelleStrahlenAktiv;
+    }
+
+    public void setVirtuelleStrahlenAktiv(boolean virtuelleStrahlenAktiv) {
+        this.virtuelleStrahlenAktiv = virtuelleStrahlenAktiv;
     }
 }

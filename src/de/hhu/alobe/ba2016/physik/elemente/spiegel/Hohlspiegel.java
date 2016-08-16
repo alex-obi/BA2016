@@ -3,8 +3,6 @@ package de.hhu.alobe.ba2016.physik.elemente.spiegel;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorFloat;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.flaechen.*;
@@ -14,41 +12,42 @@ import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Hohlspiegel extends Bauelement implements KannKollision{
 
-    protected float hoehe;
+    protected double hoehe;
     public static final int MIND_HOEHE = 100;
-    public static final int MAX_HOEHE = 600;
+    public static final int MAX_HOEHE = 510;
 
-    protected float breite;
+    protected double breite;
 
 
-    protected float radius;
-    public static final float MIND_RADIUS = 50;
-    public static final float MAX_RADIUS = 100000; //Maximaler Radius bis Kreis als ebene Fläche approximiert wird
+    protected double radius;
+    public static final int MIND_RADIUS = 50;
+    public static final int MAX_RADIUS = 100000; //Maximaler Radius bis Kreis als ebene Fläche approximiert wird
 
     private Grenzflaeche spiegelFlaeche;
 
     private Hauptebene hauptebene;
 
-    public Hohlspiegel(OptischeBank optischeBank, Vektor mittelPunkt, float radius, float hoehe) {
+    public Hohlspiegel(OptischeBank optischeBank, Vektor mittelPunkt, double radius, double hoehe) {
         super(optischeBank, mittelPunkt, TYP_SPIEGEL);
         this.radius = radius;
         hauptebene = new Hauptebene(Flaeche.MODUS_REFLEKT, mittelPunkt, radius / 2, hoehe);
         setHoehe(hoehe);
     }
 
-    public void setHoehe(float nHoehe) {
+    public void setHoehe(double nHoehe) {
         formatNeuBestimmen(nHoehe, radius);
     }
 
-    public void setRadius(float nRadius) {
+    public void setRadius(double nRadius) {
         formatNeuBestimmen(hoehe, nRadius);
     }
 
-    public void formatNeuBestimmen(float nHoehe, float nRadius) {
+    public void formatNeuBestimmen(double nHoehe, double nRadius) {
         if(radius != 0) {
             this.hoehe = Math.min(nHoehe, Math.abs(radius * 2));
         } else {
@@ -59,18 +58,18 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
         hauptebene.setBrennweite(radius / 2);
         if(radius == 0 || radius > MAX_RADIUS) {
             breite = 0;
-            Vektor von = new VektorFloat(mittelPunkt.getXfloat(), mittelPunkt.getYfloat() + hoehe / 2);
-            Vektor bis = new VektorFloat(mittelPunkt.getXfloat(), mittelPunkt.getYfloat() - hoehe / 2);
+            Vektor von = new Vektor(mittelPunkt.getX(), mittelPunkt.getY() + hoehe / 2);
+            Vektor bis = new Vektor(mittelPunkt.getX(), mittelPunkt.getY() - hoehe / 2);
             spiegelFlaeche = new Grenzflaeche_Ebene(Grenzflaeche.MODUS_REFLEKT, von, bis);
         } else {
             double winkel = Math.asin(Math.abs(hoehe / (2* radius)));
-            float c = (float)Math.sqrt(radius * radius - (hoehe * hoehe) / 4);
+            double c = Math.sqrt(radius * radius - (hoehe * hoehe) / 4);
             breite = Math.abs(radius) - c;
             if(radius > 0) {
-                Vektor mp = new VektorFloat(mittelPunkt.getXfloat() - radius, mittelPunkt.getYfloat());
+                Vektor mp = new Vektor(mittelPunkt.getX() - radius, mittelPunkt.getY());
                 spiegelFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_REFLEKT, mp, radius, Math.PI * 2 - winkel, 2 * winkel);
             } else {
-                Vektor mp = new VektorFloat(mittelPunkt.getXfloat() - radius, mittelPunkt.getYfloat());
+                Vektor mp = new Vektor(mittelPunkt.getX() - radius, mittelPunkt.getY());
                 spiegelFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_REFLEKT, mp, -radius, Math.PI - winkel, 2 * winkel);
             }
         }
@@ -90,11 +89,16 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
         });
         regler.add(new Eigenschaftenregler("Höhe", slide_hoehe));
 
-        JSlider slide_radius = new JSlider(-(int)(10000 / MIND_RADIUS), (int)(10000 / MIND_RADIUS), (int)(10000 / radius));
+        JSlider slide_radius = new JSlider(-10000 / MIND_RADIUS, 10000 / MIND_RADIUS, (int)(10000 / radius));
         slide_radius.setPaintTicks(true);
         slide_radius.setMajorTickSpacing(20);
         slide_radius.addChangeListener(e -> {
-            setRadius( 10000 / ((float)((JSlider) e.getSource()).getValue()));
+            int wert = ((JSlider) e.getSource()).getValue();
+            if(wert != 0) {
+                setRadius(10000 / wert);
+            } else {
+                setRadius(0);
+            }
             optischeBank.aktualisieren();
         });
         regler.add(new Eigenschaftenregler("Radius", slide_radius));
@@ -147,17 +151,17 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
     public Rahmen generiereRahmen() {
         if(radius > 0) {
             Rahmen rahmen = new Rahmen(mittelPunkt);
-            rahmen.rahmenErweitern(new VektorInt(5, hoehe / 2));
-            rahmen.rahmenErweitern(new VektorInt(-breite - 5, hoehe / 2));
-            rahmen.rahmenErweitern(new VektorInt(-breite - 5, -hoehe / 2));
-            rahmen.rahmenErweitern(new VektorInt(5, -hoehe / 2));
+            rahmen.rahmenErweitern(new Point2D.Double(5, hoehe / 2));
+            rahmen.rahmenErweitern(new Point2D.Double(-breite - 5, hoehe / 2));
+            rahmen.rahmenErweitern(new Point2D.Double(-breite - 5, -hoehe / 2));
+            rahmen.rahmenErweitern(new Point2D.Double(5, -hoehe / 2));
             return  rahmen;
         } else {
             Rahmen rahmen = new Rahmen(mittelPunkt);
-            rahmen.rahmenErweitern(new VektorInt(-5, hoehe / 2));
-            rahmen.rahmenErweitern(new VektorInt(breite + 5, hoehe / 2));
-            rahmen.rahmenErweitern(new VektorInt(breite + 5, -hoehe / 2));
-            rahmen.rahmenErweitern(new VektorInt(-5, -hoehe / 2));
+            rahmen.rahmenErweitern(new Point2D.Double(-5, hoehe / 2));
+            rahmen.rahmenErweitern(new Point2D.Double(breite + 5, hoehe / 2));
+            rahmen.rahmenErweitern(new Point2D.Double(breite + 5, -hoehe / 2));
+            rahmen.rahmenErweitern(new Point2D.Double(-5, -hoehe / 2));
             return rahmen;
         }
     }

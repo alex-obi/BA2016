@@ -5,8 +5,6 @@ import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorFloat;
-import de.hhu.alobe.ba2016.mathe.VektorInt;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
@@ -17,11 +15,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.geom.Arc2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class PunktLichtquelle extends Lichtquelle{
 
-    public static int groesse = 20;
+    public static double groesse = 20;
 
     public PunktLichtquelle(OptischeBank optischeBank, Vektor mittelpunkt, Color farbe) {
         super(optischeBank, mittelpunkt, farbe);
@@ -30,7 +30,7 @@ public class PunktLichtquelle extends Lichtquelle{
 
     @Override
     public Strahlengang berechneNeuenStrahl(Vektor strahlPunkt) {
-        VektorFloat richtungsPunkt = new VektorFloat(strahlPunkt.getXfloat(), strahlPunkt.getYfloat());
+        Vektor richtungsPunkt = strahlPunkt.kopiere();
         Vektor richtungsVektor = Vektor.subtrahiere(richtungsPunkt, mittelPunkt);
         return new Strahlengang(new Strahl(mittelPunkt, richtungsVektor));
     }
@@ -43,21 +43,21 @@ public class PunktLichtquelle extends Lichtquelle{
     @Override
     public Rahmen generiereRahmen() {
         Rahmen rahmen = new Rahmen(mittelPunkt);
-        rahmen.rahmenErweitern(new VektorInt(-groesse / 2, -groesse / 2));
-        rahmen.rahmenErweitern(new VektorInt(groesse / 2, -groesse / 2));
-        rahmen.rahmenErweitern(new VektorInt(groesse / 2, groesse / 2));
-        rahmen.rahmenErweitern(new VektorInt(-groesse / 2, groesse / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(-groesse / 2, -groesse / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(groesse / 2, -groesse / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(groesse / 2, groesse / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(-groesse / 2, groesse / 2));
         return rahmen;
     }
 
     @Override
     public void paintComponent(Graphics2D g) {
         g.setColor(farbe);
-        Arc2D zeichenKreis = new Arc2D.Float(mittelPunkt.getXint() - groesse / 2, mittelPunkt.getYint() - groesse / 2, groesse, groesse, 0, 360, Arc2D.OPEN);
+        Arc2D zeichenKreis = new Arc2D.Double(mittelPunkt.getX() - groesse / 2, mittelPunkt.getY() - groesse / 2, groesse, groesse, 0, 360, Arc2D.OPEN);
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
         g.draw(zeichenKreis);
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-        g.drawLine(mittelPunkt.getXint(), optischeBank.getOptischeAchse().getHoehe(), mittelPunkt.getXint(), mittelPunkt.getYint());
+        g.draw(new Line2D.Double(mittelPunkt.getX(), optischeBank.getOptischeAchse().getHoehe(), mittelPunkt.getX(), mittelPunkt.getY()));
         super.paintComponent(g);
     }
 

@@ -5,11 +5,11 @@ package de.hhu.alobe.ba2016;
  */
 public abstract class Konstanten {
 
-    public static final float LICHTGESCHW = 299792458; // m/s
+    public static final double LICHTGESCHW = 299792458; // m/s
 
-    public static final float MIND_ENTFERNUNG_STRAHL = 0.5f; // Mindestdistanz, die ein Strahl zurueckgelegt haben muss um Kollidieren zu koennen
+    public static final double MIND_ENTFERNUNG_STRAHL = 0.5f; // Mindestdistanz, die ein Strahl zurueckgelegt haben muss um Kollidieren zu koennen
 
-    public static final float MIND_DICKE_LINSEN = 1f; //Mindestdicke, die eine Linse haben muss am dünnsten Punkt zwischen ihren brechenden Flächen.
+    public static final double MIND_DICKE_LINSEN = 1f; //Mindestdicke, die eine Linse haben muss am dünnsten Punkt zwischen ihren brechenden Flächen.
 
     public static final int MAX_STRAHLLAENGE = 50; //Maximalanzahl an Strahlenteile um Endlosschleifen zu vermeiden.
 

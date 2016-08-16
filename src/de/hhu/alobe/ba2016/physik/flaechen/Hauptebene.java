@@ -4,7 +4,6 @@ package de.hhu.alobe.ba2016.physik.flaechen;
 import de.hhu.alobe.ba2016.mathe.Gerade;
 import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 import java.awt.*;
@@ -15,17 +14,17 @@ public class Hauptebene extends Flaeche {
 
     Gerade hauptebene;
 
-    float brennweite;
+    double brennweite;
 
-    public Hauptebene(int modus, Vektor mittelpunkt, float brennweite, float hoehe) {
+    public Hauptebene(int modus, Vektor mittelpunkt, double brennweite, double hoehe) {
         this.modus = modus;
-        this.mittelpunkt = mittelpunkt.kopiere();
+        this.mittelpunkt = (Vektor) mittelpunkt.kopiere();
         this.brennweite = brennweite;
-        hauptebene = new Gerade(new VektorFloat(mittelpunkt.getXfloat(), mittelpunkt.getYfloat() + hoehe / 2), new VektorFloat(mittelpunkt.getXfloat(), mittelpunkt.getYfloat() - hoehe / 2));
+        hauptebene = new Gerade(new Vektor(mittelpunkt.getX(), mittelpunkt.getY() + hoehe / 2), new Vektor(mittelpunkt.getX(), mittelpunkt.getY() - hoehe / 2));
     }
 
     @Override
-    public float kollisionUeberpruefen(Strahlengang cStrGng) {
+    public double kollisionUeberpruefen(Strahlengang cStrGng) {
         return hauptebene.gibSchnittEntfernung(cStrGng.getAktuellerStrahl());
     }
 
@@ -35,26 +34,26 @@ public class Hauptebene extends Flaeche {
             cStrGng.strahlengangBeenden(position);
             return;
         }
-        float richtungsvorzeichen = Math.signum(cStrGng.getAktuellerStrahl().getRichtungsVektor().getXfloat());
-        float gegenstandsweite = richtungsvorzeichen * (mittelpunkt.getXfloat() - cStrGng.getAktuellerStrahl().gibQuellPunkt().getXfloat());
-        float gegenstandshoehe = richtungsvorzeichen * (mittelpunkt.getYfloat() - cStrGng.getAktuellerStrahl().gibQuellPunkt().getYfloat());
-        float bildweite = 0;
-        float bildgroesse;
+        double richtungsvorzeichen = Math.signum(cStrGng.getAktuellerStrahl().getRichtungsVektor().getX());
+        double gegenstandsweite = richtungsvorzeichen * (mittelpunkt.getX() - cStrGng.getAktuellerStrahl().gibQuellPunkt().getX());
+        double gegenstandshoehe = richtungsvorzeichen * (mittelpunkt.getY() - cStrGng.getAktuellerStrahl().gibQuellPunkt().getY());
+        double bildweite = 0;
+        double bildgroesse;
         Vektor neueRichtung;
-        float quellLaenge;
-        float cBrennweite = brennweite;
+        double quellLaenge;
+        double cBrennweite = brennweite;
         if(modus == Flaeche.MODUS_REFLEKT) {
-            if(cStrGng.getAktuellerStrahl().getRichtungsVektor().getXfloat() < 0) {
+            if(cStrGng.getAktuellerStrahl().getRichtungsVektor().getX() < 0) {
                 cBrennweite *= -1;
             }
         }
-        float faktor = 1;
+        double faktor = 1;
         if (modus == Flaeche.MODUS_REFLEKT) {
             faktor = -1;
         }
-        if(Math.abs((double)(cBrennweite - gegenstandsweite)) > 7) {
+        if(Math.abs(cBrennweite - gegenstandsweite) > 7) {
             if (gegenstandsweite != 0 && cBrennweite != 0) {
-                bildweite = (float)(Math.pow((double) ((1 / cBrennweite) - (1 / gegenstandsweite)), -1));
+                bildweite = (Math.pow((1 / cBrennweite) - (1 / gegenstandsweite), -1));
             } else if (cBrennweite == 0) {
                 bildweite = -gegenstandsweite;
             } else {
@@ -65,7 +64,7 @@ public class Hauptebene extends Flaeche {
                 bildweite *= -1;
             }
             Vektor relativerSchnittpunkt = Vektor.subtrahiere(position, mittelpunkt);
-            neueRichtung = Vektor.addiere(relativerSchnittpunkt, new VektorFloat(-(richtungsvorzeichen * bildweite), -(richtungsvorzeichen * bildgroesse)));
+            neueRichtung = Vektor.addiere(relativerSchnittpunkt, new Vektor(-(richtungsvorzeichen * bildweite), -(richtungsvorzeichen * bildgroesse)));
             if(cStrGng.getAktuellerStrahl().isAusDemUnendlichen()) {
                 neueRichtung.multipliziere(Math.abs(brennweite / bildweite));
                 //todo: position offset einbingen was wenn x- == bildweite ?
@@ -80,7 +79,7 @@ public class Hauptebene extends Flaeche {
                 cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, -faktor), faktor * neueRichtung.gibLaenge(), false));
             }
         } else { //gegenstand ungefähr in brennweite
-            neueRichtung = new VektorFloat(faktor * cBrennweite, gegenstandshoehe);
+            neueRichtung = new Vektor(faktor * cBrennweite, gegenstandshoehe);
             if(richtungsvorzeichen > 0) {
                 cStrGng.neuenStrahlAnhaengen(new Strahl(position, neueRichtung, 0, true));
             } else {
@@ -90,8 +89,8 @@ public class Hauptebene extends Flaeche {
         }
     }
 
-    public void setHoehe(float nHoehe) {
-        hauptebene.verschiebeUm(new VektorFloat(0, (nHoehe - hauptebene.getLaenge()) / 2));
+    public void setHoehe(double nHoehe) {
+        hauptebene.verschiebeUm(new Vektor(0, (nHoehe - hauptebene.getLaenge()) / 2));
         hauptebene.setLaenge(nHoehe);
     }
 
@@ -103,7 +102,7 @@ public class Hauptebene extends Flaeche {
         this.hauptebene = hauptebene;
     }
 
-    public void setBrennweite(float nBrennweite) {
+    public void setBrennweite(double nBrennweite) {
         brennweite = nBrennweite;
     }
 

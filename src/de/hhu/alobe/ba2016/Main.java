@@ -1,11 +1,15 @@
 package de.hhu.alobe.ba2016;
 
+import de.hhu.alobe.ba2016.grafik.Grafiken;
+import de.hhu.alobe.ba2016.mathe.Vektor;
+
 /**
  * Klasse zum Programmeinstieg
  */
 public class Main {
 
     public static void main(String[] args) {
+        Grafiken.grafikenLaden();
         new HauptFenster();
 
         /*
@@ -14,28 +18,32 @@ public class Main {
         Features:
 
         Freitag:
-         * todo: Eigenschaftenpanel für alle Bauelemente.(~ 4 Std)
+         * Eigenschaftenpanel für alle Bauelemente.(~ 4 Std) [X]
          *
-        Samstag:
-         * todo: Werkzeugfenster für alle Bauelemente. Geeignete Startwerte. Grafische Aufarbeitung (~ 2 Std)
-         *
-         * todo: Strahlen einzeln aktualisieren (~ 1 Std)
-         *
-         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren (~ 2 Std)
 
-         Montag und Dienstag:
-         * todo: Brennweite und Position der Hauptebene bei dicken Linsen. Linse über kleine Brennweite zu klein dargestellt -> ab mindesthöhe brechzahl editieren(~ 4 Std)
+         Dienstag:
+         * Werkzeugfenster für alle Bauelemente. Geeignete Startwerte. Grafische Aufarbeitung (~ 2 Std) [X]
+         *
+         * Strahlen einzeln aktualisieren (~ 1 Std) [X]
 
-         * todo: Maßstab und Einheiten (~ 3 Std)
-         *
-         * todo: Virtuelle Bilder an/aus (~ 1 Std)
-         *
+         * Virtuelle Bilder an/aus (~ 1 Std) [X]
+
+
+
+         Mittwoch:
          * todo: Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren. (~ 5 Std)
+         *
+         * todo: Brennweite und Position der Hauptebene bei dicken Linsen. Linse über kleine Brennweite zu klein dargestellt -> ab mindesthöhe brechzahl editieren(~ 4 Std)
+         *
+         *
+         *
+         Donnerstag:
 
-         Mittwoch und Donnerstag:
-         * todo: Kommentieren und Funktionen überprüfen. Mit Formeln belegen und aufschreiben. (~ 12 Std)
+         * todo: Kommentieren und Funktionen überprüfen. Mit Formeln belegen und aufschreiben. (~ 8 Std)
 
          Freitag:
+
+         * todo: Maßstab und Einheiten (~ 3 Std)
          * todo: Speichern und Laden xml (~ 6 Std)
 
          Samstag:
@@ -63,17 +71,20 @@ public class Main {
 
 
          Optional:
-         * todo: Eigenschaftenänderung rücknehmbar
-         * todo: Schirm Hohlspiegel Linse Grafisch Abgrenzen
          * todo: Parallel-, Zenit-, Brennpunktstrahl markieren
          * todo: Strahlen nummerieren
+         * todo: Eigenschaftenänderung rücknehmbar
+         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
+         * todo: Scrollen mit Maus
+         * todo: Schirm Hohlspiegel Linse Grafisch Abgrenzen
+         * todo: Optische Achse verschiebbar
+         *
          * todo: Mehrere Tabs
          * todo: Ausschnitt und Scrollen optimieren
          * todo: Spiegel schräg
 
          * todo: Nullpointer verhindern
          * todo: this vermeiden
-         * todo: float zu double
          * todo: get gib einheitlich
          */
 

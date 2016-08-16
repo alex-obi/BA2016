@@ -1,10 +1,8 @@
 package de.hhu.alobe.ba2016.physik.elemente.Auge;
 
-import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.grafik.Zeichenbar;
 import de.hhu.alobe.ba2016.mathe.Vektor;
-import de.hhu.alobe.ba2016.mathe.VektorFloat;
 import de.hhu.alobe.ba2016.physik.flaechen.Flaeche;
 import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche;
 import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Sphaerisch;
@@ -14,7 +12,6 @@ import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class Hornhaut implements KannKollision, Zeichenbar {
 
@@ -26,14 +23,14 @@ public class Hornhaut implements KannKollision, Zeichenbar {
 
     private Vektor position;
 
-    private float radius;
+    private double radius;
 
-    public Hornhaut(Auge auge, Vektor position, float radius) {
+    public Hornhaut(Auge auge, Vektor position, double radius) {
         this.auge = auge;
         this.radius = radius;
         this.position = position;
         this.hauptebene = new Hauptebene(Hauptebene.MODUS_BRECHUNG, position, 248, radius * 1.5f);
-        this.grenzflaeche = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_BRECHUNG, 1, Auge.BRECHZAHL_KAMMERWASSER, new VektorFloat(position.getXfloat() + radius, position.getYfloat()), radius, 2.36, 1.57);
+        this.grenzflaeche = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_BRECHUNG, 1, Auge.BRECHZAHL_KAMMERWASSER, new Vektor(position.getX() + radius, position.getY()), radius, 2.36, 1.57);
     }
 
     public void verschiebeUm(Vektor verschiebung) {

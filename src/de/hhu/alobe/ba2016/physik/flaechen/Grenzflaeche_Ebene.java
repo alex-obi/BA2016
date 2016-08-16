@@ -10,7 +10,6 @@ import java.awt.*;
 
 public class Grenzflaeche_Ebene extends Grenzflaeche{
 
-
     private Gerade ebene;
 
     public Grenzflaeche_Ebene (int modus, double n1, double n2, Vektor von_Vektor, Vektor bis_Vektor) {
@@ -34,7 +33,7 @@ public class Grenzflaeche_Ebene extends Grenzflaeche{
     }
 
     @Override
-    public float kollisionUeberpruefen(Strahlengang cStrGng) {
+    public double kollisionUeberpruefen(Strahlengang cStrGng) {
         return ebene.gibSchnittEntfernung(cStrGng.getAktuellerStrahl());
     }
 
