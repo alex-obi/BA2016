@@ -53,15 +53,15 @@ public class Strahlengang implements Zeichenbar{
         strahlenAbschnitte = new ArrayList<>();
     }
 
-    public ArrayList<Vektor> gibBildpunkte() {
+    public ArrayList<Vektor> gibBildpunkte(boolean auchVirtuell) {
         ArrayList<Vektor> retList = new ArrayList<>();
         for(Gerade g : strahlenAbschnitte) {
-            if(g.getQuellEntfernung() != 0 && g.getQuellEntfernung() < g.getLaenge()) {
+            if(g.getQuellEntfernung() != 0 && g.getQuellEntfernung() < g.getLaenge() && (g.getQuellEntfernung() > 0 || auchVirtuell)) {
                 retList.add(g.gibQuellPunkt());
             }
         }
         if(aktuellerStrahl != null) {
-            if (aktuellerStrahl.getQuellEntfernung() != 0) {
+            if (aktuellerStrahl.getQuellEntfernung() != 0 && (aktuellerStrahl.getQuellEntfernung() > 0 || auchVirtuell)) {
                 retList.add(aktuellerStrahl.gibQuellPunkt());
             }
         }

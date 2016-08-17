@@ -33,9 +33,7 @@ public class Main {
          Mittwoch:
          * todo: Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren. (~ 5 Std)
          *
-         * todo: Brennweite und Position der Hauptebene bei dicken Linsen. Linse über kleine Brennweite zu klein dargestellt -> ab mindesthöhe brechzahl editieren(~ 4 Std)
-         *
-         *
+         * Brennweite und Position der Hauptebene bei dicken Linsen. Linse über kleine Brennweite zu klein dargestellt -> ab mindesthöhe brechzahl editieren(~ 4 Std) [X]
          *
          Donnerstag:
 
@@ -62,6 +60,7 @@ public class Main {
          * todo: spiegel bei unendlich keine reflexion
          * todo: Lichtquelle genau auf Spiegelhauptebene -> Absturz!
          * todo: Bei KonkavKonvexen werden bei r -> unendlich beide Seiten vertauscht
+         * todo: Rückgängig bei Parallellicht buggy
          *
          * Zweitrangig:
          * todo: Bei Radiusänderung unter Höhe wird Spiegel erst nach loslassen des Reglers aktualisiert

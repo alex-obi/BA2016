@@ -47,11 +47,11 @@ public abstract class Lichtquelle extends Bauelement {
 
     }
 
-    public ArrayList<Vektor> gibBildpunkte() {
+    public ArrayList<Vektor> gibBildpunkte(boolean auchVirtuell) {
         ArrayList<Vektor> pruefList = new ArrayList<>();
         ArrayList<Vektor> retList = new ArrayList<>();
         for(Strahlengang cStrG : strahlengaenge) {
-            for(Vektor cBildpunkt : cStrG.gibBildpunkte()) {
+            for(Vektor cBildpunkt : cStrG.gibBildpunkte(auchVirtuell)) {
                 int anzahlGleicherPunkte = 1;
                 for(Vektor cVergleichsBildpunkt : pruefList) {
                     if(Vektor.gibAbstand(cVergleichsBildpunkt, cBildpunkt) < 1) {
@@ -81,11 +81,9 @@ public abstract class Lichtquelle extends Bauelement {
         if(aktiv) {
             strahlenZeichnen(g);
             //Bilder Zeichnen, die von dieser Lampe entstehen
-            if(optischeBank.isVirtuelleStrahlenAktiv()) {
-                for (Vektor bildPunkt : gibBildpunkte()) {
+                for (Vektor bildPunkt : gibBildpunkte(optischeBank.isVirtuelleStrahlenAktiv())) {
                     g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
                     g.draw(new Line2D.Double(bildPunkt.getX(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getX(), bildPunkt.getY()));
-                }
             }
         }
         super.paintComponent(g);

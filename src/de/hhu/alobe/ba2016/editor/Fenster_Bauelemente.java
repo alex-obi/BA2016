@@ -118,11 +118,11 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener{
             if(typString != null) {
                 Linse nLinse;
                 if(typString.equals("Sammellinse")) {
-                    nLinse = new Linse(optBank, new Vektor(0, 0), 150);
+                    nLinse = new Linse(optBank, new Vektor(0, 0), 200);
                 } else if(typString.equals("Streulinse")) {
-                    nLinse = new Linse(optBank, new Vektor(0, 0), -150);
+                    nLinse = new Linse(optBank, new Vektor(0, 0), -200);
                 } else {
-                    nLinse = new Linse(optBank, new Vektor(0, 0), -150); //Eventuell durch weitere Typen zu ersetzen
+                    nLinse = new Linse(optBank, new Vektor(0, 0), -200); //Eventuell durch weitere Typen zu ersetzen
                 }
                 optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, nLinse));
             }
