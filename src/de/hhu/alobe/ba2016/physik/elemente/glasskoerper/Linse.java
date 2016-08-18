@@ -117,7 +117,7 @@ public class Linse extends Bauelement implements KannKollision {
                 linsenseite1 = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_BRECHUNG, brechzahl, 1, Vektor.addiere(mittelPunkt, p), r, vonWinkel, extWinkel);
             }
         } else {
-            linsenseite1 = new Grenzflaeche_Ebene(Grenzflaeche.MODUS_BRECHUNG, 1, brechzahl, unten1, oben1);
+            linsenseite1 = new Grenzflaeche_Ebene(Grenzflaeche.MODUS_BRECHUNG, brechzahl, 1, unten1, oben1);
         }
 
         if(r2 != 0 && r2 < MAX_RADIUS) {
@@ -135,7 +135,7 @@ public class Linse extends Bauelement implements KannKollision {
                 linsenseite2 = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_BRECHUNG, brechzahl, 1, Vektor.addiere(mittelPunkt, p), r, vonWinkel, extWinkel);
             }
         } else {
-            linsenseite2 = new Grenzflaeche_Ebene(Grenzflaeche.MODUS_BRECHUNG, brechzahl, 1, unten2, oben2);
+            linsenseite2 = new Grenzflaeche_Ebene(Grenzflaeche.MODUS_BRECHUNG, 1, brechzahl, unten2, oben2);
         }
 
         breite1 = breite2 = (int)(dicke / 2);
@@ -150,8 +150,16 @@ public class Linse extends Bauelement implements KannKollision {
 
     }
 
+    //r = 0 -> r gegen uendlich
     public static double berechneBrennweite(double brechzahl, double radius1, double radius2) {
-        return  Math.pow((brechzahl - 1) * (1 / radius1 + 1 / radius2), -1);
+        if(radius1 == 0) {
+            return Math.pow((brechzahl - 1) / radius2, -1);
+        }
+        if(radius2 == 0) {
+            return Math.pow((brechzahl - 1)  / radius1, -1);
+        } else {
+            return Math.pow((brechzahl - 1) * (1 / radius1 + 1 / radius2), -1);
+        }
     }
 
     public void setMaxLinsenHoehe(int nHoehe) {
@@ -295,7 +303,13 @@ public class Linse extends Bauelement implements KannKollision {
             });
             regler.add(new Eigenschaftenregler("Brechzahl", slide_brechzahl));
 
-            JSlider slide_radius1 = new JSlider(-10000 / MIND_RADIUS, 10000 / MIND_RADIUS, (int)(10000 / radius1));
+            int startwert1;
+            if(radius1 == 0) {
+                startwert1 = 0;
+            } else {
+                startwert1 = (int)(10000 / Math.max(MIND_RADIUS, radius1));
+            }
+            JSlider slide_radius1 = new JSlider(-10000 / MIND_RADIUS, 10000 / MIND_RADIUS, startwert1);
             slide_radius1.setPaintTicks(true);
             slide_radius1.setMajorTickSpacing(20);
             slide_radius1.addChangeListener(e -> {
@@ -310,7 +324,13 @@ public class Linse extends Bauelement implements KannKollision {
             });
             regler.add(new Eigenschaftenregler("Radius 1", slide_radius1));
 
-            JSlider slide_radius2 = new JSlider(-10000 / MIND_RADIUS, 10000 / MIND_RADIUS, (int)(10000 / radius2));
+            int startwert2;
+            if(radius2 == 0) {
+                startwert2 = 0;
+            } else {
+                startwert2 = (int)(10000 / Math.max(MIND_RADIUS, radius2));
+            }
+            JSlider slide_radius2 = new JSlider(-10000 / MIND_RADIUS, 10000 / MIND_RADIUS, startwert2);
             slide_radius2.setPaintTicks(true);
             slide_radius2.setMajorTickSpacing(20);
             slide_radius2.addChangeListener(e -> {

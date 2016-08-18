@@ -18,7 +18,7 @@ public class Hauptebene extends Flaeche {
 
     public Hauptebene(int modus, Vektor mittelpunkt, double brennweite, double hoehe) {
         this.modus = modus;
-        this.mittelpunkt = (Vektor) mittelpunkt.kopiere();
+        this.mittelpunkt = mittelpunkt.kopiere();
         this.brennweite = brennweite;
         hauptebene = new Gerade(new Vektor(mittelpunkt.getX(), mittelpunkt.getY() + hoehe / 2), new Vektor(mittelpunkt.getX(), mittelpunkt.getY() - hoehe / 2));
     }
@@ -64,6 +64,7 @@ public class Hauptebene extends Flaeche {
                 bildweite *= -1;
             }
             Vektor relativerSchnittpunkt = Vektor.subtrahiere(position, mittelpunkt);
+            System.out.println("Bildweite: " + bildweite + ", Bildgroesse: " + bildgroesse);
             neueRichtung = Vektor.addiere(relativerSchnittpunkt, new Vektor(-(richtungsvorzeichen * bildweite), -(richtungsvorzeichen * bildgroesse)));
             if(cStrGng.getAktuellerStrahl().isAusDemUnendlichen()) {
                 neueRichtung.multipliziere(Math.abs(brennweite / bildweite));

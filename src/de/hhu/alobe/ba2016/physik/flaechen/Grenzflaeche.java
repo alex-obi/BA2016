@@ -47,7 +47,7 @@ public abstract class Grenzflaeche extends Flaeche {
         double ausfallsWinkel;
         Vektor normalAnteilAusfall;
         Vektor tangentialAnteilAusfall;
-        if(Vektor.skalarprodukt(einfallVektor, normalVektor) < 0) {
+        if(Vektor.skalarprodukt(einfallVektor, normalVektor) < 0) { //Vektoren zeigen in unterschiedliche Richtungen
             ausfallsWinkel = Math.asin((n1 * Math.sin(einfallsWinkel) / n2));
             normalAnteilAusfall = Vektor.multipliziere(normalVektor, -Math.cos(ausfallsWinkel));
         } else {

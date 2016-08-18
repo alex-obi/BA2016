@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class Auge extends Bauelement implements KannKollision {
 
-    public static final double BRECHZAHL_KAMMERWASSER = 1.336;
+    public static final double BRECHZAHL_KAMMERWASSER = 1.333;
 
     private Hornhaut hornhaut;
     private double abstand_hornhaut; //Abstand relativ zu Augenlinse
@@ -37,9 +37,9 @@ public class Auge extends Bauelement implements KannKollision {
         super(optischeBank, mittelpunkt, Bauelement.TYP_AUGE);
         abstand_hornhaut = 40;
         hornhaut = new Hornhaut(this, Vektor.addiere(mittelpunkt, new Vektor(-abstand_hornhaut, 0)), 60);
-        kruemmungsradius_linse = 150;
-        augenlinse = new Augenlinse(this, mittelpunkt.kopiere(), 1.4, 120, kruemmungsradius_linse);
-        abstand_netzhaut = 200;
+        kruemmungsradius_linse = 700;
+        //augenlinse = new Augenlinse(this, mittelpunkt.kopiere(), 1.5, 120, kruemmungsradius_linse);
+        abstand_netzhaut = 150;
         netzhaut = new Netzhaut(this, Vektor.addiere(mittelpunkt, new Vektor(abstand_netzhaut, 0)), 120);
         setRahmen(generiereRahmen());
     }
@@ -47,7 +47,7 @@ public class Auge extends Bauelement implements KannKollision {
     @Override
     public void verschiebeUm(Vektor verschiebung) {
         mittelPunkt.addiere(verschiebung);
-        augenlinse.verschiebeUm(verschiebung);
+        //augenlinse.verschiebeUm(verschiebung);
         hornhaut.verschiebeUm(verschiebung);
         netzhaut.verschiebeUm(verschiebung);
     }
@@ -102,7 +102,7 @@ public class Auge extends Bauelement implements KannKollision {
     public void paintComponent(Graphics2D g) {
         super.paintComponent(g);
         hornhaut.paintComponent(g);
-        augenlinse.paintComponent(g);
+        //augenlinse.paintComponent(g);
         netzhaut.paintComponent(g);
     }
 
@@ -110,7 +110,7 @@ public class Auge extends Bauelement implements KannKollision {
     public StrahlenKollision kollisionUeberpruefen(Strahlengang cStrGng) {
         ArrayList<StrahlenKollision> kollisionen = new ArrayList();
         kollisionen.add(hornhaut.kollisionUeberpruefen(cStrGng));
-        kollisionen.add(augenlinse.kollisionUeberpruefen(cStrGng));
+        //kollisionen.add(augenlinse.kollisionUeberpruefen(cStrGng));
         kollisionen.add(netzhaut.kollisionUeberpruefen(cStrGng));
         return StrahlenKollision.getErsteKollision(kollisionen);
     }

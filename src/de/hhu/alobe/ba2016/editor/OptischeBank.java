@@ -97,6 +97,8 @@ public class OptischeBank extends JPanel {
 
         //########### Erzeuge Testszenario
 
+        bauelementHinzufuegen(new Linse(this, new Vektor(50, 450), 1.336, 90, 0, 60, 0));
+
         bauelementHinzufuegen(new PunktLichtquelle(this, new Vektor(50, 150), Color.BLACK));
         /*bauelementHinzufuegen(new ParrallelLichtquelle(this, new Vektor(50, 250), Color.BLACK, 250, 0));
         bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(500, 450), -300, 150));
