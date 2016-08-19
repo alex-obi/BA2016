@@ -31,24 +31,26 @@ public class Main {
 
 
          Mittwoch:
-         * todo: Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren. (~ 5 Std)
+
          *
          * Brennweite und Position der Hauptebene bei dicken Linsen. Linse über kleine Brennweite zu klein dargestellt -> ab mindesthöhe brechzahl editieren(~ 4 Std) [X]
          *
          Donnerstag:
 
-         * todo: Kommentieren und Funktionen überprüfen. Mit Formeln belegen und aufschreiben. (~ 8 Std)
+         * Kommentieren und Funktionen überprüfen. Mit Formeln belegen und aufschreiben. (~ 8 Std) [X]
 
          Freitag:
+         * todo: Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren. (~ 5 Std)
 
-         * todo: Maßstab und Einheiten (~ 3 Std)
-         * todo: Speichern und Laden xml (~ 6 Std)
+         *
 
          Samstag:
+         * todo: Speichern und Laden xml (~ 6 Std)
          * todo: Menüführung (~ 4 Std)
          * todo: Bugfixes1 (~ 2 Std)
          *
          Sonntag:
+         * todo: Maßstab und Einheiten (~ 3 Std)
          * todo: Bugfixes2 (~ 6 Std)
 
          Bugs:

@@ -128,7 +128,6 @@ public class ParrallelLichtquelle extends Lichtquelle {
             cStrg.resetteStrahlengang();
             double relativeNeigung;
             if(cStrg.getAnfangsStrahl().getRichtungsVektor().getX() < 0) { //Strahl geht in Richtung linker Seite
-                System.out.println(cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel());
                 relativeNeigung = (nNeigungsWinkel + Math.PI) - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
             } else {
                 relativeNeigung = nNeigungsWinkel - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();

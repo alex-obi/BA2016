@@ -14,12 +14,24 @@ public class Hauptebene extends Flaeche {
 
     Gerade hauptebene;
 
-    double brennweite;
+    //Brennweite vor der Hauptebene
+    double brennweiteVor;
 
-    public Hauptebene(int modus, Vektor mittelpunkt, double brennweite, double hoehe) {
+    //Brennweite hinter der Hauptebene
+    double brennweiteHinter;
+
+    public Hauptebene(int modus, Vektor nMittelpunkt, double nBrennweite, double hoehe) {
         this.modus = modus;
-        this.mittelpunkt = mittelpunkt.kopiere();
-        this.brennweite = brennweite;
+        mittelpunkt = nMittelpunkt.kopiere();
+        brennweiteVor = this.brennweiteHinter = nBrennweite;
+        hauptebene = new Gerade(new Vektor(mittelpunkt.getX(), mittelpunkt.getY() + hoehe / 2), new Vektor(mittelpunkt.getX(), mittelpunkt.getY() - hoehe / 2));
+    }
+
+    public Hauptebene(int modus, Vektor nMittelpunkt, double nBrennweiteVor, double nBrennweiteHinter, double hoehe) {
+        this.modus = modus;
+        mittelpunkt = nMittelpunkt.kopiere();
+        brennweiteVor = nBrennweiteVor;
+        brennweiteHinter = nBrennweiteHinter;
         hauptebene = new Gerade(new Vektor(mittelpunkt.getX(), mittelpunkt.getY() + hoehe / 2), new Vektor(mittelpunkt.getX(), mittelpunkt.getY() - hoehe / 2));
     }
 
@@ -34,59 +46,73 @@ public class Hauptebene extends Flaeche {
             cStrGng.strahlengangBeenden(position);
             return;
         }
-        double richtungsvorzeichen = Math.signum(cStrGng.getAktuellerStrahl().getRichtungsVektor().getX());
-        double gegenstandsweite = richtungsvorzeichen * (mittelpunkt.getX() - cStrGng.getAktuellerStrahl().gibQuellPunkt().getX());
-        double gegenstandshoehe = richtungsvorzeichen * (mittelpunkt.getY() - cStrGng.getAktuellerStrahl().gibQuellPunkt().getY());
-        double bildweite = 0;
-        double bildgroesse;
-        Vektor neueRichtung;
-        double quellLaenge;
-        double cBrennweite = brennweite;
-        if(modus == Flaeche.MODUS_REFLEKT) {
-            if(cStrGng.getAktuellerStrahl().getRichtungsVektor().getX() < 0) {
-                cBrennweite *= -1;
-            }
-        }
-        double faktor = 1;
-        if (modus == Flaeche.MODUS_REFLEKT) {
-            faktor = -1;
-        }
-        if(Math.abs(cBrennweite - gegenstandsweite) > 7) {
-            if (gegenstandsweite != 0 && cBrennweite != 0) {
-                bildweite = (Math.pow((1 / cBrennweite) - (1 / gegenstandsweite), -1));
-            } else if (cBrennweite == 0) {
-                bildweite = -gegenstandsweite;
-            } else {
-                return;
-            }
-            bildgroesse = (bildweite / gegenstandsweite) * gegenstandshoehe;
-            if(modus == Flaeche.MODUS_REFLEKT) {
-                bildweite *= -1;
-            }
-            Vektor relativerSchnittpunkt = Vektor.subtrahiere(position, mittelpunkt);
-            System.out.println("Bildweite: " + bildweite + ", Bildgroesse: " + bildgroesse);
-            neueRichtung = Vektor.addiere(relativerSchnittpunkt, new Vektor(-(richtungsvorzeichen * bildweite), -(richtungsvorzeichen * bildgroesse)));
-            if(cStrGng.getAktuellerStrahl().isAusDemUnendlichen()) {
-                neueRichtung.multipliziere(Math.abs(brennweite / bildweite));
-                //todo: position offset einbingen was wenn x- == bildweite ?
-            }
-            if(bildweite < 0) {
-                if(!cStrGng.getAktuellerStrahl().isAusDemUnendlichen() || brennweite < 0) {
-                    cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, faktor), -faktor * neueRichtung.gibLaenge(), false));
-                } else {
-                    cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, faktor), faktor * neueRichtung.gibLaenge(), false));
-                }
-            } else {
-                cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, -faktor), faktor * neueRichtung.gibLaenge(), false));
-            }
-        } else { //gegenstand ungefähr in brennweite
-            neueRichtung = new Vektor(faktor * cBrennweite, gegenstandshoehe);
-            if(richtungsvorzeichen > 0) {
-                cStrGng.neuenStrahlAnhaengen(new Strahl(position, neueRichtung, 0, true));
-            } else {
-                cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, -1), 0, true));
-            }
+        if(cStrGng.getAktuellerStrahl().getRichtungsVektor().getX() == 0) return; //Abbrechen, wenn Strahl parallel zur Hauptebene eintrifft
 
+        double richtungsVZ = Math.signum(cStrGng.getAktuellerStrahl().getRichtungsVektor().getX()); //Gibt an von welcher Seite der Strahl kommt
+        double gegenstandsweite = richtungsVZ * (mittelpunkt.getX() - cStrGng.getAktuellerStrahl().gibQuellPunkt().getX()); //Gegenstandsweite gespiegelt bei Richtungswechsel
+        double gegenstandshoehe = cStrGng.getAktuellerStrahl().gibQuellPunkt().getY() - mittelpunkt.getY();
+        Vektor relativerSchnittpunkt = Vektor.subtrahiere(position, mittelpunkt);
+
+        double reflFakt = 1;
+        if (modus == Flaeche.MODUS_REFLEKT) {
+            reflFakt = -1;
+        }
+
+        double brennweiteG; //Brennweite auf Gegenstandsseite
+        double brennweiteB; //Brennweite auf Bildseite
+        if (richtungsVZ > 0) {
+            brennweiteG = brennweiteVor;
+            brennweiteB = brennweiteHinter;
+        } else {
+            brennweiteG = reflFakt * brennweiteHinter;
+            brennweiteB = reflFakt * brennweiteVor;
+        }
+
+        Vektor neueRichtung;
+        boolean inUnendlich;
+        boolean istVirtuell;
+        double nQuellWeite;
+
+        if (Math.abs(brennweiteG - gegenstandsweite) < 7){ //Spezialfall 1 (g ist ungefähr f)
+            neueRichtung = new Vektor(reflFakt * richtungsVZ * brennweiteB, -gegenstandshoehe);
+            inUnendlich = true;
+            istVirtuell = (brennweiteB < 0);
+            nQuellWeite = 0;
+        } else {
+            Vektor bildPosition; //Position des Bildes relativ zum Mittelpunkt der Hauptebene
+            if (cStrGng.getAktuellerStrahl().isAusDemUnendlichen()) { //Spezialfall 2 (g, G -> unendlich)
+                double hoehe = -richtungsVZ * cStrGng.getAktuellerStrahl().getRichtungsVektor().getY();
+                double breite = cStrGng.getAktuellerStrahl().getRichtungsVektor().getX();
+                bildPosition = new Vektor(brennweiteB, -brennweiteG * (hoehe / breite));
+                istVirtuell = (brennweiteB < 0);
+            } else { //Normalfall
+                double bildweite;
+                if (gegenstandsweite != 0 && brennweiteB != 0 && brennweiteG != 0) {
+                    bildweite = (brennweiteB * gegenstandsweite) / (gegenstandsweite - brennweiteG);
+                } else if (brennweiteB == 0) { //Strahl wird unverändert durchgelassen
+                    return; //todo: Spezialfall behandeln
+                } else if (brennweiteG == 0) {
+                    return; //todo: Spezialfall behandeln
+                } else {
+                    return; //todo: Spezialfall behandeln
+                }
+
+                double bildgroesse = (gegenstandshoehe * brennweiteG) / (gegenstandsweite - brennweiteG);
+
+                bildPosition = new Vektor(bildweite, -bildgroesse);
+                istVirtuell = (bildweite < 0);
+            }
+            bildPosition.setX(richtungsVZ * reflFakt * bildPosition.getX());
+            bildPosition.subtrahiere(relativerSchnittpunkt);
+            neueRichtung = bildPosition;
+            inUnendlich = false;
+            nQuellWeite = neueRichtung.gibLaenge();
+        }
+
+        if (istVirtuell) { //Bild ist virtuell
+            cStrGng.neuenStrahlAnhaengen(new Strahl(position, Vektor.multipliziere(neueRichtung, -1), -nQuellWeite, inUnendlich));
+        } else { //Bild ist reell
+            cStrGng.neuenStrahlAnhaengen(new Strahl(position, neueRichtung, nQuellWeite, inUnendlich));
         }
     }
 
@@ -104,7 +130,23 @@ public class Hauptebene extends Flaeche {
     }
 
     public void setBrennweite(double nBrennweite) {
-        brennweite = nBrennweite;
+        brennweiteVor = brennweiteHinter = nBrennweite;
+    }
+
+    public double getBrennweiteHinter() {
+        return brennweiteHinter;
+    }
+
+    public void setBrennweiteHinter(double brennweiteHinter) {
+        this.brennweiteHinter = brennweiteHinter;
+    }
+
+    public double getBrennweiteVor() {
+        return brennweiteVor;
+    }
+
+    public void setBrennweiteVor(double brennweiteVor) {
+        this.brennweiteVor = brennweiteVor;
     }
 
     @Override
