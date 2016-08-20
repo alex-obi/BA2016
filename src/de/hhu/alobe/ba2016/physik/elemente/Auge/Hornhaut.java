@@ -15,6 +15,8 @@ import java.awt.*;
 
 public class Hornhaut implements KannKollision, Zeichenbar {
 
+    public static final double BRECHZAHL_HORNHAUT = 1.376;
+
     private Auge auge;
 
     private Grenzflaeche grenzflaeche;
@@ -29,8 +31,8 @@ public class Hornhaut implements KannKollision, Zeichenbar {
         this.auge = auge;
         this.radius = radius;
         this.position = position;
-        this.hauptebene = new Hauptebene(Hauptebene.MODUS_BRECHUNG, position, Math.pow(((Auge.BRECHZAHL_KAMMERWASSER - 1) / radius), -1), radius * 1.5f);
-        this.grenzflaeche = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_BRECHUNG, 1, Auge.BRECHZAHL_KAMMERWASSER, new Vektor(position.getX() + radius, position.getY()), radius, 2.36, 1.57);
+        this.hauptebene = new Hauptebene(Hauptebene.MODUS_BRECHUNG, position, 2.660 * radius, 3.660 * radius, radius * 1.5f);
+        this.grenzflaeche = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_BRECHUNG, 1, BRECHZAHL_HORNHAUT, new Vektor(position.getX() + radius, position.getY()), radius, 2.36, 1.57);
     }
 
     public void verschiebeUm(Vektor verschiebung) {

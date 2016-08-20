@@ -50,6 +50,7 @@ public class Main {
          * todo: Bugfixes1 (~ 2 Std)
          *
          Sonntag:
+         * todo: todos bei Hauptebene
          * todo: Maßstab und Einheiten (~ 3 Std)
          * todo: Bugfixes2 (~ 6 Std)
 

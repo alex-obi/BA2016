@@ -135,4 +135,7 @@ public class Schirm extends Bauelement implements KannKollision {
         return rahmen;
     }
 
+    public double getHoehe() {
+        return hoehe;
+    }
 }
