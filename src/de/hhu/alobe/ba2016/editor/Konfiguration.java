@@ -1,4 +1,4 @@
-package de.hhu.alobe.ba2016;
+package de.hhu.alobe.ba2016.editor;
 
 /**
  * Speichert und verwaltet die Einstellungen des Programms

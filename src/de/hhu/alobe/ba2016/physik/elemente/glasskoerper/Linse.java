@@ -11,6 +11,7 @@ import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import de.hhu.alobe.ba2016.physik.flaechen.*;
+import org.jdom2.Element;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,18 +21,23 @@ import java.util.ArrayList;
 
 public class Linse extends Bauelement implements KannKollision {
 
+    public static final String XML_LINSE = "linse";
     private double hoeheLinse;
+    public static final String XML_HOEHE_LINSE = "hoeheLinse";
     public static final int MIND_HOEHE_LINSE = 100;
     public static final int MAX_HOEHE_LINSE = 500;
 
     private double dicke;
+    public static final String XML_DICKE = "dicke";
 
     private Grenzflaeche linsenseite1;
     private double radius1; //Radius 0 bedeutet, dass die Grenzflaeche eine Ebene ist
+    public static final String XML_RADIUS1 = "radius1";
     private double breite1; //Abstand bezüglich Mittelpunkt von Radius1
 
     private Grenzflaeche linsenseite2;
     private double radius2;
+    public static final String XML_RADIUS2 = "radius2";
     private double breite2;  //Abstand bezüglich Mittelpunkt von Radius2
 
     public static final int MIND_RADIUS = 50;
@@ -41,6 +47,7 @@ public class Linse extends Bauelement implements KannKollision {
     private Grenzflaeche untereBegrenzung;
 
     private double brechzahl;
+    public static final String XML_BRECHZAHL = "brechzahl";
     public static final double MIND_BRECHZAHL = 1;
     public static final double MAX_BRECHZAHL = 4;
 
@@ -50,18 +57,35 @@ public class Linse extends Bauelement implements KannKollision {
 
     private Hauptebene hauptebene;
     private double hoeheHauptebene;
+    public static final String XML_HOEHE_HAUPTEBENE = "hoeheHauptebene";
     public static final int MIND_HOEHE_HAUPTEBENE = 100;
     public static final int MAX_HOEHE_HAUPTEBENE = 500;
 
-    public Linse (OptischeBank optischeBank, Vektor mittelPunkt, double brennweite) {
+    public Linse(OptischeBank optischeBank, Vektor mittelPunkt, double brennweite) {
         super(optischeBank, mittelPunkt, TYP_LINSE);
         this.hoeheHauptebene = Math.max(MIND_HOEHE_HAUPTEBENE, Math.min(Math.abs(brennweite), MAX_HOEHE_HAUPTEBENE));
         setBrennweite(brennweite);
     }
 
-    public Linse (OptischeBank optischeBank, Vektor mittelPunkt, double brechzahl, double hoehe, double dicke, double radius1, double radius2) {
+    public Linse(OptischeBank optischeBank, Vektor mittelPunkt, double brechzahl, double hoehe, double dicke, double radius1, double radius2) {
         super(optischeBank, mittelPunkt, TYP_LINSE);
         formatNeuBestimmen(brechzahl, Math.min(hoehe, MIND_HOEHE_HAUPTEBENE), hoehe, dicke, radius1, radius2);
+    }
+
+    public Linse(OptischeBank optischeBank, Vektor mittelPunkt, double brechzahl, double hoeheHauptebene, double hoeheLinse, double dicke, double radius1, double radius2) {
+        super(optischeBank, mittelPunkt, TYP_LINSE);
+        formatNeuBestimmen(brechzahl, hoeheHauptebene, hoeheLinse, dicke, radius1, radius2);
+    }
+
+    public Linse(OptischeBank optischeBank, Element xmlElement) throws Exception {
+        super(optischeBank, xmlElement, TYP_LINSE);
+        brechzahl = xmlElement.getChild(XML_BRECHZAHL).getAttribute("wert").getDoubleValue();
+        hoeheHauptebene = xmlElement.getChild(XML_HOEHE_HAUPTEBENE).getAttribute("wert").getDoubleValue();
+        hoeheLinse = xmlElement.getChild(XML_HOEHE_LINSE).getAttribute("wert").getDoubleValue();
+        dicke = xmlElement.getChild(XML_DICKE).getAttribute("wert").getDoubleValue();
+        radius1 = xmlElement.getChild(XML_RADIUS1).getAttribute("wert").getDoubleValue();
+        radius2 = xmlElement.getChild(XML_RADIUS2).getAttribute("wert").getDoubleValue();
+        formatNeuBestimmen(brechzahl, hoeheHauptebene, hoeheLinse, dicke, radius1, radius2);
     }
 
     public void formatNeuBestimmen(double brechzahl, double nMindHoeheHauptebene, double nMaxHoeheLinse, double nDicke, double r1, double r2) {
@@ -364,6 +388,23 @@ public class Linse extends Bauelement implements KannKollision {
         rahmen.rahmenErweitern(new Point2D.Double(breite2 + 2, (hoeheHauptebene / 2) + 2));
         rahmen.rahmenErweitern(new Point2D.Double(-breite1 - 2, (hoeheHauptebene / 2) + 2));
         return rahmen;
+    }
+
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = super.getXmlElement();
+        xmlElement.addContent(new Element(XML_BRECHZAHL).setAttribute("wert", String.valueOf(brechzahl)));
+        xmlElement.addContent(new Element(XML_DICKE).setAttribute("wert", String.valueOf(dicke)));
+        xmlElement.addContent(new Element(XML_HOEHE_HAUPTEBENE).setAttribute("wert", String.valueOf(hoeheHauptebene)));
+        xmlElement.addContent(new Element(XML_HOEHE_LINSE).setAttribute("wert", String.valueOf(hoeheLinse)));
+        xmlElement.addContent(new Element(XML_RADIUS1).setAttribute("wert", String.valueOf(radius1)));
+        xmlElement.addContent(new Element(XML_RADIUS2).setAttribute("wert", String.valueOf(radius2)));
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_LINSE;
     }
 
     public double getRadius1() {

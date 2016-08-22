@@ -1,7 +1,9 @@
 package de.hhu.alobe.ba2016;
 
+import de.hhu.alobe.ba2016.editor.HauptFenster;
 import de.hhu.alobe.ba2016.grafik.Grafiken;
-import de.hhu.alobe.ba2016.mathe.Vektor;
+
+import java.io.File;
 
 /**
  * Klasse zum Programmeinstieg
@@ -10,7 +12,9 @@ public class Main {
 
     public static void main(String[] args) {
         Grafiken.grafikenLaden();
-        new HauptFenster();
+        HauptFenster fenster = new HauptFenster();
+        //fenster.wechseleOptischeBank(fenster.ladeNeueOptischeBank(new File("jdom/saves/test.jdom")));
+        //fenster.speichereAktuelleOptischeBank(new File("jdom/saves/test.jdom"));
 
         /*
         Todoliste:
@@ -40,28 +44,21 @@ public class Main {
          * Kommentieren und Funktionen überprüfen. Mit Formeln belegen und aufschreiben. (~ 8 Std) [X]
 
          Freitag:
-         * todo: Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren. (~ 5 Std)
+         * Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren. (~ 5 Std) [X]
 
          *
 
          Samstag:
-         * todo: Speichern und Laden xml (~ 6 Std)
-         * todo: Menüführung (~ 4 Std)
-         * todo: Bugfixes1 (~ 2 Std)
-         *
+         * todo: Auge mehr in Länge als in allgemeine Größe skalieren
+         * todo: Feldlinse (g -> 0) (~2 Std)
+
          Sonntag:
-         * todo: todos bei Hauptebene
          * todo: Maßstab und Einheiten (~ 3 Std)
-         * todo: Bugfixes2 (~ 6 Std)
+         * todo: Speichern und Laden jdom (~ 6 Std)
+         * todo: Menüführung (~ 4 Std)
 
          Bugs:
          * Wichtig:
-         * todo: Strahlen machen kleinen Sprung an Hornhaut
-         * todo: Hauptebene Brennweite -> unendlich Reflexion mit Bild?!
-         * todo: Senkrechter Einfall bei Hauptebene -> Absturz!
-         * todo: bilder nur noch bei spiegeln aus dem unendlichen nicht angezeigt und ins unendliche mehrere bilder
-         * todo: spiegel bei unendlich keine reflexion
-         * todo: Lichtquelle genau auf Spiegelhauptebene -> Absturz!
          * todo: Bei KonkavKonvexen werden bei r -> unendlich beide Seiten vertauscht
          * todo: Rückgängig bei Parallellicht buggy
          *
@@ -74,7 +71,7 @@ public class Main {
 
          Optional:
          * todo: Parallel-, Zenit-, Brennpunktstrahl markieren
-         * todo: Strahlen nummerieren
+         * todo: Strahlen nummerieren und oder farblich kennzeichnen
          * todo: Eigenschaftenänderung rücknehmbar
          * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
          * todo: Scrollen mit Maus

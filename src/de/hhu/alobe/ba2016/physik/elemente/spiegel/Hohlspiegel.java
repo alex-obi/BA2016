@@ -9,6 +9,7 @@ import de.hhu.alobe.ba2016.physik.flaechen.*;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
+import org.jdom2.Element;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,10 @@ import java.util.ArrayList;
 
 public class Hohlspiegel extends Bauelement implements KannKollision{
 
+    public static final String XML_HOHLSPIEGEL = "hohlspiegel";
+
     protected double hoehe;
+    public static final String XML_HOEHE = "hoehe";
     public static final int MIND_HOEHE = 100;
     public static final int MAX_HOEHE = 510;
 
@@ -25,6 +29,7 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
 
 
     protected double radius;
+    public static final String XML_RADIUS = "radius";
     public static final int MIND_RADIUS = 50;
     public static final int MAX_RADIUS = 100000; //Maximaler Radius bis Kreis als ebene Fläche approximiert wird
 
@@ -35,6 +40,14 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
     public Hohlspiegel(OptischeBank optischeBank, Vektor mittelPunkt, double radius, double hoehe) {
         super(optischeBank, mittelPunkt, TYP_SPIEGEL);
         this.radius = radius;
+        hauptebene = new Hauptebene(Flaeche.MODUS_REFLEKT, mittelPunkt, radius / 2, hoehe);
+        setHoehe(hoehe);
+    }
+
+    public Hohlspiegel(OptischeBank optischeBank, Element xmlElement) throws Exception {
+        super(optischeBank, xmlElement, TYP_SPIEGEL);
+        this.hoehe = xmlElement.getChild(XML_HOEHE).getAttribute("wert").getDoubleValue();
+        this.radius = xmlElement.getChild(XML_RADIUS).getAttribute("wert").getDoubleValue();
         hauptebene = new Hauptebene(Flaeche.MODUS_REFLEKT, mittelPunkt, radius / 2, hoehe);
         setHoehe(hoehe);
     }
@@ -165,4 +178,18 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
             return rahmen;
         }
     }
+
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = super.getXmlElement();
+        xmlElement.addContent(new Element(XML_HOEHE).setAttribute("wert", String.valueOf(hoehe)));
+        xmlElement.addContent(new Element(XML_RADIUS).setAttribute("wert", String.valueOf(radius)));
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_HOHLSPIEGEL;
+    }
+
 }

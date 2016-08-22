@@ -10,25 +10,36 @@ import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_Auswahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.grafik.OptischeAchse;
 import de.hhu.alobe.ba2016.physik.elemente.Auge.Auge;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.Farbe;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.ParallelLichtquelle;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.PunktLichtquelle;
 import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Blende;
 import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Schirm;
 import de.hhu.alobe.ba2016.physik.elemente.glasskoerper.Linse;
 import de.hhu.alobe.ba2016.physik.elemente.spiegel.Hohlspiegel;
+import de.hhu.alobe.ba2016.physik.elemente.spiegel.Spiegel;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import de.hhu.alobe.ba2016.physik.elemente.*;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
+import de.hhu.alobe.ba2016.jdom.Speicherbar;
+import org.jdom2.Element;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Panel beinhaltet die gesamte graphische Anzeige der optischen Bank
  */
-public class OptischeBank extends JPanel {
+public class OptischeBank extends JPanel implements Speicherbar {
+
+    public static final String XML_OPTISCHEBANK = "optische_bank";
+
+    private String name;
+    public static final String XML_NAME = "name";
 
     private double zoom;
 
@@ -65,9 +76,49 @@ public class OptischeBank extends JPanel {
 
     Werkzeug aktuellesWerkzeug;
 
-    public OptischeBank() {
+    public OptischeBank(String name) {
+        this.name = name;
+        initialisiere();
 
-        super(new BorderLayout());
+        //########### Erzeuge Testszenario
+
+        //bauelementHinzufuegen(new Linse(this, new Vektor(50, 450), 1.336, 90, 0, 60, 0));
+
+        bauelementHinzufuegen(new PunktLichtquelle(this, new Vektor(50, 150), new Farbe(Color.BLACK)));
+        /*bauelementHinzufuegen(new Blende(this, new Vektor(800, 450), 150, 50));
+        bauelementHinzufuegen(new ParallelLichtquelle(this, new Vektor(50, 250), Color.BLACK, 250, 0));
+        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(500, 450), -300, 150));
+        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(700, 500), 300, 200));
+        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(300, 500), 100, 200));
+        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(900, 500), 0, 200));
+        bauelementHinzufuegen(new Schirm(this, new Vektor(650, 450), 150));
+        bauelementHinzufuegen(new Linse(this, new Vektor(50, 450), 1.8, 200, 10, 50, -60));
+        bauelementHinzufuegen(new Linse(this, new Vektor(350, 450), 2.5, 150, 10, 300, 250));
+        bauelementHinzufuegen(new Linse(this, new Vektor(200, 450), 1.8, 150, 10, -300, -250));
+        bauelementHinzufuegen(new Blende(this, new Vektor(800, 450), 150, 50));
+        bauelementHinzufuegen(new Auge(this, new Vektor(700, 250)));*/
+    }
+
+    public OptischeBank(Element xmlElement) throws Exception {
+        this.name = xmlElement.getAttributeValue(XML_NAME);
+        initialisiere();
+        Iterator<?> bauelemente = xmlElement.getChildren().iterator();
+        while(bauelemente.hasNext()) {
+            Element nextBau = (Element)bauelemente.next();
+            String name = nextBau.getName();
+            if(name.equals(Blende.XML_BLENDE)) bauelementHinzufuegen(new Blende(this, nextBau));
+            if(name.equals(Schirm.XML_SCHIRM)) bauelementHinzufuegen(new Schirm(this, nextBau));
+            if(name.equals(Auge.XML_AUGE)) bauelementHinzufuegen(new Auge(this, nextBau));
+            if(name.equals(Linse.XML_LINSE)) bauelementHinzufuegen(new Linse(this, nextBau));
+            if(name.equals(ParallelLichtquelle.XML_PARALLELLICHT)) bauelementHinzufuegen(new ParallelLichtquelle(this, nextBau));
+            if(name.equals(PunktLichtquelle.XML_PUNKTLICHT)) bauelementHinzufuegen(new PunktLichtquelle(this, nextBau));
+            if(name.equals(Hohlspiegel.XML_HOHLSPIEGEL)) bauelementHinzufuegen(new Hohlspiegel(this, nextBau));
+            if(name.equals(Spiegel.XML_SPIEGEL)) bauelementHinzufuegen(new Spiegel(this, nextBau));
+        }
+    }
+
+    private void initialisiere() {
+        setLayout(new BorderLayout());
         setOpaque(true);
 
         zoom = 1;
@@ -94,23 +145,6 @@ public class OptischeBank extends JPanel {
         aktionsListe = new AktionsListe();
 
         werkzeugWechseln(new Werkzeug_Auswahl(this));
-
-        //########### Erzeuge Testszenario
-
-        //bauelementHinzufuegen(new Linse(this, new Vektor(50, 450), 1.336, 90, 0, 60, 0));
-
-        bauelementHinzufuegen(new PunktLichtquelle(this, new Vektor(50, 150), Color.BLACK));
-        /*bauelementHinzufuegen(new ParrallelLichtquelle(this, new Vektor(50, 250), Color.BLACK, 250, 0));
-        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(500, 450), -300, 150));
-        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(700, 500), 300, 200));
-        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(300, 500), 100, 200));
-        bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(900, 500), 0, 200));
-        bauelementHinzufuegen(new Schirm(this, new Vektor(650, 450), 150));
-        bauelementHinzufuegen(new Linse(this, new Vektor(50, 450), 1.8, 200, 10, 50, -60));
-        bauelementHinzufuegen(new Linse(this, new Vektor(350, 450), 2.5, 150, 10, 300, 250));
-        bauelementHinzufuegen(new Linse(this, new Vektor(200, 450), 1.8, 150, 10, -300, -250));
-        bauelementHinzufuegen(new Blende(this, new Vektor(800, 450), 150, 50));
-        bauelementHinzufuegen(new Auge(this, new Vektor(700, 250)));*/
 
     }
 
@@ -292,5 +326,24 @@ public class OptischeBank extends JPanel {
 
     public void setVirtuelleStrahlenAktiv(boolean virtuelleStrahlenAktiv) {
         this.virtuelleStrahlenAktiv = virtuelleStrahlenAktiv;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = new Element(getXmlElementTyp()).setAttribute(XML_NAME, name);
+        for(Bauelement cBau : bauelemente) {
+            xmlElement.addContent(cBau.getXmlElement());
+        }
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_OPTISCHEBANK;
     }
 }

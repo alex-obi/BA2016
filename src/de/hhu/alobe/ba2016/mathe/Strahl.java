@@ -1,7 +1,8 @@
 package de.hhu.alobe.ba2016.mathe;
 
-import de.hhu.alobe.ba2016.HauptFenster;
+import de.hhu.alobe.ba2016.editor.HauptFenster;
 import de.hhu.alobe.ba2016.Konstanten;
+import org.jdom2.Element;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -11,8 +12,13 @@ import java.awt.geom.Line2D;
  */
 public class Strahl extends GeomertrischeFigur {
 
+    public static final String XML_STRAHL = "strahl";
+
     protected Vektor basisVektor;
+    public static final String XML_BASISVEKTOR = "basisVektor";
+
     protected Vektor richtungsVektor;
+    public static final String XML_RICHTUNGSVEKTOR = "richtungsVektor";
 
     //Variable zum Speichern der Entfernung, von welchem Bildpunkt (reell oder virtuell) aus der Strahl bei Berechnung durch Hauptebenen erzeugt wird
     protected double quellEntfernung;
@@ -29,6 +35,11 @@ public class Strahl extends GeomertrischeFigur {
         this.richtungsVektor = richtung.gibEinheitsVektor();
         this.quellEntfernung = quellEntfernung;
         this.ausDemUnendlichen = ausDemUnendlichen;
+    }
+
+    public Strahl(Element xmlElement) throws Exception {
+        basisVektor = new Vektor(xmlElement.getChild(XML_BASISVEKTOR));
+        richtungsVektor = new Vektor(xmlElement.getChild(XML_RICHTUNGSVEKTOR));
     }
 
     /**
@@ -81,6 +92,17 @@ public class Strahl extends GeomertrischeFigur {
     @Override
     public void verschiebeUm(Vektor verschiebung) {
         basisVektor.addiere(verschiebung);
+    }
+
+    public Element getXmlElement() {
+        Element xmlElement = new Element(getXmlElementTyp());
+        xmlElement.addContent(basisVektor.getXmlElement(XML_BASISVEKTOR));
+        xmlElement.addContent(richtungsVektor.getXmlElement(XML_RICHTUNGSVEKTOR));
+        return xmlElement;
+    }
+
+    public String getXmlElementTyp() {
+        return XML_STRAHL;
     }
 
     public static double[] gibSchnittentfernungen (Strahl s1, Strahl s2) {

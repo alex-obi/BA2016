@@ -5,6 +5,8 @@ package de.hhu.alobe.ba2016;
  */
 public abstract class Konstanten {
 
+    public static final String SAVE_ORDNER = "saves/";
+
     public static final double LICHTGESCHW = 299792458; // m/s
 
     public static final double MIND_ENTFERNUNG_STRAHL = 0.1f; // Mindestdistanz, die ein Strahl zurueckgelegt haben muss um Kollidieren zu koennen

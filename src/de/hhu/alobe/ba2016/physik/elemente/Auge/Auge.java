@@ -10,6 +10,7 @@ import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Sphaerisch;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
+import org.jdom2.Element;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,20 +19,29 @@ import java.util.ArrayList;
 
 public class Auge extends Bauelement implements KannKollision {
 
+    public static final String XML_AUGE = "auge";
+
     private Hornhaut hornhaut;
-    private double abstand_hornhaut; //Abstand relativ zu Augenlinse
+    private static final double HORNHAUT_RADIUS = 43.1;
+    private static final double HORNHAUT_ABSTAND = 40.3; //Abstand relativ zu Augenlinse
 
     private Augenlinse augenlinse;
+    private static final double AUGENLINSE_BRECHZAHL = 1.25;
+
     private double kruemmungsradius_linse;
+    public static final String XML_KRUEMMUNG_LINSE = "kruemmungLinse";
 
     public static final double MIND_RADIUS_LINSE = 60;
     public static final double MAX_RADIUS_LINSE = 535.8 / 2;
 
     private Netzhaut netzhaut;
-    private double abstand_netzhaut; //Abstand relativ zu Augenlinse
+    private static final double HOEHE_NETZHAUT = 64.65;
 
-    public static final double MIND_ABSTAND_NETZHAUT = 71.3;
-    public static final double MAX_ABSTAND_NETZHAUT = 121.3;
+    private double abstand_netzhaut; //Abstand relativ zu Augenlinse
+    public static final String XML_NETZHAUT_ABSTAND = "abstandNetzhaut";
+
+    public static final double MIND_ABSTAND_NETZHAUT = 46.3;
+    public static final double MAX_ABSTAND_NETZHAUT = 146.3;
 
     private Grenzflaeche_Sphaerisch obereBegrenzung;
     private Grenzflaeche_Sphaerisch untereBegrenzung;
@@ -40,19 +50,28 @@ public class Auge extends Bauelement implements KannKollision {
 
     public Auge(OptischeBank optischeBank, Vektor mittelpunkt) {
         super(optischeBank, mittelpunkt, Bauelement.TYP_AUGE);
-        abstand_hornhaut = 40.3;
-        hornhaut = new Hornhaut(this, Vektor.addiere(mittelpunkt, new Vektor(-abstand_hornhaut, 0)), 43.1);
-        kruemmungsradius_linse = 535.8 / 2;
-        augenlinse = new Augenlinse(this, mittelpunkt.kopiere(), 1.25, 80, kruemmungsradius_linse);
-        abstand_netzhaut = 96.3;
-        netzhaut = new Netzhaut(this, Vektor.addiere(mittelpunkt, new Vektor(abstand_netzhaut, 0)), 64.65);
+        initialisiere(mittelpunkt, 535.8 / 2, 96.3);
+    }
+
+    public Auge(OptischeBank optischeBank, Element xmlElement) throws Exception {
+        super(optischeBank, xmlElement, TYP_AUGE);
+        kruemmungsradius_linse = xmlElement.getChild(XML_KRUEMMUNG_LINSE).getAttribute("wert").getDoubleValue();
+        abstand_netzhaut = xmlElement.getChild(XML_NETZHAUT_ABSTAND).getAttribute("wert").getDoubleValue();
+        initialisiere(mittelPunkt, kruemmungsradius_linse, abstand_netzhaut);
+    }
+
+    private void initialisiere(Vektor mittelpunkt, double nKruemmungsradius_linse, double nAbstand_netzhaut) {
+        kruemmungsradius_linse = nKruemmungsradius_linse;
+        abstand_netzhaut = nAbstand_netzhaut;
+        hornhaut = new Hornhaut(this, Vektor.addiere(mittelpunkt, new Vektor(-HORNHAUT_ABSTAND, 0)), HORNHAUT_RADIUS);
+        augenlinse = new Augenlinse(this, mittelpunkt.kopiere(), AUGENLINSE_BRECHZAHL, 80, kruemmungsradius_linse);
+        netzhaut = new Netzhaut(this, Vektor.addiere(mittelpunkt, new Vektor(abstand_netzhaut, 0)), HOEHE_NETZHAUT);
         generiereBegrenzungen();
         setRahmen(generiereRahmen());
-
     }
 
     private void generiereBegrenzungen() {
-        double d = abstand_netzhaut + + abstand_hornhaut - 14;
+        double d = abstand_netzhaut + HORNHAUT_ABSTAND - 14;
         double a = netzhaut.getHoehe() / 2;
         double b = abstand_netzhaut - (d / 2);
         double r = Math.sqrt(a * a + d * d / 4);
@@ -76,10 +95,10 @@ public class Auge extends Bauelement implements KannKollision {
     @Override
     public Rahmen generiereRahmen() {
         Rahmen rahmen = new Rahmen(mittelPunkt);
-        rahmen.rahmenErweitern(new Point2D.Double(-abstand_hornhaut - 5, 5 + insgesamtHoehe / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(-HORNHAUT_ABSTAND - 5, 5 + insgesamtHoehe / 2));
         rahmen.rahmenErweitern(new Point2D.Double( abstand_netzhaut + 5, 5 + insgesamtHoehe / 2));
         rahmen.rahmenErweitern(new Point2D.Double(+abstand_netzhaut + 5, -5 -insgesamtHoehe / 2));
-        rahmen.rahmenErweitern(new Point2D.Double(-abstand_hornhaut - 5, -5 -insgesamtHoehe / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(-HORNHAUT_ABSTAND - 5, -5 -insgesamtHoehe / 2));
         return rahmen;
     }
 
@@ -140,4 +159,18 @@ public class Auge extends Bauelement implements KannKollision {
         kollisionen.add(untereBegrenzung.gibKollision(cStrGng));
         return StrahlenKollision.getErsteKollision(kollisionen);
     }
+
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = super.getXmlElement();
+        xmlElement.addContent(new Element(XML_KRUEMMUNG_LINSE).setAttribute("wert", String.valueOf(kruemmungsradius_linse)));
+        xmlElement.addContent(new Element(XML_NETZHAUT_ABSTAND).setAttribute("wert", String.valueOf(abstand_netzhaut)));
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_AUGE;
+    }
+
 }

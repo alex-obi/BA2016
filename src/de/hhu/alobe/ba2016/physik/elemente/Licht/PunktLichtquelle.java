@@ -7,6 +7,7 @@ import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
+import org.jdom2.Element;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,10 +22,17 @@ import java.util.ArrayList;
 
 public class PunktLichtquelle extends Lichtquelle{
 
+    public static final String XML_PUNKTLICHT = "punkt_licht";
+
     public static double groesse = 20;
 
-    public PunktLichtquelle(OptischeBank optischeBank, Vektor mittelpunkt, Color farbe) {
+    public PunktLichtquelle(OptischeBank optischeBank, Vektor mittelpunkt, Farbe farbe) {
         super(optischeBank, mittelpunkt, farbe);
+        setRahmen(generiereRahmen());
+    }
+
+    public PunktLichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
+        super(optischeBank, xmlElement);
         setRahmen(generiereRahmen());
     }
 
@@ -32,12 +40,7 @@ public class PunktLichtquelle extends Lichtquelle{
     public Strahlengang berechneNeuenStrahl(Vektor strahlPunkt) {
         Vektor richtungsPunkt = strahlPunkt.kopiere();
         Vektor richtungsVektor = Vektor.subtrahiere(richtungsPunkt, mittelPunkt);
-        return new Strahlengang(new Strahl(mittelPunkt, richtungsVektor));
-    }
-
-    @Override
-    public void verschiebeUm(Vektor verschiebung) {
-        mittelPunkt.addiere(verschiebung);
+        return new Strahlengang(new Strahl(mittelPunkt.kopiere(), richtungsVektor));
     }
 
     @Override
@@ -94,6 +97,17 @@ public class PunktLichtquelle extends Lichtquelle{
 
         optischeBank.getEigenschaften().setOptionen("Punktlichtquelle", regler);
 
+    }
+
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = super.getXmlElement();
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_PUNKTLICHT;
     }
 
 }

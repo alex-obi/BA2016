@@ -1,9 +1,8 @@
 package de.hhu.alobe.ba2016.mathe;
 
-import de.hhu.alobe.ba2016.HauptFenster;
+import de.hhu.alobe.ba2016.editor.HauptFenster;
 import de.hhu.alobe.ba2016.Konstanten;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
 

@@ -1,13 +1,17 @@
 package de.hhu.alobe.ba2016.physik.elemente;
 
+import de.hhu.alobe.ba2016.jdom.Speicherbar;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.mathe.Vektor;
+import org.jdom2.Element;
 
 /**
  * Ein Bauelement hat eine Interaktion mit Strahlen
  *
  */
-public abstract class Bauelement extends Auswahlobjekt {
+public abstract class Bauelement extends Auswahlobjekt implements Speicherbar{
+
+    public static final String XML_BAUELEMENT = "bauelement";
 
     protected OptischeBank optischeBank;
 
@@ -24,7 +28,12 @@ public abstract class Bauelement extends Auswahlobjekt {
     public Bauelement(OptischeBank optischeBank, Vektor mittelPunkt, int typ) {
         super(mittelPunkt);
         this.optischeBank = optischeBank;
-        this.mittelPunkt = mittelPunkt;
+        this.typ = typ;
+    }
+
+    public Bauelement(OptischeBank optischeBank, Element xmlElement, int typ) throws Exception {
+        super(new Vektor(xmlElement.getChild(XML_MITTELPUNKT)));
+        this.optischeBank = optischeBank;
         this.typ = typ;
     }
 
@@ -51,5 +60,17 @@ public abstract class Bauelement extends Auswahlobjekt {
     }
 
     public abstract Rahmen generiereRahmen();
+
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = new Element(getXmlElementTyp());
+        xmlElement.addContent(mittelPunkt.getXmlElement(XML_MITTELPUNKT));
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_BAUELEMENT;
+    }
 
 }

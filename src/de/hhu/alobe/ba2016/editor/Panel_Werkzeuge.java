@@ -1,7 +1,6 @@
 package de.hhu.alobe.ba2016.editor;
 
 
-import de.hhu.alobe.ba2016.HauptFenster;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_Auswahl;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_ElementLoeschen;
 

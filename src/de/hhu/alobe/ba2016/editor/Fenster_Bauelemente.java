@@ -1,12 +1,11 @@
 package de.hhu.alobe.ba2016.editor;
 
 
-import de.hhu.alobe.ba2016.HauptFenster;
 import de.hhu.alobe.ba2016.editor.werkzeuge.*;
 import de.hhu.alobe.ba2016.grafik.Grafiken;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Auge.Auge;
-import de.hhu.alobe.ba2016.physik.elemente.Licht.ParrallelLichtquelle;
+import de.hhu.alobe.ba2016.physik.elemente.Licht.ParallelLichtquelle;
 import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Blende;
 import de.hhu.alobe.ba2016.physik.elemente.spiegel.Hohlspiegel;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.Farbe;
@@ -151,7 +150,7 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener{
                     Farbe.farbenpalette.keySet().toArray(),
                     "Schwarz");
             if(farbenString != null) {
-                Lichtquelle lampe = new PunktLichtquelle(optBank, new Vektor(0, 0), Farbe.getColor(farbenString));
+                Lichtquelle lampe = new PunktLichtquelle(optBank, new Vektor(0, 0), new Farbe(farbenString));
                 optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, lampe));
             }
         }
@@ -165,7 +164,7 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener{
                     Farbe.farbenpalette.keySet().toArray(),
                     "Schwarz");
             if(farbenString != null) {
-                ParrallelLichtquelle lampe = new ParrallelLichtquelle(optBank, new Vektor(0, 0), Farbe.getColor(farbenString), ParrallelLichtquelle.MAX_HOEHE  / 2, 0);
+                ParallelLichtquelle lampe = new ParallelLichtquelle(optBank, new Vektor(0, 0), new Farbe(farbenString), ParallelLichtquelle.MAX_HOEHE  / 2, 0);
                 optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, lampe));
             }
         }

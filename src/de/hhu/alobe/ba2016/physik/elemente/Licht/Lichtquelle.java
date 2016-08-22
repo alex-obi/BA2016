@@ -4,29 +4,47 @@ package de.hhu.alobe.ba2016.physik.elemente.Licht;
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_NeuerStrahl;
+import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
+import org.jdom2.Element;
 
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public abstract class Lichtquelle extends Bauelement {
 
+    public static final String XML_LICHTQUELLE = "lichtquelle";
+
     private boolean aktiv;
+    public static final String XML_ISTAKTIV = "istAktiv";
 
     //Strahlengaenge, die durch diese Lichtquelle erzeugt werden
     protected ArrayList<Strahlengang> strahlengaenge;
 
     //Farbe dieser Lichtquelle
-    protected Color farbe;
+    protected Farbe farbe;
+    public static final String XML_FARBE = "farbe";
 
-    public Lichtquelle (OptischeBank optischeBank, Vektor mittelPunkt, Color farbe) {
+    public Lichtquelle(OptischeBank optischeBank, Vektor mittelPunkt, Farbe farbe) {
         super(optischeBank, mittelPunkt, TYP_LAMPE);
         aktiv = true;
         strahlengaenge = new ArrayList<>();
         this.farbe = farbe;
+    }
+
+    public Lichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
+        super(optischeBank, xmlElement, TYP_LAMPE);
+        aktiv = xmlElement.getChild(XML_ISTAKTIV).getAttribute("wert").getBooleanValue();
+        farbe = new Farbe(xmlElement.getChild(XML_FARBE));
+        strahlengaenge = new ArrayList<>();
+        Iterator<?> strahlen = xmlElement.getChildren(Strahl.XML_STRAHL).iterator();
+        while(strahlen.hasNext()) {
+            neuerStrahl(new Strahlengang(new Strahl((Element) strahlen.next())));
+        }
     }
 
     public abstract Strahlengang berechneNeuenStrahl (Vektor strahlPunkt);
@@ -74,7 +92,12 @@ public abstract class Lichtquelle extends Bauelement {
     }
 
     @Override
-    public abstract void verschiebeUm(Vektor verschiebung);
+    public void verschiebeUm(Vektor verschiebung) {
+        mittelPunkt.addiere(verschiebung);
+        for(Strahlengang cStrG : strahlengaenge) {
+            cStrG.getAnfangsStrahl().getBasisVektor().addiere(verschiebung);
+        }
+    }
 
     @Override
     public void paintComponent(Graphics2D g) {
@@ -89,12 +112,32 @@ public abstract class Lichtquelle extends Bauelement {
         super.paintComponent(g);
     }
 
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = super.getXmlElement();
+        xmlElement.addContent(new Element(XML_ISTAKTIV).setAttribute("wert", String.valueOf(aktiv)));
+        xmlElement.addContent(farbe.getXmlElement(XML_FARBE));
+        for(Strahlengang strG : strahlengaenge) {
+            xmlElement.addContent(strG.getAnfangsStrahl().getXmlElement());
+        }
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_LICHTQUELLE;
+    }
+
     public Color getFarbe() {
         return farbe;
     }
 
-    public void setFarbe(Color farbe) {
+    public void setFarbe(Farbe farbe) {
         this.farbe = farbe;
+    }
+
+    public void setFarbe(Color farbe) {
+        this.farbe = new Farbe(farbe);
     }
 
     public ArrayList<Strahlengang> getStrahlengaenge() {
@@ -112,5 +155,6 @@ public abstract class Lichtquelle extends Bauelement {
     public void setStrahlengaenge(ArrayList<Strahlengang> strahlengaenge) {
         this.strahlengaenge = strahlengaenge;
     }
+
 
 }

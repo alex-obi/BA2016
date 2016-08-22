@@ -9,6 +9,7 @@ import java.awt.*;
 public abstract class Auswahlobjekt implements Zeichenbar {
 
     protected Vektor mittelPunkt;
+    public static final String XML_MITTELPUNKT = "Mittelpunkt";
 
     protected boolean rahmenSichtbar;
     protected Rahmen rahmen;

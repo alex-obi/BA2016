@@ -12,24 +12,26 @@ import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Ebene;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
+import org.jdom2.Element;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Blende extends Bauelement implements KannKollision {
 
+    public static final String XML_BLENDE = "blende";
+
     double durchmesser;
-    double hoehe;
-
-    public static final int MIND_HOEHE = 10;
-    public static final int MAX_HOEHE = 510;
-
+    public static final String XML_DURCHMESSER = "Durchmesser";
     public static final int MIND_DURCHMESSER = 0;
     public static final int MAX_DURCHMESSER = 500;
+
+    double hoehe;
+    public static final String XML_HOEHE = "Hoehe";
+    public static final int MIND_HOEHE = 10;
+    public static final int MAX_HOEHE = 510;
 
     Grenzflaeche obereHaelfte;
     Grenzflaeche untereHaelfte;
@@ -37,6 +39,13 @@ public class Blende extends Bauelement implements KannKollision {
     public Blende(OptischeBank optischeBank, Vektor mittelPunkt, int hoehe, int durchmesser) {
         super(optischeBank, mittelPunkt, Bauelement.TYP_BLENDE);
         this.hoehe = Math.max(10, hoehe);
+        setzeDurchmesser(durchmesser);
+    }
+
+    public Blende(OptischeBank optischeBank, Element xmlElement) throws Exception {
+        super(optischeBank, xmlElement, TYP_BLENDE);
+        this.durchmesser = xmlElement.getChild(XML_DURCHMESSER).getAttribute("wert").getDoubleValue();
+        this.hoehe = xmlElement.getChild(XML_HOEHE).getAttribute("wert").getDoubleValue();
         setzeDurchmesser(durchmesser);
     }
 
@@ -125,4 +134,18 @@ public class Blende extends Bauelement implements KannKollision {
         kollisionen.add(untereHaelfte.gibKollision(cStrGng));
         return StrahlenKollision.getErsteKollision(kollisionen);
     }
+
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = super.getXmlElement();
+        xmlElement.addContent(new Element(XML_DURCHMESSER).setAttribute("wert", String.valueOf(durchmesser)));
+        xmlElement.addContent(new Element(XML_HOEHE).setAttribute("wert", String.valueOf(hoehe)));
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_BLENDE;
+    }
+
 }

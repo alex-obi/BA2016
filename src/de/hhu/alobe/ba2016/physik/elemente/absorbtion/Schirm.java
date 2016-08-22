@@ -1,6 +1,7 @@
 package de.hhu.alobe.ba2016.physik.elemente.absorbtion;
 
 
+import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.mathe.Vektor;
@@ -12,6 +13,7 @@ import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Sphaerisch;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
+import org.jdom2.Element;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,12 +22,18 @@ import java.util.ArrayList;
 
 public class Schirm extends Bauelement implements KannKollision {
 
-    public static final int MIND_HOEHE = 10;
-    public static final int MAX_HOEHE = 510;
+    public static final String XML_SCHIRM = "schirm";
 
     private double hoehe;
+    public static final String XML_HOEHE = "hoehe";
+    public static final double MIND_HOEHE = 10;
+    public static final double MAX_HOEHE = 510;
+
     private double breite;
+
+
     private double radius;
+    public static final String XML_RADIUS = "radius";
 
     private Grenzflaeche schirmFlaeche;
 
@@ -39,6 +47,13 @@ public class Schirm extends Bauelement implements KannKollision {
         super(optischeBank, mittelPunkt, TYP_SCHIRM);
         this. radius = 0;
         setHoehe(hoehe);
+    }
+
+    public Schirm(OptischeBank optischeBank, Element xmlElement) throws Exception {
+        super(optischeBank, xmlElement, TYP_SCHIRM);
+        this.radius = xmlElement.getChild(XML_RADIUS).getAttribute("wert").getDoubleValue();
+        setHoehe(xmlElement.getChild(XML_HOEHE).getAttribute("wert").getDoubleValue());
+
     }
 
     public void setHoehe(double nHoehe) {
@@ -95,7 +110,7 @@ public class Schirm extends Bauelement implements KannKollision {
     public void waehleAus() {
         ArrayList<Eigenschaftenregler> regler = new ArrayList<>();
 
-        JSlider slide_hoehe = new JSlider (MIND_HOEHE, MAX_HOEHE, (int)hoehe);
+        JSlider slide_hoehe = new JSlider ((int)MIND_HOEHE, (int)MAX_HOEHE, (int)hoehe);
         slide_hoehe.setPaintTicks(true);
         slide_hoehe.setMajorTickSpacing(20);
         slide_hoehe.addChangeListener(e -> {
@@ -138,4 +153,18 @@ public class Schirm extends Bauelement implements KannKollision {
     public double getHoehe() {
         return hoehe;
     }
+
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = super.getXmlElement();
+        xmlElement.addContent(new Element(XML_HOEHE).setAttribute("wert", String.valueOf(hoehe)));
+        xmlElement.addContent(new Element(XML_RADIUS).setAttribute("wert", String.valueOf(radius)));
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_SCHIRM;
+    }
+
 }

@@ -1,9 +1,14 @@
 package de.hhu.alobe.ba2016.mathe;
 
+import org.jdom2.Element;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 
-public class Vektor extends Point2D.Double{
+public class Vektor extends Point2D.Double {
+
+    public static final String XML_XKOORDINATE = "x";
+    public static final String XML_YKOORDINATE = "y";
 
     public Vektor(Point2D.Double point) {
         super(point.getX(), point.getY());
@@ -23,6 +28,11 @@ public class Vektor extends Point2D.Double{
 
     public Vektor(int x, int y) {
         super((double)x, (double)y);
+    }
+
+    public Vektor(Element xmlElement) throws Exception {
+        x = xmlElement.getAttribute(XML_XKOORDINATE).getDoubleValue();
+        y = xmlElement.getAttribute(XML_YKOORDINATE).getDoubleValue();
     }
 
     public static boolean sindGleich(Vektor vektor1, Vektor vektor2) {
@@ -184,6 +194,13 @@ public class Vektor extends Point2D.Double{
 
     public void setY(double y) {
         this.y = y;
+    }
+
+    public Element getXmlElement(String name) {
+        Element xmlElement = new Element(name);
+        xmlElement.setAttribute(XML_XKOORDINATE, String.valueOf(x));
+        xmlElement.setAttribute(XML_YKOORDINATE, String.valueOf(y));
+        return xmlElement;
     }
 
 }

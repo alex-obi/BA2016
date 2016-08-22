@@ -6,6 +6,7 @@ import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
+import org.jdom2.Element;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,23 +18,34 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
-public class ParrallelLichtquelle extends Lichtquelle {
+public class ParallelLichtquelle extends Lichtquelle {
+
+    public static final String XML_PARALLELLICHT = "parallel_licht";
 
     private double breite = 20;
-    private double hoehe;
 
+    private double hoehe;
+    public static final String XML_HOEHE = "hoehe";
     public static final int MIND_HOEHE = 100;
     public static final int MAX_HOEHE = 600;
 
     double neigungsWinkel;
-
+    public static final String XML_NEIGUNG = "neigung";
     public static final double MIND_NEIGUNG = - Math.PI / 8;
     public static final double MAX_NEIGUNG = Math.PI / 8;
 
-    public ParrallelLichtquelle(OptischeBank optischeBank, Vektor mittelPunkt, Color farbe, int hoehe, double neigungsWinkel) {
+    public ParallelLichtquelle(OptischeBank optischeBank, Vektor mittelPunkt, Farbe farbe, int hoehe, double neigungsWinkel) {
         super(optischeBank, mittelPunkt, farbe);
         this.hoehe = hoehe;
         this.neigungsWinkel = neigungsWinkel;
+
+        setRahmen(generiereRahmen());
+    }
+
+    public ParallelLichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
+        super(optischeBank, xmlElement);
+        this.hoehe = xmlElement.getChild(XML_HOEHE).getAttribute("wert").getDoubleValue();
+        this.neigungsWinkel = xmlElement.getChild(XML_NEIGUNG).getAttribute("wert").getDoubleValue();
 
         setRahmen(generiereRahmen());
     }
@@ -48,14 +60,6 @@ public class ParrallelLichtquelle extends Lichtquelle {
             return new Strahlengang(new Strahl(basis, richtung, 0, true));
         } else {
             return null;
-        }
-    }
-
-    @Override
-    public void verschiebeUm(Vektor verschiebung) {
-        mittelPunkt.addiere(verschiebung);
-        for(Strahlengang cStrG : strahlengaenge) {
-            cStrG.getAnfangsStrahl().getBasisVektor().addiere(verschiebung);
         }
     }
 
@@ -155,6 +159,19 @@ public class ParrallelLichtquelle extends Lichtquelle {
         g.draw(new Rectangle2D.Double(mittelPunkt.getX() - breite / 2, mittelPunkt.getY() - hoehe / 2, breite, hoehe));
         super.paintComponent(g);
 
+    }
+
+    @Override
+    public Element getXmlElement() {
+        Element xmlElement = super.getXmlElement();
+        xmlElement.addContent(new Element(XML_HOEHE).setAttribute("wert", String.valueOf(hoehe)));
+        xmlElement.addContent(new Element(XML_NEIGUNG).setAttribute("wert", String.valueOf(neigungsWinkel)));
+        return xmlElement;
+    }
+
+    @Override
+    public String getXmlElementTyp() {
+        return XML_PARALLELLICHT;
     }
 
     public double getNeigungsWinkel() {
