@@ -74,14 +74,37 @@ public class Hauptebene extends Flaeche {
         boolean istVirtuell;
         double nQuellWeite = 0;
 
-        if ((brennweiteB == 0 || brennweiteG == 0) && (cStrGng.getAktuellerStrahl().isAusDemUnendlichen())){ //Ebener Spiegel oder Ebene Linse ohne Brennweite (Brennweite -> unendlich)
+        if ((brennweiteB == 0 || brennweiteG == 0)){ //Ebener Spiegel oder Ebene Linse ohne Brennweite (Brennweite -> unendlich)
+            if(cStrGng.getAktuellerStrahl().isAusDemUnendlichen()) {
                 double hoehe = cStrGng.getAktuellerStrahl().getRichtungsVektor().getY();
                 double breite = richtungsVZ * cStrGng.getAktuellerStrahl().getRichtungsVektor().getX();
                 neueRichtung = new Vektor(-richtungsVZ * reflFakt * breite, -hoehe);
                 inUnendlich = true;
                 istVirtuell = true;
                 nQuellWeite = 0;
-        } else if (Math.abs(brennweiteG - gegenstandsweite) < 7 && brennweiteG != 0) { //Spezialfall 1 (g ist ungefähr f)
+            } else {
+                double bildweite = -gegenstandsweite;
+                double bildgroesse = -gegenstandshoehe;
+                Vektor bildPosition = new Vektor(bildweite, -bildgroesse);
+                istVirtuell = (bildweite < 0);
+                inUnendlich = false;
+                bildPosition.setX(richtungsVZ * reflFakt * bildPosition.getX());
+                bildPosition.subtrahiere(relativerSchnittpunkt);
+                neueRichtung = bildPosition;
+                nQuellWeite += neueRichtung.gibLaenge();
+            }
+        } else if (Math.abs(gegenstandsweite) < 0.000001) { //Quellpunkt liegt genau auf der Linse -> übernimmt Funktion einer Feldlinse
+            double einfallswinkel = cStrGng.getAktuellerStrahl().getRichtungsVektor().gibRichtungsWinkel();
+            if(richtungsVZ < 0) {
+                einfallswinkel = Math.PI - einfallswinkel;
+            }
+            double ausfallswinkel = Math.atan(-(relativerSchnittpunkt.getY() / brennweiteB) + Math.tan(einfallswinkel) * (brennweiteG / brennweiteB));
+            neueRichtung = new Vektor(richtungsVZ * reflFakt, 0);
+            neueRichtung.dreheUmWinkel(richtungsVZ * reflFakt * ausfallswinkel);
+            inUnendlich = false;
+            istVirtuell = false;
+            nQuellWeite = 0;
+        } else if (Math.abs(brennweiteG - gegenstandsweite) < 7) { //Spezialfall 1 (g ist ungefähr f)
             neueRichtung = new Vektor(reflFakt * richtungsVZ * brennweiteB, -gegenstandshoehe);
             inUnendlich = true;
             istVirtuell = (brennweiteB < 0);
@@ -95,17 +118,8 @@ public class Hauptebene extends Flaeche {
                 istVirtuell = (brennweiteB < 0);
                 inUnendlich = false;
             } else { //Normalfall (g, G liefern direkt Werte b, B)
-                double bildweite;
-                double bildgroesse;
-                if (gegenstandsweite != 0 && brennweiteB != 0 && brennweiteG != 0) {
-                    bildweite = (brennweiteB * gegenstandsweite) / (gegenstandsweite - brennweiteG);
-                    bildgroesse = (gegenstandshoehe * brennweiteG) / (gegenstandsweite - brennweiteG);
-                } else if (brennweiteB == 0 || brennweiteG == 0) {
-                    bildweite = -gegenstandsweite;
-                    bildgroesse = -gegenstandshoehe;
-                } else { //Quellpunkt liegt genau auf der Linse -> übernimmt Funktion einer Feldlinse
-                    return; //todo: Spezialfall behandeln
-                }
+                double bildweite = (brennweiteB * gegenstandsweite) / (gegenstandsweite - brennweiteG);
+                double bildgroesse = (gegenstandshoehe * brennweiteG) / (gegenstandsweite - brennweiteG);
                 bildPosition = new Vektor(bildweite, -bildgroesse);
                 istVirtuell = (bildweite < 0);
                 inUnendlich = false;

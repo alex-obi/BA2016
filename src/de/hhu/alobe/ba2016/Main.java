@@ -53,7 +53,6 @@ public class Main {
 
          Sonntag:
          * todo: Auge mehr in Länge als in allgemeine Größe skalieren
-         * todo: Feldlinse (g -> 0)
          * todo: Menüführung. Speichern unter...
          * todo: Maßstab und Einheiten
 

@@ -129,8 +129,10 @@ public class Vektor extends Point2D.Double {
         return retVektor;
     }
     public void dreheUmWinkel(double winkel) {
-        x = x * Math.cos(winkel) - y * Math.sin(winkel);
-        y = x * Math.sin(winkel) + y * Math.cos(winkel);
+        double xAlt = x;
+        double yAlt = y;
+        x = xAlt * Math.cos(winkel) - yAlt * Math.sin(winkel);
+        y = xAlt * Math.sin(winkel) + yAlt * Math.cos(winkel);
     }
 
     public double gibRichtungsWinkel() {

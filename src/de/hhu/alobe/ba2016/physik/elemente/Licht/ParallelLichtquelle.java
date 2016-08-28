@@ -31,8 +31,8 @@ public class ParallelLichtquelle extends Lichtquelle {
 
     double neigungsWinkel;
     public static final String XML_NEIGUNG = "neigung";
-    public static final double MIND_NEIGUNG = - Math.PI / 8;
-    public static final double MAX_NEIGUNG = Math.PI / 8;
+    public static final double MIND_NEIGUNG = - Math.PI / 4;
+    public static final double MAX_NEIGUNG = Math.PI / 4;
 
     public ParallelLichtquelle(OptischeBank optischeBank, Vektor mittelPunkt, Farbe farbe, int hoehe, double neigungsWinkel) {
         super(optischeBank, mittelPunkt, farbe);
