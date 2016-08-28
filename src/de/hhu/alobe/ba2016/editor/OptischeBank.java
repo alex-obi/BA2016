@@ -38,7 +38,6 @@ public class OptischeBank extends JPanel implements Speicherbar {
 
     public static final String XML_OPTISCHEBANK = "optische_bank";
 
-    private String name;
     public static final String XML_NAME = "name";
 
     private double zoom;
@@ -77,7 +76,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     Werkzeug aktuellesWerkzeug;
 
     public OptischeBank(String name) {
-        this.name = name;
+        setName(name);
         initialisiere();
 
         //########### Erzeuge Testszenario
@@ -99,8 +98,8 @@ public class OptischeBank extends JPanel implements Speicherbar {
         bauelementHinzufuegen(new Auge(this, new Vektor(700, 250)));*/
     }
 
-    public OptischeBank(Element xmlElement) throws Exception {
-        this.name = xmlElement.getAttributeValue(XML_NAME);
+    public OptischeBank(Element xmlElement, String nName) throws Exception {
+        setName(nName);
         initialisiere();
         Iterator<?> bauelemente = xmlElement.getChildren().iterator();
         while(bauelemente.hasNext()) {
@@ -329,13 +328,8 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
     public Element getXmlElement() {
-        Element xmlElement = new Element(getXmlElementTyp()).setAttribute(XML_NAME, name);
+        Element xmlElement = new Element(getXmlElementTyp());
         for(Bauelement cBau : bauelemente) {
             xmlElement.addContent(cBau.getXmlElement());
         }

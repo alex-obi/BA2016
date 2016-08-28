@@ -79,12 +79,12 @@ public class Linse extends Bauelement implements KannKollision {
 
     public Linse(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_LINSE);
-        brechzahl = xmlElement.getChild(XML_BRECHZAHL).getAttribute("wert").getDoubleValue();
-        hoeheHauptebene = xmlElement.getChild(XML_HOEHE_HAUPTEBENE).getAttribute("wert").getDoubleValue();
-        hoeheLinse = xmlElement.getChild(XML_HOEHE_LINSE).getAttribute("wert").getDoubleValue();
-        dicke = xmlElement.getChild(XML_DICKE).getAttribute("wert").getDoubleValue();
-        radius1 = xmlElement.getChild(XML_RADIUS1).getAttribute("wert").getDoubleValue();
-        radius2 = xmlElement.getChild(XML_RADIUS2).getAttribute("wert").getDoubleValue();
+        brechzahl = xmlElement.getAttribute(XML_BRECHZAHL).getDoubleValue();
+        hoeheHauptebene = xmlElement.getAttribute(XML_HOEHE_HAUPTEBENE).getDoubleValue();
+        hoeheLinse = xmlElement.getAttribute(XML_HOEHE_LINSE).getDoubleValue();
+        dicke = xmlElement.getAttribute(XML_DICKE).getDoubleValue();
+        radius1 = xmlElement.getAttribute(XML_RADIUS1).getDoubleValue();
+        radius2 = xmlElement.getAttribute(XML_RADIUS2).getDoubleValue();
         formatNeuBestimmen(brechzahl, hoeheHauptebene, hoeheLinse, dicke, radius1, radius2);
     }
 
@@ -393,12 +393,12 @@ public class Linse extends Bauelement implements KannKollision {
     @Override
     public Element getXmlElement() {
         Element xmlElement = super.getXmlElement();
-        xmlElement.addContent(new Element(XML_BRECHZAHL).setAttribute("wert", String.valueOf(brechzahl)));
-        xmlElement.addContent(new Element(XML_DICKE).setAttribute("wert", String.valueOf(dicke)));
-        xmlElement.addContent(new Element(XML_HOEHE_HAUPTEBENE).setAttribute("wert", String.valueOf(hoeheHauptebene)));
-        xmlElement.addContent(new Element(XML_HOEHE_LINSE).setAttribute("wert", String.valueOf(hoeheLinse)));
-        xmlElement.addContent(new Element(XML_RADIUS1).setAttribute("wert", String.valueOf(radius1)));
-        xmlElement.addContent(new Element(XML_RADIUS2).setAttribute("wert", String.valueOf(radius2)));
+        xmlElement.setAttribute(XML_BRECHZAHL, String.valueOf(brechzahl));
+        xmlElement.setAttribute(XML_DICKE, String.valueOf(dicke));
+        xmlElement.setAttribute(XML_HOEHE_HAUPTEBENE, String.valueOf(hoeheHauptebene));
+        xmlElement.setAttribute(XML_HOEHE_LINSE, String.valueOf(hoeheLinse));
+        xmlElement.setAttribute(XML_RADIUS1, String.valueOf(radius1));
+        xmlElement.setAttribute(XML_RADIUS2, String.valueOf(radius2));
         return xmlElement;
     }
 

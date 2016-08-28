@@ -55,8 +55,8 @@ public class Auge extends Bauelement implements KannKollision {
 
     public Auge(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_AUGE);
-        kruemmungsradius_linse = xmlElement.getChild(XML_KRUEMMUNG_LINSE).getAttribute("wert").getDoubleValue();
-        abstand_netzhaut = xmlElement.getChild(XML_NETZHAUT_ABSTAND).getAttribute("wert").getDoubleValue();
+        kruemmungsradius_linse = xmlElement.getAttribute(XML_KRUEMMUNG_LINSE).getDoubleValue();
+        abstand_netzhaut = xmlElement.getAttribute(XML_NETZHAUT_ABSTAND).getDoubleValue();
         initialisiere(mittelPunkt, kruemmungsradius_linse, abstand_netzhaut);
     }
 
@@ -135,6 +135,7 @@ public class Auge extends Bauelement implements KannKollision {
     }
 
     public void setze_kruemmungsradius(double nKruemmungsradius) {
+        kruemmungsradius_linse = nKruemmungsradius;
         augenlinse.setRadius1(nKruemmungsradius);
         augenlinse.setRadius2(nKruemmungsradius);
     }
@@ -163,8 +164,8 @@ public class Auge extends Bauelement implements KannKollision {
     @Override
     public Element getXmlElement() {
         Element xmlElement = super.getXmlElement();
-        xmlElement.addContent(new Element(XML_KRUEMMUNG_LINSE).setAttribute("wert", String.valueOf(kruemmungsradius_linse)));
-        xmlElement.addContent(new Element(XML_NETZHAUT_ABSTAND).setAttribute("wert", String.valueOf(abstand_netzhaut)));
+        xmlElement.setAttribute(XML_KRUEMMUNG_LINSE, String.valueOf(kruemmungsradius_linse));
+        xmlElement.setAttribute(XML_NETZHAUT_ABSTAND, String.valueOf(abstand_netzhaut));
         return xmlElement;
     }
 

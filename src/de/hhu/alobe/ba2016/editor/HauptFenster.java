@@ -50,8 +50,8 @@ public class HauptFenster extends JFrame {
         fensterInhalt = new JPanel(new BorderLayout());
         fensterInhalt.setOpaque(true);
 
-        optBank = new OptischeBank("Optische_Bank");
-        fensterInhalt.add(optBank, BorderLayout.CENTER);
+        optBank = new OptischeBank((String)null);
+        wechseleOptischeBank(optBank);
 
         fenster_bauelemente = new Fenster_Bauelemente(this);
 
@@ -62,7 +62,6 @@ public class HauptFenster extends JFrame {
         fensterInhalt.add(werkzeuge, BorderLayout.NORTH);
 
         this.setContentPane(fensterInhalt);
-
         fenster_bauelemente.setVisible(true);
         this.setVisible(true);
     }
@@ -75,7 +74,7 @@ public class HauptFenster extends JFrame {
         Document xmlDatei;
         try {
             xmlDatei = new SAXBuilder().build(datei);
-            return new OptischeBank(xmlDatei.getRootElement());
+            return new OptischeBank(xmlDatei.getRootElement(), datei.getName().substring(0, datei.getName().length() - 4));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Fehler beim Laden der Datei: " + datei.getPath(), "Fehler", JOptionPane.ERROR_MESSAGE);
             System.out.println(e.getMessage());
@@ -90,18 +89,22 @@ public class HauptFenster extends JFrame {
         XMLOutputter xmlOutput = new XMLOutputter();
         xmlOutput.setFormat(Format.getPrettyFormat());
         try {
-            xmlOutput.output(xmlDatei, new FileWriter(datei));
+            FileWriter fileWriter = new FileWriter(datei);
+            xmlOutput.output(xmlDatei, fileWriter);
+            fileWriter.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, datei.getPath() + " konnte nicht gespeichert werden!");
             System.out.println(e.getMessage());
         }
-
     }
 
     public void wechseleOptischeBank(OptischeBank optischeBank) {
         fensterInhalt.remove(optBank);
         this.optBank = optischeBank;
         fensterInhalt.add(optBank, BorderLayout.CENTER);
+        String name = optischeBank.getName();
+        if(name == null) name = "Neue Optische Bank";
+        this.setTitle("Optischer Baukasten - " + name);
         optBank.aktualisieren();
         this.revalidate();
     }

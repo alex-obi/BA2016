@@ -44,8 +44,8 @@ public class ParallelLichtquelle extends Lichtquelle {
 
     public ParallelLichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement);
-        this.hoehe = xmlElement.getChild(XML_HOEHE).getAttribute("wert").getDoubleValue();
-        this.neigungsWinkel = xmlElement.getChild(XML_NEIGUNG).getAttribute("wert").getDoubleValue();
+        this.hoehe = xmlElement.getAttribute(XML_HOEHE).getDoubleValue();
+        this.neigungsWinkel = xmlElement.getAttribute(XML_NEIGUNG).getDoubleValue();
 
         setRahmen(generiereRahmen());
     }
@@ -164,8 +164,8 @@ public class ParallelLichtquelle extends Lichtquelle {
     @Override
     public Element getXmlElement() {
         Element xmlElement = super.getXmlElement();
-        xmlElement.addContent(new Element(XML_HOEHE).setAttribute("wert", String.valueOf(hoehe)));
-        xmlElement.addContent(new Element(XML_NEIGUNG).setAttribute("wert", String.valueOf(neigungsWinkel)));
+        xmlElement.setAttribute(XML_HOEHE, String.valueOf(hoehe));
+        xmlElement.setAttribute(XML_NEIGUNG, String.valueOf(neigungsWinkel));
         return xmlElement;
     }
 

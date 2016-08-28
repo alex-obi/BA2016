@@ -42,6 +42,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         neu = new JMenuItem("Neu...");
         neu.addActionListener(this);
         datei.add(neu);
+        datei.addSeparator();
         laden = new JMenuItem("Laden...");
         laden.addActionListener(this);
         datei.add(laden);
@@ -70,13 +71,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(neu)) {
-            String nName = JOptionPane.showInputDialog(this, "Name fuer die neue Optische Bank:");
-            while (nName != null && !istDateiNameGueltig(nName)) {
-                nName = JOptionPane.showInputDialog(this, "Name nicht gueltig. Keine Sonderzeichen verwenden. Bitte neuen Namen eingeben:");
-            }
-            if(nName != null) {
-                optikSimulator.neueOptischeBank(nName);
-            }
+            optikSimulator.neueOptischeBank(null);
         }
         if(e.getSource().equals(laden)) {
 
@@ -90,30 +85,48 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         }
         if(e.getSource().equals(speichern)) {
             OptischeBank optischeBank = optikSimulator.gibAktuelleOptischeBank();
-            File pfad = new File(Konstanten.SAVE_ORDNER + optischeBank.getName() + ".xml");
-            if(pfad.exists()) {
-                int ergebnis = JOptionPane.showConfirmDialog(this, "Datei existiert bereits. Überschreiben?", "Speichern", JOptionPane.YES_NO_OPTION);
-                if(ergebnis == JOptionPane.YES_OPTION) {
-                    optikSimulator.speichereAktuelleOptischeBank(pfad);
+
+            String nName = optischeBank.getName();
+            File pfad;
+            if(nName == null) {
+                nName = JOptionPane.showInputDialog(this, "Name fuer die neue Optische Bank:");
+                pfad = new File(Konstanten.SAVE_ORDNER + nName + ".xml");
+                while (nName != null && !erstelleDatei(pfad)) {
+                    nName = JOptionPane.showInputDialog(this, "Name nicht gueltig. Keine Sonderzeichen (<>: \"\\ / | *?) verwenden. Bitte neuen Namen eingeben:");
+                }
+                if(nName == null) {
+                    return;
+                } else {
+                    optischeBank.setName(nName);
+                    optikSimulator.setTitle("Optischer Baukasten - " + nName);
                 }
             } else {
-                optikSimulator.speichereAktuelleOptischeBank(pfad);
+                pfad = new File(Konstanten.SAVE_ORDNER + nName + ".xml");
             }
+            optikSimulator.speichereAktuelleOptischeBank(pfad);
         }
         if(e.getSource().equals(speichernUnter)) {
 
         }
     }
 
-    public static boolean istDateiNameGueltig(String datei) {
-        if(datei == null) return false;
-        File testDatei = new File(datei);
+    //Liefert true wenn Datei erfolgreich neu erstellt wurde oder zum Überschreiben freigegeben
+    public boolean erstelleDatei(File pfad) {
         try {
-            testDatei.getCanonicalFile().isFile();
-            return true;
+            if(pfad.createNewFile()) {
+                return true;
+            } else {
+                if(pfad.exists()) {
+                    int ergebnis = JOptionPane.showConfirmDialog(this, "Datei existiert bereits. Überschreiben?", "Speichern", JOptionPane.YES_NO_OPTION);
+                    if (ergebnis == JOptionPane.YES_OPTION) return true;
+                }
+                return false;
+            }
         } catch (IOException e) {
             return false;
         }
+
+
     }
 
     public void aktualisiereLokaleDateien() {

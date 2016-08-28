@@ -49,13 +49,15 @@ public class Main {
          *
 
          Samstag:
-         * todo: Auge mehr in Länge als in allgemeine Größe skalieren
-         * todo: Feldlinse (g -> 0) (~2 Std)
+
 
          Sonntag:
-         * todo: Maßstab und Einheiten (~ 3 Std)
-         * todo: Speichern und Laden jdom (~ 6 Std)
-         * todo: Menüführung (~ 4 Std)
+         * todo: Auge mehr in Länge als in allgemeine Größe skalieren
+         * todo: Feldlinse (g -> 0)
+         * todo: Menüführung. Speichern unter...
+         * todo: Maßstab und Einheiten
+
+
 
          Bugs:
          * Wichtig:

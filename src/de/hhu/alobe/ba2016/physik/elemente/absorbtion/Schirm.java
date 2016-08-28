@@ -51,8 +51,8 @@ public class Schirm extends Bauelement implements KannKollision {
 
     public Schirm(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_SCHIRM);
-        this.radius = xmlElement.getChild(XML_RADIUS).getAttribute("wert").getDoubleValue();
-        setHoehe(xmlElement.getChild(XML_HOEHE).getAttribute("wert").getDoubleValue());
+        this.radius = xmlElement.getAttribute(XML_RADIUS).getDoubleValue();
+        setHoehe(xmlElement.getAttribute(XML_HOEHE).getDoubleValue());
 
     }
 
@@ -157,8 +157,8 @@ public class Schirm extends Bauelement implements KannKollision {
     @Override
     public Element getXmlElement() {
         Element xmlElement = super.getXmlElement();
-        xmlElement.addContent(new Element(XML_HOEHE).setAttribute("wert", String.valueOf(hoehe)));
-        xmlElement.addContent(new Element(XML_RADIUS).setAttribute("wert", String.valueOf(radius)));
+        xmlElement.setAttribute(XML_HOEHE, String.valueOf(hoehe));
+        xmlElement.setAttribute(XML_RADIUS, String.valueOf(radius));
         return xmlElement;
     }
 

@@ -38,7 +38,7 @@ public abstract class Lichtquelle extends Bauelement {
 
     public Lichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_LAMPE);
-        aktiv = xmlElement.getChild(XML_ISTAKTIV).getAttribute("wert").getBooleanValue();
+        aktiv = xmlElement.getAttribute(XML_ISTAKTIV).getBooleanValue();
         farbe = new Farbe(xmlElement.getChild(XML_FARBE));
         strahlengaenge = new ArrayList<>();
         Iterator<?> strahlen = xmlElement.getChildren(Strahl.XML_STRAHL).iterator();
@@ -115,7 +115,7 @@ public abstract class Lichtquelle extends Bauelement {
     @Override
     public Element getXmlElement() {
         Element xmlElement = super.getXmlElement();
-        xmlElement.addContent(new Element(XML_ISTAKTIV).setAttribute("wert", String.valueOf(aktiv)));
+        xmlElement.setAttribute(XML_ISTAKTIV, String.valueOf(aktiv));
         xmlElement.addContent(farbe.getXmlElement(XML_FARBE));
         for(Strahlengang strG : strahlengaenge) {
             xmlElement.addContent(strG.getAnfangsStrahl().getXmlElement());

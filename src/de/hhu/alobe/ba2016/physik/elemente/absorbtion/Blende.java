@@ -24,12 +24,12 @@ public class Blende extends Bauelement implements KannKollision {
     public static final String XML_BLENDE = "blende";
 
     double durchmesser;
-    public static final String XML_DURCHMESSER = "Durchmesser";
+    public static final String XML_DURCHMESSER = "durchmesser";
     public static final int MIND_DURCHMESSER = 0;
     public static final int MAX_DURCHMESSER = 500;
 
     double hoehe;
-    public static final String XML_HOEHE = "Hoehe";
+    public static final String XML_HOEHE = "hoehe";
     public static final int MIND_HOEHE = 10;
     public static final int MAX_HOEHE = 510;
 
@@ -44,8 +44,8 @@ public class Blende extends Bauelement implements KannKollision {
 
     public Blende(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_BLENDE);
-        this.durchmesser = xmlElement.getChild(XML_DURCHMESSER).getAttribute("wert").getDoubleValue();
-        this.hoehe = xmlElement.getChild(XML_HOEHE).getAttribute("wert").getDoubleValue();
+        this.durchmesser = xmlElement.getAttribute(XML_DURCHMESSER).getDoubleValue();
+        this.hoehe = xmlElement.getAttribute(XML_HOEHE).getDoubleValue();
         setzeDurchmesser(durchmesser);
     }
 
@@ -138,8 +138,8 @@ public class Blende extends Bauelement implements KannKollision {
     @Override
     public Element getXmlElement() {
         Element xmlElement = super.getXmlElement();
-        xmlElement.addContent(new Element(XML_DURCHMESSER).setAttribute("wert", String.valueOf(durchmesser)));
-        xmlElement.addContent(new Element(XML_HOEHE).setAttribute("wert", String.valueOf(hoehe)));
+        xmlElement.setAttribute(XML_DURCHMESSER, String.valueOf(durchmesser));
+        xmlElement.setAttribute(XML_HOEHE, String.valueOf(hoehe));
         return xmlElement;
     }
 
