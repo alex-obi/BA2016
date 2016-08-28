@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<optische_bank>
-  <punkt_licht istAktiv="true">
-    <Mittelpunkt x="50.0" y="150.0" />
-    <farbe r="0" g="0" b="0" />
-  </punkt_licht>
-</optische_bank>
