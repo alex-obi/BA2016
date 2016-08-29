@@ -83,6 +83,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
 
         //bauelementHinzufuegen(new Linse(this, new Vektor(50, 450), 1.336, 90, 0, 60, 0));
 
+        bauelementHinzufuegen(new Schirm(this, new Vektor(650, 450), 300, 150));
         bauelementHinzufuegen(new PunktLichtquelle(this, new Vektor(50, 150), new Farbe(Color.BLACK)));
         /*bauelementHinzufuegen(new Blende(this, new Vektor(800, 450), 150, 50));
         bauelementHinzufuegen(new ParallelLichtquelle(this, new Vektor(50, 250), Color.BLACK, 250, 0));

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class Auge extends Bauelement implements KannKollision {
 
     public static final String XML_AUGE = "auge";
+    public static final double HOEHE_AUGE = 135;
 
     private Hornhaut hornhaut;
     private static final double HORNHAUT_RADIUS = 43.1;
@@ -71,15 +72,16 @@ public class Auge extends Bauelement implements KannKollision {
     }
 
     private void generiereBegrenzungen() {
-        double d = abstand_netzhaut + HORNHAUT_ABSTAND - 14;
+        double d = abstand_netzhaut + HORNHAUT_ABSTAND - 14.59;
         double a = netzhaut.getHoehe() / 2;
         double b = abstand_netzhaut - (d / 2);
-        double r = Math.sqrt(a * a + d * d / 4);
-        insgesamtHoehe = 2 * r;
-        double alpha = Math.atan(2 * a / d);
+        double e = HOEHE_AUGE / 2;
+        double c = (e * e - a * a - (d * d) / 4) / (2 * (a - e));
+        double r = e + c;
+        double alpha = Math.atan((2 * (a + c)) / d);
         double ext = Math.PI - 2 * alpha;
-        obereBegrenzung = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_ABSORB, Vektor.addiere(mittelPunkt, new Vektor(b, 0)), r, alpha, ext + 0.15);
-        untereBegrenzung = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_ABSORB, Vektor.addiere(mittelPunkt, new Vektor(b, 0)), r, Math.PI + alpha - 0.15, ext + 0.15);
+        obereBegrenzung = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_ABSORB, Vektor.addiere(mittelPunkt, new Vektor(b, -c)), r, alpha, ext);
+        untereBegrenzung = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_ABSORB, Vektor.addiere(mittelPunkt, new Vektor(b, c)), r, Math.PI + alpha, ext);
     }
 
     @Override

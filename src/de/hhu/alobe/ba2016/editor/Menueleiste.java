@@ -78,7 +78,6 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         }
         for(Component lokaleDatei : lokal.getMenuComponents()) {
             if(e.getSource().equals(lokaleDatei)) {
-                //optikSimulator.wechseleOptischeBank(optikSimulator.ladeNeueOptischeBank(new File(Konstanten.SAVE_ORDNER + ((JMenuItem)lokaleDatei).getText() + ".xml")));
                 OptischeBank optischeBank = optikSimulator.ladeNeueOptischeBank(new File(Konstanten.SAVE_ORDNER + ((JMenuItem)lokaleDatei).getText() + ".xml"));
                 optikSimulator.wechseleOptischeBank(optischeBank);
             }
@@ -89,10 +88,10 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
             String nName = optischeBank.getName();
             File pfad;
             if(nName == null) {
-                nName = JOptionPane.showInputDialog(this, "Name fuer die neue Optische Bank:");
+                nName = JOptionPane.showInputDialog(this, "Name fuer die neue Optische Bank:", "Speichern");
                 pfad = new File(Konstanten.SAVE_ORDNER + nName + ".xml");
                 while (nName != null && !erstelleDatei(pfad)) {
-                    nName = JOptionPane.showInputDialog(this, "Name nicht gueltig. Keine Sonderzeichen (<>: \"\\ / | *?) verwenden. Bitte neuen Namen eingeben:");
+                    nName = JOptionPane.showInputDialog(this, "Name nicht gueltig. Keine Sonderzeichen (<>: \"\\ / | *?) verwenden. Bitte neuen Namen eingeben:", "Speichern");
                 }
                 if(nName == null) {
                     return;

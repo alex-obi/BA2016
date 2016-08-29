@@ -108,7 +108,7 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
         Vektor obenLinks = Vektor.addiere(mittelpunkt, new Vektor(-radius, -radius));
         double start = Math.toDegrees(vonWinkel);
         double extend = Math.toDegrees(extWinkel);
-        Arc2D zeichenKreis = new Arc2D.Double(obenLinks.getX(), obenLinks.getY(), radius * 2, radius * 2, start, extend, Arc2D.OPEN);
+        Arc2D zeichenKreis = new Arc2D.Double(obenLinks.getX(), obenLinks.getY(), radius * 2, radius * 2, -start, -extend, Arc2D.OPEN);
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
         g.draw(zeichenKreis);
     }

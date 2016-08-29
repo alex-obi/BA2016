@@ -12,54 +12,19 @@ public class Main {
 
     public static void main(String[] args) {
         Grafiken.grafikenLaden();
-        HauptFenster fenster = new HauptFenster();
-        //fenster.wechseleOptischeBank(fenster.ladeNeueOptischeBank(new File("jdom/saves/test.jdom")));
-        //fenster.speichereAktuelleOptischeBank(new File("jdom/saves/test.jdom"));
+        new HauptFenster();
 
         /*
         Todoliste:
-
-        Features:
-
-        Freitag:
-         * Eigenschaftenpanel für alle Bauelemente.(~ 4 Std) [X]
-         *
-
-         Dienstag:
-         * Werkzeugfenster für alle Bauelemente. Geeignete Startwerte. Grafische Aufarbeitung (~ 2 Std) [X]
-         *
-         * Strahlen einzeln aktualisieren (~ 1 Std) [X]
-
-         * Virtuelle Bilder an/aus (~ 1 Std) [X]
-
-
-
-         Mittwoch:
-
-         *
-         * Brennweite und Position der Hauptebene bei dicken Linsen. Linse über kleine Brennweite zu klein dargestellt -> ab mindesthöhe brechzahl editieren(~ 4 Std) [X]
-         *
-         Donnerstag:
-
-         * Kommentieren und Funktionen überprüfen. Mit Formeln belegen und aufschreiben. (~ 8 Std) [X]
-
-         Freitag:
-         * Begrenzungen Auge. Abstände und Größen mit wirklichnkeit abgleichen und skalieren. (~ 5 Std) [X]
-
-         *
-
-         Samstag:
-
-
-         Sonntag:
-         * todo: Auge mehr in Länge als in allgemeine Größe skalieren
          * todo: Menüführung. Speichern unter...
          * todo: Maßstab und Einheiten
-
-
+         *
+         * todo: Schirm Hohlspiegel Linse Grafisch Abgrenzen
+         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
 
          Bugs:
          * Wichtig:
+         * todo: Zwischen Hauptebene und Spiegel buggy
          * todo: Bei KonkavKonvexen werden bei r -> unendlich beide Seiten vertauscht
          * todo: Rückgängig bei Parallellicht buggy
          *
@@ -69,23 +34,20 @@ public class Main {
          * todo: Bei Auge wird Brennweite mitgezeichnet
          * todo: Auswahl Cursor ändert sich nicht
 
-
          Optional:
-         * todo: Parallel-, Zenit-, Brennpunktstrahl markieren
+         * todo: Parallel-, Zenit-, Brennpunktstrahl markieren und einfangen
          * todo: Strahlen nummerieren und oder farblich kennzeichnen
-         * todo: Eigenschaftenänderung rücknehmbar
-         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
-         * todo: Scrollen mit Maus
-         * todo: Schirm Hohlspiegel Linse Grafisch Abgrenzen
+
          * todo: Optische Achse verschiebbar
-         *
+         * todo: Scrollen mit Maus und Ausschnitt optimieren
+         * todo: Eigenschaftenänderung rücknehmbar
+
+         * todo: get gib einheitlich
+
+         Zweitrangig:
          * todo: Mehrere Tabs
-         * todo: Ausschnitt und Scrollen optimieren
          * todo: Spiegel schräg
 
-         * todo: Nullpointer verhindern
-         * todo: this vermeiden
-         * todo: get gib einheitlich
          */
 
 

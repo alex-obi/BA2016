@@ -31,8 +31,10 @@ public class Hornhaut implements KannKollision, Zeichenbar {
         this.auge = auge;
         this.radius = radius;
         this.position = position;
-        this.hauptebene = new Hauptebene(Hauptebene.MODUS_BRECHUNG, position, 2.660 * radius, 3.660 * radius, radius * 1.5f);
-        this.grenzflaeche = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_BRECHUNG, 1, BRECHZAHL_HORNHAUT, new Vektor(position.getX() + radius, position.getY()), radius, 2.36, 1.57);
+        double hoehenfaktor = 1.5;
+        this.hauptebene = new Hauptebene(Hauptebene.MODUS_BRECHUNG, position, 2.660 * radius, 3.660 * radius, radius * hoehenfaktor);
+        double alpha = Math.asin(hoehenfaktor / 2);
+        this.grenzflaeche = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_BRECHUNG, 1, BRECHZAHL_HORNHAUT, new Vektor(position.getX() + radius, position.getY()), radius, Math.PI - alpha, alpha * 2);
     }
 
     public void verschiebeUm(Vektor verschiebung) {
@@ -65,8 +67,8 @@ public class Hornhaut implements KannKollision, Zeichenbar {
             case OptischeBank.MODUS_HAUPTEBENE:
                 g.setColor(Color.GRAY);
                 grenzflaeche.paintComponent(g);
-                g.setColor(Color.BLACK);
-                hauptebene.paintComponent(g);
+                /*g.setColor(Color.BLACK);
+                hauptebene.paintComponent(g);*/
                 break;
         }
     }
