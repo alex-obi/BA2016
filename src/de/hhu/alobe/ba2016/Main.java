@@ -4,7 +4,9 @@ import de.hhu.alobe.ba2016.editor.HauptFenster;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.grafik.Grafiken;
 
+import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Klasse zum Programmeinstieg
@@ -12,6 +14,13 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
+        if(!new File(Konstanten.SAVE_ORDNER).exists()) {
+            boolean geschafft = new File(Konstanten.SAVE_ORDNER).mkdir();
+            if(!geschafft) {
+                return;
+            }
+        }
+
         Grafiken.grafikenLaden();
         new HauptFenster();
 

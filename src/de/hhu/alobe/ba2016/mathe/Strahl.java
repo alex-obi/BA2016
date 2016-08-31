@@ -22,6 +22,7 @@ public class Strahl extends GeomertrischeFigur {
 
     //Variable zum Speichern der Entfernung, von welchem Bildpunkt (reell oder virtuell) aus der Strahl bei Berechnung durch Hauptebenen erzeugt wird
     protected double quellEntfernung;
+
     protected boolean ausDemUnendlichen;
 
     public Strahl(Vektor basisVektor, Vektor richtung) {
@@ -81,8 +82,12 @@ public class Strahl extends GeomertrischeFigur {
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
         Line2D line = new Line2D.Double(basisVektor, bisVektor);
         g.draw(line);
-        if(quellEntfernung < 0 && !isAusDemUnendlichen() && HauptFenster.get().gibAktuelleOptischeBank().isVirtuelleStrahlenAktiv()) {
-            Vektor bisVektorVirtuell = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, quellEntfernung));
+        if((quellEntfernung < 0 || isAusDemUnendlichen()) && HauptFenster.get().gibAktuelleOptischeBank().isVirtuelleStrahlenAktiv()) {
+            double cQuellEntfernung = quellEntfernung;
+            if(isAusDemUnendlichen()) {
+                cQuellEntfernung = -10000;
+            }
+            Vektor bisVektorVirtuell = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, cQuellEntfernung));
             g.setStroke(new BasicStroke(Konstanten.LINIENDICKE, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 5.0f, new float[] {10.0f,4.0f}, 0.0f));
             Line2D lineVirtuell = new Line2D.Double(basisVektor, bisVektorVirtuell);
             g.draw(lineVirtuell);

@@ -53,7 +53,7 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
 
     public Hohlspiegel(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_SPIEGEL);
-        initialisiere(xmlElement.getAttribute(XML_HOEHE).getDoubleValue(), xmlElement.getAttribute(XML_RADIUS).getDoubleValue());
+        initialisiere(xmlElement.getAttribute(XML_RADIUS).getDoubleValue(), xmlElement.getAttribute(XML_HOEHE).getDoubleValue());
     }
 
     private void initialisiere(double nRadius, double nHoehe) {
@@ -179,7 +179,7 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
             case OptischeBank.MODUS_SNELLIUS:
                 return spiegelFlaeche.gibKollision(cStrGng);
             case OptischeBank.MODUS_HAUPTEBENE:
-                StrahlenKollision sK = hauptebene.gibKollision(cStrGng);
+                StrahlenKollision sK = spiegelFlaeche.gibKollision(cStrGng);
                 if(sK != null) {
                     return new StrahlenKollision(sK.getDistanz(), cStrGng, hauptebene);
                 }

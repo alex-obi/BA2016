@@ -217,10 +217,12 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
 
     public void aktualisiereLokaleDateien() {
         lokal.removeAll();
-        for (File datei : Dateifunktionen.getLokaleDateienMitEndung(new File(Konstanten.SAVE_ORDNER), Konstanten.SAVE_ENDUNG)) {
-            JMenuItem nItem = new JMenuItem(datei.getName().substring(0, datei.getName().length() - 4));
-            nItem.addActionListener(this);
-            lokal.add(nItem);
+        if (new File(Konstanten.SAVE_ORDNER).exists()) {
+            for (File datei : Dateifunktionen.getLokaleDateienMitEndung(new File(Konstanten.SAVE_ORDNER), Konstanten.SAVE_ENDUNG)) {
+                JMenuItem nItem = new JMenuItem(datei.getName().substring(0, datei.getName().length() - 4));
+                nItem.addActionListener(this);
+                lokal.add(nItem);
+            }
         }
     }
 

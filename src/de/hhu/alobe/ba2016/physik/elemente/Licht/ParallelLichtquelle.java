@@ -171,6 +171,12 @@ public class ParallelLichtquelle extends Lichtquelle {
     }
 
     @Override
+    public void neuerStrahl(Strahlengang strahl) {
+        strahl.getAnfangsStrahl().setAusDemUnendlichen(true);
+        strahlengaenge.add(strahl);
+    }
+
+    @Override
     public Strahlengang berechneNeuenStrahl(Vektor strahlPunkt) {
         Vektor richtung = new Vektor(Math.signum(strahlPunkt.getX() - mittelPunkt.getX()), 0);
         richtung.dreheUmWinkel(neigungsWinkel);

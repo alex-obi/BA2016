@@ -52,7 +52,6 @@ public class Hauptebene extends Flaeche {
         double gegenstandsweite = richtungsVZ * (mittelpunkt.getX() - cStrGng.getAktuellerStrahl().gibQuellPunkt().getX()); //Gegenstandsweite gespiegelt bei Richtungswechsel
         double gegenstandshoehe = cStrGng.getAktuellerStrahl().gibQuellPunkt().getY() - mittelpunkt.getY();
         Vektor relativerSchnittpunkt = Vektor.subtrahiere(position, mittelpunkt);
-        relativerSchnittpunkt.setX(0);
 
         double reflFakt = 1;
         if (modus == Flaeche.MODUS_REFLEKT) {
@@ -91,7 +90,7 @@ public class Hauptebene extends Flaeche {
                 bildPosition.setX(richtungsVZ * reflFakt * bildPosition.getX());
                 bildPosition.subtrahiere(relativerSchnittpunkt);
                 neueRichtung = bildPosition;
-                nQuellWeite += neueRichtung.gibLaenge();
+                nQuellWeite = neueRichtung.gibLaenge();
             }
         } else if (Math.abs(gegenstandsweite) < 0.000001) { //Quellpunkt liegt genau auf der Linse -> übernimmt Funktion einer Feldlinse
             double einfallswinkel = cStrGng.getAktuellerStrahl().getRichtungsVektor().gibRichtungsWinkel();
@@ -104,7 +103,7 @@ public class Hauptebene extends Flaeche {
             inUnendlich = false;
             istVirtuell = false;
             nQuellWeite = 0;
-        } else if (Math.abs(brennweiteG - gegenstandsweite) < 7) { //Spezialfall 1 (g ist ungefähr f)
+        } else if (Math.abs(brennweiteG - gegenstandsweite) < 7 && !cStrGng.getAktuellerStrahl().isAusDemUnendlichen()) { //Spezialfall 1 (g ist ungefähr f)
             neueRichtung = new Vektor(reflFakt * richtungsVZ * brennweiteB, -gegenstandshoehe);
             inUnendlich = true;
             istVirtuell = (brennweiteB < 0);
@@ -127,7 +126,7 @@ public class Hauptebene extends Flaeche {
             bildPosition.setX(richtungsVZ * reflFakt * bildPosition.getX());
             bildPosition.subtrahiere(relativerSchnittpunkt);
             neueRichtung = bildPosition;
-            nQuellWeite += neueRichtung.gibLaenge();
+            nQuellWeite = neueRichtung.gibLaenge();
         }
 
         if (istVirtuell) { //Bild ist virtuell

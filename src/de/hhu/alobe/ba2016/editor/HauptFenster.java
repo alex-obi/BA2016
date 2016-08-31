@@ -45,7 +45,7 @@ public class HauptFenster extends JFrame {
 
         this.setSize(Konstanten.FENSTER_X, Konstanten.FENSTER_Y);
         this.setMinimumSize(new Dimension(MIND_BREITE, MIND_HOEHE));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
         fensterInhalt = new JPanel(new BorderLayout());

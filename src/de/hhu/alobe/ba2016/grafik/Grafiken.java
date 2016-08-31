@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class Grafiken {
 
@@ -55,11 +56,7 @@ public class Grafiken {
     }
 
     private static ImageIcon ladeIcon(String ort) {
-        try {
-            return new ImageIcon(ImageIO.read(new File(ort)));
-        } catch (IOException e) {
-            System.out.println("Error: Grafikdatei " + ort + " nicht gefunden!");
-            return null;
-        }
+        URL pfad = ClassLoader.getSystemResource(ort);
+        return new ImageIcon(pfad);
     }
 }
