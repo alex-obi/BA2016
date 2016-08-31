@@ -3,6 +3,7 @@ package de.hhu.alobe.ba2016.editor;
 
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_Auswahl;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_ElementLoeschen;
+import de.hhu.alobe.ba2016.grafik.Grafiken;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,27 +32,50 @@ public class Panel_Werkzeuge extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(0, 35));
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        werkzeug_bauelement_auswaehlen = new JButton("Auswählen");
+        werkzeug_bauelement_auswaehlen = new JButton();
+        werkzeug_bauelement_auswaehlen.setPreferredSize(new Dimension(26, 27));
+        werkzeug_bauelement_auswaehlen.setIcon(Grafiken.grafik_auswahl);
+        werkzeug_bauelement_auswaehlen.setToolTipText("Auswaehlen");
         werkzeug_bauelement_auswaehlen.addActionListener(this);
         this.add(werkzeug_bauelement_auswaehlen);
-        werkzeug_bauelement_loeschen = new JButton("Löschen");
+
+        werkzeug_bauelement_loeschen = new JButton();
+        werkzeug_bauelement_loeschen.setPreferredSize(new Dimension(26, 27));
+        werkzeug_bauelement_loeschen.setIcon(Grafiken.grafik_loeschen);
+        werkzeug_bauelement_loeschen.setToolTipText("Loeschen");
         werkzeug_bauelement_loeschen.addActionListener(this);
         this.add(werkzeug_bauelement_loeschen);
 
-        button_rueckgaengig =  new JButton("Zurück");
+        button_rueckgaengig =  new JButton();
+        button_rueckgaengig.setPreferredSize(new Dimension(26, 27));
+        button_rueckgaengig.setIcon(Grafiken.grafik_zurueck);
+        button_rueckgaengig.setToolTipText("Zurueck");
         button_rueckgaengig.addActionListener(this);
         this.add(button_rueckgaengig);
-        button_wiederholen = new JButton("Vorwärts");
+
+        button_wiederholen = new JButton();
+        button_wiederholen.setPreferredSize(new Dimension(26, 27));
+        button_wiederholen.setIcon(Grafiken.grafik_vorwaerts);
+        button_wiederholen.setToolTipText("Vorwaerts");
         button_wiederholen.addActionListener(this);
         this.add(button_wiederholen);
 
-        button_zoom_rein = new JButton("Zoom +");
+        button_zoom_rein = new JButton();
+        button_zoom_rein.setPreferredSize(new Dimension(26, 27));
+        button_zoom_rein.setIcon(Grafiken.grafik_zoomRein);
+        button_zoom_rein.setToolTipText("Reinzoomen");
         button_zoom_rein.addActionListener(this);
         this.add(button_zoom_rein);
-        button_zoom_raus = new JButton("Zoom -");
+        button_zoom_raus = new JButton();
+        button_zoom_raus.setPreferredSize(new Dimension(26, 27));
+        button_zoom_raus.setIcon(Grafiken.grafik_zoomRaus);
+        button_zoom_raus.setToolTipText("Rauszoomen");
         button_zoom_raus.addActionListener(this);
         this.add(button_zoom_raus);
-        button_zoom_100 = new JButton("Zoom 100%");
+        button_zoom_100 = new JButton();
+        button_zoom_100.setPreferredSize(new Dimension(26, 27));
+        button_zoom_100.setIcon(Grafiken.grafik_zoom100);
+        button_zoom_100.setToolTipText("Originalgroesse");
         button_zoom_100.addActionListener(this);
         this.add(button_zoom_100);
 

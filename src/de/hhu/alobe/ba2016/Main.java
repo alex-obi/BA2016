@@ -17,21 +17,19 @@ public class Main {
 
         /*
         Todoliste:
-         * todo: Buttons oben Grafik
 
          Bugs:
          * Wichtig:
          * todo: Parallellicht auf 0 Grad zurückstellen führt zu komischem Wackeln des Strahlengangs
          *
          * Zweitrangig:
-         * todo: Bei Radiusänderung unter Höhe wird Spiegel erst nach loslassen des Reglers aktualisiert
          * todo: Rahmen werden nach scrollen ausgeblendet
-         * todo: Bei Auge wird Brennweite mitgezeichnet
          * todo: Auswahl Cursor ändert sich nicht
 
          Optional:
-         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
          * todo: Optische Achse verschiebbar
+         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
+
          * todo: Scrollen mit Maus und Ausschnitt optimieren
 
          * todo: Parallel-, Zenit-, Brennpunktstrahl markieren und einfangen

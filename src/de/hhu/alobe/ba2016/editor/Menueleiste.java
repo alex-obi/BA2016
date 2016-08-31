@@ -115,8 +115,8 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         ansicht.add(snelliusAktivieren);
         ansicht.add(hauptebenenAktivieren);
 
-        hilfe = new JMenu("Hilfe");
-        this.add(hilfe);
+        /*hilfe = new JMenu("Hilfe");
+        this.add(hilfe);*/
     }
 
     @Override
