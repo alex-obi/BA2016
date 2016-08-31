@@ -1,6 +1,7 @@
 package de.hhu.alobe.ba2016;
 
 import de.hhu.alobe.ba2016.editor.HauptFenster;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.grafik.Grafiken;
 
 import java.io.File;
@@ -16,17 +17,11 @@ public class Main {
 
         /*
         Todoliste:
-         * todo: Menüführung. Speichern unter...
-         * todo: Maßstab und Einheiten
-         *
-         * todo: Schirm Hohlspiegel Linse Grafisch Abgrenzen
-         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
+         * todo: Buttons oben Grafik
 
          Bugs:
          * Wichtig:
-         * todo: Zwischen Hauptebene und Spiegel buggy
-         * todo: Bei KonkavKonvexen werden bei r -> unendlich beide Seiten vertauscht
-         * todo: Rückgängig bei Parallellicht buggy
+         * todo: Parallellicht auf 0 Grad zurückstellen führt zu komischem Wackeln des Strahlengangs
          *
          * Zweitrangig:
          * todo: Bei Radiusänderung unter Höhe wird Spiegel erst nach loslassen des Reglers aktualisiert
@@ -35,11 +30,13 @@ public class Main {
          * todo: Auswahl Cursor ändert sich nicht
 
          Optional:
+         * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
+         * todo: Optische Achse verschiebbar
+         * todo: Scrollen mit Maus und Ausschnitt optimieren
+
          * todo: Parallel-, Zenit-, Brennpunktstrahl markieren und einfangen
          * todo: Strahlen nummerieren und oder farblich kennzeichnen
 
-         * todo: Optische Achse verschiebbar
-         * todo: Scrollen mit Maus und Ausschnitt optimieren
          * todo: Eigenschaftenänderung rücknehmbar
 
          * todo: get gib einheitlich
@@ -47,6 +44,7 @@ public class Main {
          Zweitrangig:
          * todo: Mehrere Tabs
          * todo: Spiegel schräg
+         * todo: Garbage vermeiden
 
          */
 

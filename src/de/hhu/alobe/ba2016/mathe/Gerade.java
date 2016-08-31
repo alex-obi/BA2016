@@ -63,7 +63,7 @@ public class Gerade extends Strahl implements KannStrahlenSchnitt {
         g.draw(line);
         if(quellEntfernung < 0 && HauptFenster.get().gibAktuelleOptischeBank().isVirtuelleStrahlenAktiv()) {
             Vektor bisVektorVirtuell = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, quellEntfernung));
-            g.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 5.0f, new float[] {10.0f,4.0f}, 0.0f));
+            g.setStroke(new BasicStroke(Konstanten.LINIENDICKE, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 5.0f, new float[] {10.0f,4.0f}, 0.0f));
             Line2D lineVirtuell = new Line2D.Double(basisVektor, bisVektorVirtuell);
             g.draw(lineVirtuell);
         }

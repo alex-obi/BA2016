@@ -39,11 +39,11 @@ public class Aktion_NeuesLinsenFormat extends Aktion {
     }
     @Override
     public void aktionDurchfuehren() {
-        linse.formatNeuBestimmen(neu_brechzahl, neu_hoeheHaupt, neu_hoeheLinse, neu_dicke, neu_radius1, neu_radius2);
+        linse.formatAktualisieren(neu_brechzahl, neu_hoeheHaupt, neu_hoeheLinse, neu_dicke, neu_radius1, neu_radius2);
     }
 
     @Override
     public void aktionRueckgaengig() {
-        linse.formatNeuBestimmen(alt_brechzahl, alt_hoeheHaupt, alt_hoeheLinse, alt_dicke, alt_radius1, alt_radius2);
+        linse.formatAktualisieren(alt_brechzahl, alt_hoeheHaupt, alt_hoeheLinse, alt_dicke, alt_radius1, alt_radius2);
     }
 }

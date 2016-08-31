@@ -46,13 +46,13 @@ public class Hauptebene extends Flaeche {
             cStrGng.strahlengangBeenden(position);
             return;
         }
-        if (cStrGng.getAktuellerStrahl().getRichtungsVektor().getX() == 0)
-            return; //Abbrechen, wenn Strahl parallel zur Hauptebene eintrifft
+        if (cStrGng.getAktuellerStrahl().getRichtungsVektor().getX() == 0) return; //Abbrechen, wenn Strahl parallel zur Hauptebene eintrifft
 
         double richtungsVZ = Math.signum(cStrGng.getAktuellerStrahl().getRichtungsVektor().getX()); //Gibt an von welcher Seite der Strahl kommt
         double gegenstandsweite = richtungsVZ * (mittelpunkt.getX() - cStrGng.getAktuellerStrahl().gibQuellPunkt().getX()); //Gegenstandsweite gespiegelt bei Richtungswechsel
         double gegenstandshoehe = cStrGng.getAktuellerStrahl().gibQuellPunkt().getY() - mittelpunkt.getY();
         Vektor relativerSchnittpunkt = Vektor.subtrahiere(position, mittelpunkt);
+        relativerSchnittpunkt.setX(0);
 
         double reflFakt = 1;
         if (modus == Flaeche.MODUS_REFLEKT) {

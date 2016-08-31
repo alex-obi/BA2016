@@ -31,20 +31,23 @@ public abstract class Lichtquelle extends Bauelement {
 
     public Lichtquelle(OptischeBank optischeBank, Vektor mittelPunkt, Farbe farbe) {
         super(optischeBank, mittelPunkt, TYP_LAMPE);
-        aktiv = true;
+        initialisieren(true, farbe);
         strahlengaenge = new ArrayList<>();
-        this.farbe = farbe;
     }
 
     public Lichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_LAMPE);
-        aktiv = xmlElement.getAttribute(XML_ISTAKTIV).getBooleanValue();
-        farbe = new Farbe(xmlElement.getChild(XML_FARBE));
+        initialisieren(xmlElement.getAttribute(XML_ISTAKTIV).getBooleanValue(), new Farbe(xmlElement.getChild(XML_FARBE)));
         strahlengaenge = new ArrayList<>();
         Iterator<?> strahlen = xmlElement.getChildren(Strahl.XML_STRAHL).iterator();
         while(strahlen.hasNext()) {
             neuerStrahl(new Strahlengang(new Strahl((Element) strahlen.next())));
         }
+    }
+
+    private void initialisieren(boolean nAktiv, Farbe nFarbe) {
+        aktiv = nAktiv;
+        farbe = nFarbe;
     }
 
     public abstract Strahlengang berechneNeuenStrahl (Vektor strahlPunkt);
@@ -87,6 +90,7 @@ public abstract class Lichtquelle extends Bauelement {
 
     @Override
     public void waehleAus() {
+        super.waehleAus();
         optischeBank.werkzeugWechseln(new Werkzeug_NeuerStrahl(optischeBank, this) {
         });
     }

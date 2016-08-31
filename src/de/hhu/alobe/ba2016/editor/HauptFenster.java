@@ -3,6 +3,7 @@ package de.hhu.alobe.ba2016.editor;
 
 import com.sun.corba.se.pept.transport.ReaderThread;
 import de.hhu.alobe.ba2016.Konstanten;
+import de.hhu.alobe.ba2016.jdom.Dateifunktionen;
 import org.jdom2.Document;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
@@ -50,7 +51,7 @@ public class HauptFenster extends JFrame {
         fensterInhalt = new JPanel(new BorderLayout());
         fensterInhalt.setOpaque(true);
 
-        optBank = new OptischeBank((String)null);
+        optBank = new OptischeBank();
         wechseleOptischeBank(optBank);
 
         fenster_bauelemente = new Fenster_Bauelemente(this);
@@ -66,15 +67,15 @@ public class HauptFenster extends JFrame {
         this.setVisible(true);
     }
 
-    public void neueOptischeBank(String name) {
-        wechseleOptischeBank(new OptischeBank(name));
+    public void neueOptischeBank() {
+        wechseleOptischeBank(new OptischeBank());
     }
 
     public OptischeBank ladeNeueOptischeBank(File datei) {
         Document xmlDatei;
         try {
             xmlDatei = new SAXBuilder().build(datei);
-            return new OptischeBank(xmlDatei.getRootElement(), datei.getName().substring(0, datei.getName().length() - 4));
+            return new OptischeBank(xmlDatei.getRootElement(), datei);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Fehler beim Laden der Datei: " + datei.getPath(), "Fehler", JOptionPane.ERROR_MESSAGE);
             System.out.println(e.getMessage());
@@ -92,6 +93,8 @@ public class HauptFenster extends JFrame {
             FileWriter fileWriter = new FileWriter(datei);
             xmlOutput.output(xmlDatei, fileWriter);
             fileWriter.close();
+            gibAktuelleOptischeBank().setDateiPfad(datei);
+            this.setTitle("Optischer Baukasten - " + Dateifunktionen.getDateiNamen(datei));
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, datei.getPath() + " konnte nicht gespeichert werden!");
             System.out.println(e.getMessage());

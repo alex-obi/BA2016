@@ -1,7 +1,10 @@
 package de.hhu.alobe.ba2016.physik.elemente.Licht;
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
+import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
 import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 
 public class ParallelLichtquelle extends Lichtquelle {
 
+    public static final String NAME = "Parallele Lichtquelle";
     public static final String XML_PARALLELLICHT = "parallel_licht";
 
     private double breite = 20;
@@ -34,20 +38,136 @@ public class ParallelLichtquelle extends Lichtquelle {
     public static final double MIND_NEIGUNG = - Math.PI / 4;
     public static final double MAX_NEIGUNG = Math.PI / 4;
 
+    private JCheckBox anAus;
+    private JComboBox farben_box;
+    private Eigenschaftenregler_Slider slide_neigung;
+    private Eigenschaftenregler_Slider slide_hoehe;
+
     public ParallelLichtquelle(OptischeBank optischeBank, Vektor mittelPunkt, Farbe farbe, int hoehe, double neigungsWinkel) {
         super(optischeBank, mittelPunkt, farbe);
-        this.hoehe = hoehe;
-        this.neigungsWinkel = neigungsWinkel;
-
-        setRahmen(generiereRahmen());
+        initialisiere(hoehe, neigungsWinkel);
     }
 
     public ParallelLichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement);
-        this.hoehe = xmlElement.getAttribute(XML_HOEHE).getDoubleValue();
-        this.neigungsWinkel = xmlElement.getAttribute(XML_NEIGUNG).getDoubleValue();
+        initialisiere(xmlElement.getAttribute(XML_HOEHE).getDoubleValue(), xmlElement.getAttribute(XML_NEIGUNG).getDoubleValue());
+    }
+
+    private void initialisiere(double nHoehe, double nNeigungsWinkel) {
+        formatAktualisieren(nHoehe, nNeigungsWinkel);
+
+        anAus = new JCheckBox("Lampe aktiv", isAktiv());
+        anAus.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(anAus.isSelected()) {
+                    setAktiv(true);
+                } else {
+                    setAktiv(false);
+                }
+                optischeBank.aktualisieren();
+            }
+        });
+
+        farben_box = new JComboBox(Farbe.farbenpalette.keySet().toArray());
+        farben_box.setSelectedItem(Farbe.gibFarbenName(getFarbe()));
+        farben_box.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setFarbe(Farbe.farbenpalette.get(farben_box.getSelectedItem()));
+                optischeBank.aktualisieren();
+            }
+        });
+
+        slide_neigung = new Eigenschaftenregler_Slider("Neigungswinkel", "°", 500, neigungsWinkel, MIND_NEIGUNG, MAX_NEIGUNG, new ReglerEvent() {
+            @Override
+            public void reglerWurdeVerschoben(double wert) {
+                setNeigung(wert);
+                optischeBank.aktualisieren();
+            }
+
+            @Override
+            public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
+                return -Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+            }
+
+            @Override
+            public double berechneReglerProzent(double wert, double minimum, double maximum) {
+                return Eigenschaften.linearZuProzent(-wert, minimum, maximum);
+            }
+
+            @Override
+            public String berechnePhysikalischenWert(double zahl) {
+                return Eigenschaften.neigungsWinkelZuGrad(-neigungsWinkel);
+            }
+        });
+
+        slide_hoehe = new Eigenschaftenregler_Slider("Hoehe", "cm", 100, hoehe, MIND_HOEHE, MAX_HOEHE, new ReglerEvent() {
+            @Override
+            public void reglerWurdeVerschoben(double wert) {
+                setHoehe(wert);
+                optischeBank.aktualisieren();
+            }
+
+            @Override
+            public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
+                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+            }
+
+            @Override
+            public double berechneReglerProzent(double wert, double minimum, double maximum) {
+                return Eigenschaften.linearZuProzent(wert, minimum, maximum);
+            }
+
+            @Override
+            public String berechnePhysikalischenWert(double zahl) {
+                return Eigenschaften.laengeZuCm(zahl);
+            }
+        });
+    }
+
+    private void formatAktualisieren(double nHoehe, double nNeigungsWinkel) {
+        this.hoehe = Math.min(MAX_HOEHE, Math.max(nHoehe, MIND_HOEHE));
+        this.neigungsWinkel = Math.min(MAX_NEIGUNG, Math.max(nNeigungsWinkel, MIND_NEIGUNG));
 
         setRahmen(generiereRahmen());
+    }
+
+    public void setNeigung(double nNeigungsWinkel) {
+        neigungsWinkel = nNeigungsWinkel;
+        for(Strahlengang cStrg : strahlengaenge) {
+            cStrg.resetteStrahlengang();
+            double relativeNeigung;
+            if(cStrg.getAnfangsStrahl().getRichtungsVektor().getX() < 0) { //Strahl geht in Richtung linker Seite
+                relativeNeigung = (nNeigungsWinkel + Math.PI) - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
+            } else {
+                relativeNeigung = nNeigungsWinkel - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
+            }
+
+            cStrg.getAnfangsStrahl().getRichtungsVektor().dreheUmWinkel(relativeNeigung);
+        }
+    }
+
+    public void setHoehe(double nHoehe) {
+        hoehe = nHoehe;
+        Rectangle2D hitbox = new Rectangle.Double(mittelPunkt.getX() - breite / 2, mittelPunkt.getY() - hoehe / 2, breite, hoehe);
+        for(int i = 0;i < strahlengaenge.size(); i++) {
+            if(!hitbox.contains(strahlengaenge.get(i).getAnfangsStrahl().getBasisVektor())) {
+                strahlengaenge.remove(i);
+            }
+        }
+        rahmenAktualisieren();
+    }
+
+    public double getNeigungsWinkel() {
+        return neigungsWinkel;
+    }
+
+    public void setNeigungsWinkel(double nNeigungsWinkel) {
+        double aenderung = nNeigungsWinkel - neigungsWinkel;
+        for(Strahlengang cStrG : strahlengaenge) {
+            cStrG.getAktuellerStrahl().getRichtungsVektor().dreheUmWinkel(nNeigungsWinkel);
+        }
     }
 
     @Override
@@ -74,89 +194,25 @@ public class ParallelLichtquelle extends Lichtquelle {
     }
 
     @Override
-    public void waehleAus() {
-        super.waehleAus();
-
-        ArrayList<Eigenschaftenregler> regler = new ArrayList<>();
-
-        JCheckBox anAus = new JCheckBox("Lampe aktiv", isAktiv());
-        anAus.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if(anAus.isSelected()) {
-                    setAktiv(true);
-                } else {
-                    setAktiv(false);
-                }
-                optischeBank.aktualisieren();
-            }
-        });
-        regler.add(new Eigenschaftenregler("", anAus));
-
-        JComboBox farben_box = new JComboBox(Farbe.farbenpalette.keySet().toArray());
-        farben_box.setSelectedItem(Farbe.gibFarbenName(getFarbe()));
-        farben_box.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setFarbe(Farbe.farbenpalette.get(farben_box.getSelectedItem()));
-                optischeBank.aktualisieren();
-            }
-        });
-        regler.add(new Eigenschaftenregler("Farbe", farben_box));
-
-        JSlider slide_neigung = new JSlider ((int)(MIND_NEIGUNG * 100), (int)(MAX_NEIGUNG * 100), (int)(-neigungsWinkel * 100));
-        slide_neigung.setPaintTicks(true);
-        slide_neigung.setMajorTickSpacing(10);
-        slide_neigung.addChangeListener(e -> {
-            setNeigung( -(double)((JSlider) e.getSource()).getValue() / 100);
-            optischeBank.aktualisieren();
-        });
-        regler.add(new Eigenschaftenregler("Neigungswinkel", slide_neigung));
-
-        JSlider slide_hoehe = new JSlider (MIND_HOEHE, MAX_HOEHE, (int)hoehe);
-        slide_hoehe.setPaintTicks(true);
-        slide_hoehe.setMajorTickSpacing(50);
-        slide_hoehe.addChangeListener(e -> {
-            setHoehe( ((JSlider) e.getSource()).getValue());
-            optischeBank.aktualisieren();
-        });
-        regler.add(new Eigenschaftenregler("Höhe", slide_hoehe));
-
-        optischeBank.getEigenschaften().setOptionen("Laser Lichtquelle", regler);
-
+    public Eigenschaftenregler[] gibEigenschaftenregler() {
+        Eigenschaftenregler[] komponenten =  new Eigenschaftenregler[4];
+        komponenten[0] = new Eigenschaftenregler("", anAus);
+        komponenten[1] = new Eigenschaftenregler("Farbe", farben_box);
+        komponenten[2] = slide_neigung;
+        komponenten[3] = slide_hoehe;
+        return komponenten;
     }
 
-    public void setNeigung(double nNeigungsWinkel) {
-        neigungsWinkel = nNeigungsWinkel;
-        for(Strahlengang cStrg : strahlengaenge) {
-            cStrg.resetteStrahlengang();
-            double relativeNeigung;
-            if(cStrg.getAnfangsStrahl().getRichtungsVektor().getX() < 0) { //Strahl geht in Richtung linker Seite
-                relativeNeigung = (nNeigungsWinkel + Math.PI) - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
-            } else {
-                relativeNeigung = nNeigungsWinkel - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
-            }
-
-            cStrg.getAnfangsStrahl().getRichtungsVektor().dreheUmWinkel(relativeNeigung);
-        }
-    }
-
-    public void setHoehe(int nHoehe) {
-        hoehe = nHoehe;
-        Rectangle2D hitbox = new Rectangle.Double(mittelPunkt.getX() - breite / 2, mittelPunkt.getY() - hoehe / 2, breite, hoehe);
-        for(int i = 0;i < strahlengaenge.size(); i++) {
-            if(!hitbox.contains(strahlengaenge.get(i).getAnfangsStrahl().getBasisVektor())) {
-                strahlengaenge.remove(i);
-            }
-        }
-        rahmenAktualisieren();
+    @Override
+    public String gibBauelementNamen() {
+        return NAME;
     }
 
     @Override
     public void paintComponent(Graphics2D g) {
-        g.setColor(farbe);
-
+        g.setColor(Color.BLACK);
         g.draw(new Rectangle2D.Double(mittelPunkt.getX() - breite / 2, mittelPunkt.getY() - hoehe / 2, breite, hoehe));
+        g.setColor(farbe);
         super.paintComponent(g);
 
     }
@@ -174,14 +230,4 @@ public class ParallelLichtquelle extends Lichtquelle {
         return XML_PARALLELLICHT;
     }
 
-    public double getNeigungsWinkel() {
-        return neigungsWinkel;
-    }
-
-    public void setNeigungsWinkel(double nNeigungsWinkel) {
-        double aenderung = nNeigungsWinkel - neigungsWinkel;
-        for(Strahlengang cStrG : strahlengaenge) {
-            cStrG.getAktuellerStrahl().getRichtungsVektor().dreheUmWinkel(nNeigungsWinkel);
-        }
-    }
 }

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-public class Panel_Werkzeuge extends JPanel implements ActionListener, ItemListener {
+public class Panel_Werkzeuge extends JPanel implements ActionListener {
 
     private HauptFenster optikSimulator;
 
@@ -25,14 +25,11 @@ public class Panel_Werkzeuge extends JPanel implements ActionListener, ItemListe
     private JButton button_zoom_raus;
     private JButton button_zoom_100;
 
-    private JButton button_snellius_hauptebene;
-    private JCheckBox button_virtuellAnAus;
-    private boolean snellius = false;
-
 
     public Panel_Werkzeuge(HauptFenster optikSimulator) {
         this.optikSimulator = optikSimulator;
         setPreferredSize(new Dimension(0, 35));
+        setLayout(new FlowLayout(FlowLayout.LEFT));
 
         werkzeug_bauelement_auswaehlen = new JButton("Auswählen");
         werkzeug_bauelement_auswaehlen.addActionListener(this);
@@ -57,13 +54,6 @@ public class Panel_Werkzeuge extends JPanel implements ActionListener, ItemListe
         button_zoom_100 = new JButton("Zoom 100%");
         button_zoom_100.addActionListener(this);
         this.add(button_zoom_100);
-
-        button_snellius_hauptebene = new JButton("Snellius");
-        button_snellius_hauptebene.addActionListener(this);
-        this.add(button_snellius_hauptebene);
-        button_virtuellAnAus = new JCheckBox("Virtuelle Strahlen", optikSimulator.gibAktuelleOptischeBank().isVirtuelleStrahlenAktiv());
-        button_virtuellAnAus.addItemListener(this);
-        this.add(button_virtuellAnAus);
 
     }
 
@@ -94,26 +84,6 @@ public class Panel_Werkzeuge extends JPanel implements ActionListener, ItemListe
            optischeBank.setZoom(1);
            optischeBank.aktualisieren();
         }
-        if(e.getSource().equals(button_snellius_hauptebene)) {
-            if(snellius) {
-                snellius = false;
-               optischeBank.setModus(OptischeBank.MODUS_HAUPTEBENE);
-                button_snellius_hauptebene.setText("Snellius");
-            } else {
-                snellius = true;
-               optischeBank.setModus(OptischeBank.MODUS_SNELLIUS);
-                button_snellius_hauptebene.setText("Hauptebene");
-            }
-           optischeBank.aktualisieren();
-        }
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        OptischeBank optischeBank = optikSimulator.gibAktuelleOptischeBank();
-        if(e.getSource().equals(button_virtuellAnAus)) {
-            optischeBank.setVirtuelleStrahlenAktiv(button_virtuellAnAus.isSelected());
-            optischeBank.aktualisieren();
-        }
-    }
 }

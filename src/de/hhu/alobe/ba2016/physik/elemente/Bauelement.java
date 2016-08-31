@@ -1,9 +1,13 @@
 package de.hhu.alobe.ba2016.physik.elemente;
 
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.jdom.Speicherbar;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import org.jdom2.Element;
+
+import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * Ein Bauelement hat eine Interaktion mit Strahlen
@@ -37,6 +41,15 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar{
         this.typ = typ;
     }
 
+    public abstract void verschiebeUm(Vektor verschiebung);
+
+    public abstract Rahmen generiereRahmen();
+
+    public abstract Eigenschaftenregler[] gibEigenschaftenregler();
+
+    public abstract String gibBauelementNamen();
+
+
     public boolean fangModusOptischeAchseAn() {
         return (typ != Bauelement.TYP_LAMPE);
     }
@@ -45,21 +58,14 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar{
         verschiebeUm(Vektor.subtrahiere(nMittelpunkt, mittelPunkt));
     }
 
-    public abstract void verschiebeUm(Vektor verschiebung);
-
-    public int getTyp() {
-        return typ;
-    }
-
-    public OptischeBank getOptischeBank() {
-        return optischeBank;
-    }
-
     public void rahmenAktualisieren() {
         setRahmen(generiereRahmen());
     }
 
-    public abstract Rahmen generiereRahmen();
+    @Override
+    public void waehleAus() {
+        optischeBank.getEigenschaften().setOptionen(gibBauelementNamen(), gibEigenschaftenregler());
+    }
 
     @Override
     public Element getXmlElement() {
@@ -71,6 +77,14 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar{
     @Override
     public String getXmlElementTyp() {
         return XML_BAUELEMENT;
+    }
+
+    public int getTyp() {
+        return typ;
+    }
+
+    public OptischeBank getOptischeBank() {
+        return optischeBank;
     }
 
 }

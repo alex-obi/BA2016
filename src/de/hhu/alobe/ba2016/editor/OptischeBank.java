@@ -7,6 +7,7 @@ import de.hhu.alobe.ba2016.editor.aktionen.AktionsListe;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_Auswahl;
+import de.hhu.alobe.ba2016.jdom.Dateifunktionen;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.grafik.OptischeAchse;
 import de.hhu.alobe.ba2016.physik.elemente.Auge.Auge;
@@ -28,6 +29,7 @@ import org.jdom2.Element;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -38,9 +40,10 @@ public class OptischeBank extends JPanel implements Speicherbar {
 
     public static final String XML_OPTISCHEBANK = "optische_bank";
 
-    public static final String XML_NAME = "name";
+    private File dateiPfad;
 
     private double zoom;
+    public static final String XML_ZOOM = "zoom";
 
     private Point groesse;
 
@@ -53,10 +56,12 @@ public class OptischeBank extends JPanel implements Speicherbar {
     private Point positionOffset;
 
     private int modus = MODUS_HAUPTEBENE;
+    public static final String XML_MODUS = "modus";
     public static final int MODUS_SNELLIUS = 1;
     public static final int MODUS_HAUPTEBENE = 2;
 
     private boolean virtuelleStrahlenAktiv = false;
+    public static final String XML_VIRTUELLE_STRAHLEN = "virtuelle_strahlen";
 
     private ArrayList<Bauelement> bauelemente;
 
@@ -75,16 +80,13 @@ public class OptischeBank extends JPanel implements Speicherbar {
 
     Werkzeug aktuellesWerkzeug;
 
-    public OptischeBank(String name) {
-        setName(name);
-        initialisiere();
+    public OptischeBank() {
+        initialisiere(1);
 
         //########### Erzeuge Testszenario
 
         //bauelementHinzufuegen(new Linse(this, new Vektor(50, 450), 1.336, 90, 0, 60, 0));
 
-        bauelementHinzufuegen(new Schirm(this, new Vektor(650, 450), 300, 150));
-        bauelementHinzufuegen(new PunktLichtquelle(this, new Vektor(50, 150), new Farbe(Color.BLACK)));
         /*bauelementHinzufuegen(new Blende(this, new Vektor(800, 450), 150, 50));
         bauelementHinzufuegen(new ParallelLichtquelle(this, new Vektor(50, 250), Color.BLACK, 250, 0));
         bauelementHinzufuegen(new Hohlspiegel(this, new Vektor(500, 450), -300, 150));
@@ -99,9 +101,12 @@ public class OptischeBank extends JPanel implements Speicherbar {
         bauelementHinzufuegen(new Auge(this, new Vektor(700, 250)));*/
     }
 
-    public OptischeBank(Element xmlElement, String nName) throws Exception {
-        setName(nName);
-        initialisiere();
+    public OptischeBank(Element xmlElement, File dateiPfad) throws Exception {
+        this.dateiPfad = dateiPfad;
+        setName(Dateifunktionen.getDateiNamen(dateiPfad));
+        initialisiere(xmlElement.getAttribute(XML_ZOOM).getDoubleValue());
+        modus = xmlElement.getAttribute(XML_MODUS).getIntValue();
+        virtuelleStrahlenAktiv = xmlElement.getAttribute(XML_VIRTUELLE_STRAHLEN).getBooleanValue();
         Iterator<?> bauelemente = xmlElement.getChildren().iterator();
         while(bauelemente.hasNext()) {
             Element nextBau = (Element)bauelemente.next();
@@ -117,11 +122,11 @@ public class OptischeBank extends JPanel implements Speicherbar {
         }
     }
 
-    private void initialisiere() {
+    private void initialisiere(double zoom) {
         setLayout(new BorderLayout());
         setOpaque(true);
 
-        zoom = 1;
+        this.zoom = zoom;
 
         zeichenBrett =  new Zeichenbrett(this);
 
@@ -328,9 +333,21 @@ public class OptischeBank extends JPanel implements Speicherbar {
         this.virtuelleStrahlenAktiv = virtuelleStrahlenAktiv;
     }
 
+
+    public File getDateiPfad() {
+        return dateiPfad;
+    }
+
+    public void setDateiPfad(File dateiPfad) {
+        this.dateiPfad = dateiPfad;
+    }
+
     @Override
     public Element getXmlElement() {
         Element xmlElement = new Element(getXmlElementTyp());
+        xmlElement.setAttribute(XML_MODUS, String.valueOf(modus));
+        xmlElement.setAttribute(XML_VIRTUELLE_STRAHLEN, String.valueOf(virtuelleStrahlenAktiv));
+        xmlElement.setAttribute(XML_ZOOM, String.valueOf(zoom));
         for(Bauelement cBau : bauelemente) {
             xmlElement.addContent(cBau.getXmlElement());
         }

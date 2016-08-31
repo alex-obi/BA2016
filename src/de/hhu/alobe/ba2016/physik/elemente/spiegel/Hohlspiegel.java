@@ -1,7 +1,11 @@
 package de.hhu.alobe.ba2016.physik.elemente.spiegel;
 
+import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
+import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
@@ -13,61 +17,108 @@ import org.jdom2.Element;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class Hohlspiegel extends Bauelement implements KannKollision{
 
+    public static final String NAME = "Hohlspiegel";
     public static final String XML_HOHLSPIEGEL = "hohlspiegel";
 
     protected double hoehe;
     public static final String XML_HOEHE = "hoehe";
-    public static final int MIND_HOEHE = 100;
-    public static final int MAX_HOEHE = 510;
+    public static final double MIND_HOEHE = 100;
+    public static final double MAX_HOEHE = 510;
 
     protected double breite;
 
 
     protected double radius;
     public static final String XML_RADIUS = "radius";
-    public static final int MIND_RADIUS = 50;
-    public static final int MAX_RADIUS = 100000; //Maximaler Radius bis Kreis als ebene Fläche approximiert wird
+    public static final double MIND_RADIUS = 50;
+    public static final double MAX_RADIUS = 100000; //Maximaler Radius bis Kreis als ebene Fläche approximiert wird
 
     private Grenzflaeche spiegelFlaeche;
 
     private Hauptebene hauptebene;
 
+    private Eigenschaftenregler_Slider slide_hoehe;
+    private Eigenschaftenregler_Slider slide_radius;
+
     public Hohlspiegel(OptischeBank optischeBank, Vektor mittelPunkt, double radius, double hoehe) {
         super(optischeBank, mittelPunkt, TYP_SPIEGEL);
-        this.radius = radius;
-        hauptebene = new Hauptebene(Flaeche.MODUS_REFLEKT, mittelPunkt, radius / 2, hoehe);
-        setHoehe(hoehe);
+        initialisiere(radius, hoehe);
     }
 
     public Hohlspiegel(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_SPIEGEL);
-        this.hoehe = xmlElement.getAttribute(XML_HOEHE).getDoubleValue();
-        this.radius = xmlElement.getAttribute(XML_RADIUS).getDoubleValue();
-        hauptebene = new Hauptebene(Flaeche.MODUS_REFLEKT, mittelPunkt, radius / 2, hoehe);
-        setHoehe(hoehe);
+        initialisiere(xmlElement.getAttribute(XML_HOEHE).getDoubleValue(), xmlElement.getAttribute(XML_RADIUS).getDoubleValue());
     }
 
-    public void setHoehe(double nHoehe) {
-        formatNeuBestimmen(nHoehe, radius);
+    private void initialisiere(double nRadius, double nHoehe) {
+        hauptebene = new Hauptebene(Flaeche.MODUS_REFLEKT, mittelPunkt, nRadius / 2, nHoehe);
+
+        radius = nRadius;
+        setHoehe(nHoehe);
+
+        slide_hoehe = new Eigenschaftenregler_Slider("Hoehe", "cm", 100, hoehe, MIND_HOEHE, MAX_HOEHE, new ReglerEvent() {
+            @Override
+            public void reglerWurdeVerschoben(double wert) {
+                setHoehe(wert);
+                slide_hoehe.setWert(hoehe);
+                optischeBank.aktualisieren();
+            }
+
+            @Override
+            public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
+                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+            }
+
+            @Override
+            public double berechneReglerProzent(double wert, double minimum, double maximum) {
+                return Eigenschaften.linearZuProzent(wert, minimum, maximum);
+            }
+
+            @Override
+            public String berechnePhysikalischenWert(double zahl) {
+                return Eigenschaften.laengeZuCm(zahl);
+            }
+        });
+
+        slide_radius = new Eigenschaftenregler_Slider("Radius", "cm", 200, radius, MIND_RADIUS, MAX_RADIUS, new ReglerEvent() {
+            @Override
+            public void reglerWurdeVerschoben(double wert) {
+                setRadius(wert);
+                slide_hoehe.setWert(hoehe);
+                optischeBank.aktualisieren();
+            }
+
+            @Override
+            public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
+                return Eigenschaften.prozentZuRadius(reglerProzent, minimum);
+            }
+
+            @Override
+            public double berechneReglerProzent(double wert, double minimum, double maximum) {
+                return Eigenschaften.radiusZuProzent(wert, minimum, maximum);
+            }
+
+            @Override
+            public String berechnePhysikalischenWert(double zahl) {
+                return Eigenschaften.radiusZuCm(zahl);
+            }
+        });
     }
 
-    public void setRadius(double nRadius) {
-        formatNeuBestimmen(hoehe, nRadius);
-    }
-
-    public void formatNeuBestimmen(double nHoehe, double nRadius) {
+    public void formatAktualisieren(double nHoehe, double nRadius) {
+        this.radius = nRadius;
         if(radius != 0) {
             this.hoehe = Math.min(nHoehe, Math.abs(radius * 2));
         } else {
             this.hoehe = nHoehe;
         }
         hauptebene.setHoehe(hoehe);
-        this.radius = nRadius;
         hauptebene.setBrennweite(radius / 2);
         if(radius == 0 || radius > MAX_RADIUS) {
             breite = 0;
@@ -89,50 +140,34 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
         setRahmen(generiereRahmen());
     }
 
-    @Override
-    public void waehleAus() {
-        ArrayList<Eigenschaftenregler> regler = new ArrayList<>();
+    public void setHoehe(double nHoehe) {
+        formatAktualisieren(nHoehe, radius);
+    }
 
-        JSlider slide_hoehe = new JSlider (MIND_HOEHE, MAX_HOEHE, (int)hoehe);
-        slide_hoehe.setPaintTicks(true);
-        slide_hoehe.setMajorTickSpacing(20);
-        slide_hoehe.addChangeListener(e -> {
-            setHoehe( ((JSlider) e.getSource()).getValue());
-            optischeBank.aktualisieren();
-        });
-        regler.add(new Eigenschaftenregler("Höhe", slide_hoehe));
+    public void setRadius(double nRadius) {
+        formatAktualisieren(hoehe, nRadius);
+    }
 
-        JSlider slide_radius = new JSlider(-10000 / MIND_RADIUS, 10000 / MIND_RADIUS, (int)(10000 / radius));
-        slide_radius.setPaintTicks(true);
-        slide_radius.setMajorTickSpacing(20);
-        slide_radius.addChangeListener(e -> {
-            int wert = ((JSlider) e.getSource()).getValue();
-            if(wert != 0) {
-                setRadius(10000 / wert);
-            } else {
-                setRadius(0);
-            }
-            optischeBank.aktualisieren();
-        });
-        regler.add(new Eigenschaftenregler("Radius", slide_radius));
-
-        optischeBank.getEigenschaften().setOptionen("Hohlspiegel", regler);
+    public double getBrennweite() {
+        return radius / 2;
     }
 
     @Override
     public void paintComponent(Graphics2D g) {
-
         switch (optischeBank.getModus()) {
             case OptischeBank.MODUS_SNELLIUS:
-                g.setColor(new Color(0, 7, 244));
+                g.setColor(new Color(62, 195, 221));
                 spiegelFlaeche.paintComponent(g);
                 break;
             case OptischeBank.MODUS_HAUPTEBENE:
+                //Brennpunkt zeichnen:
                 g.setColor(Color.GRAY);
-                spiegelFlaeche.paintComponent(g);
+                g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
+                g.draw(new Line2D.Double(mittelPunkt.getX() - getBrennweite(), mittelPunkt.getY() + 5, mittelPunkt.getX() - getBrennweite(), mittelPunkt.getY() - 5));
                 g.setColor(Color.BLACK);
                 hauptebene.paintComponent(g);
-                break;
+                g.setColor(new Color(62, 195, 221));
+                spiegelFlaeche.paintComponent(g);
         }
         super.paintComponent(g);
 
@@ -144,7 +179,7 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
             case OptischeBank.MODUS_SNELLIUS:
                 return spiegelFlaeche.gibKollision(cStrGng);
             case OptischeBank.MODUS_HAUPTEBENE:
-                StrahlenKollision sK = spiegelFlaeche.gibKollision(cStrGng);
+                StrahlenKollision sK = hauptebene.gibKollision(cStrGng);
                 if(sK != null) {
                     return new StrahlenKollision(sK.getDistanz(), cStrGng, hauptebene);
                 }
@@ -177,6 +212,19 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
             rahmen.rahmenErweitern(new Point2D.Double(-5, -hoehe / 2));
             return rahmen;
         }
+    }
+
+    @Override
+    public Eigenschaftenregler[] gibEigenschaftenregler() {
+        Eigenschaftenregler[] komponenten =  new Eigenschaftenregler[2];
+        komponenten[0] = slide_hoehe;
+        komponenten[1] = slide_radius;
+        return komponenten;
+    }
+
+    @Override
+    public String gibBauelementNamen() {
+        return NAME;
     }
 
     @Override

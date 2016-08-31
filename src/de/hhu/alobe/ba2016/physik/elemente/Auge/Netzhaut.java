@@ -7,7 +7,7 @@ import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Schirm;
 public class Netzhaut extends Schirm{
 
     public Netzhaut(Auge auge, Vektor position, double hoehe) {
-        super(auge.getOptischeBank(), position, 0, hoehe);
+        super(auge.getOptischeBank(), position, hoehe);
     }
 
 }

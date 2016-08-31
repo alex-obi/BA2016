@@ -2,7 +2,10 @@ package de.hhu.alobe.ba2016.physik.elemente.absorbtion;
 
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
+import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
@@ -21,60 +24,105 @@ import java.util.ArrayList;
 
 public class Blende extends Bauelement implements KannKollision {
 
+    public static final String NAME = "Blende";
     public static final String XML_BLENDE = "blende";
 
-    double durchmesser;
+    private double durchmesser;
     public static final String XML_DURCHMESSER = "durchmesser";
-    public static final int MIND_DURCHMESSER = 0;
-    public static final int MAX_DURCHMESSER = 500;
+    public static final double MIND_DURCHMESSER = 0;
+    public static final double MIND_ABSTAND = 10; //Mindestlänge der Außenbegrenzungen der Blende
 
-    double hoehe;
+    private double hoehe;
     public static final String XML_HOEHE = "hoehe";
-    public static final int MIND_HOEHE = 10;
-    public static final int MAX_HOEHE = 510;
+    public static final double MIND_HOEHE = 20;
+    public static final double MAX_HOEHE = 500;
 
-    Grenzflaeche obereHaelfte;
-    Grenzflaeche untereHaelfte;
+    private Grenzflaeche obereHaelfte;
+    private Grenzflaeche untereHaelfte;
 
-    public Blende(OptischeBank optischeBank, Vektor mittelPunkt, int hoehe, int durchmesser) {
+    private Eigenschaftenregler_Slider slide_hoehe;
+    private Eigenschaftenregler_Slider slide_durchmesser;
+
+    public Blende(OptischeBank optischeBank, Vektor mittelPunkt, double hoehe, double durchmesser) {
         super(optischeBank, mittelPunkt, Bauelement.TYP_BLENDE);
-        this.hoehe = Math.max(10, hoehe);
-        setzeDurchmesser(durchmesser);
+        initialisiere(hoehe, durchmesser);
     }
 
     public Blende(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_BLENDE);
-        this.durchmesser = xmlElement.getAttribute(XML_DURCHMESSER).getDoubleValue();
-        this.hoehe = xmlElement.getAttribute(XML_HOEHE).getDoubleValue();
-        setzeDurchmesser(durchmesser);
+        initialisiere(xmlElement.getAttribute(XML_HOEHE).getDoubleValue(), xmlElement.getAttribute(XML_DURCHMESSER).getDoubleValue());
     }
 
-    public void setzeDurchmesser(double nDurchmesser) {
-        if(Math.abs(nDurchmesser) + 10 > hoehe) {
-            durchmesser = hoehe - 10;
-        } else {
-            durchmesser = Math.abs(nDurchmesser);
-        }
-        formatAktualisieren();
+    private void initialisiere(double nHoehe, double nDurchmesser) {
+        formatAktualisieren(nHoehe, nDurchmesser);
+
+        slide_hoehe = new Eigenschaftenregler_Slider("Hoehe", "cm", 100, hoehe, MIND_HOEHE, MAX_HOEHE, new ReglerEvent() {
+            @Override
+            public void reglerWurdeVerschoben(double wert) {
+                setHoehe(wert);
+                slide_durchmesser.setWert(durchmesser);
+                optischeBank.aktualisieren();
+            }
+
+            @Override
+            public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
+                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+            }
+
+            @Override
+            public double berechneReglerProzent(double wert, double minimum, double maximum) {
+                return Eigenschaften.linearZuProzent(wert, minimum, maximum);
+            }
+
+            @Override
+            public String berechnePhysikalischenWert(double zahl) {
+                return Eigenschaften.laengeZuCm(zahl);
+            }
+        });
+
+        slide_durchmesser = new Eigenschaftenregler_Slider("Durchmesser", "cm", 100, durchmesser, MIND_DURCHMESSER, MAX_HOEHE - MIND_ABSTAND * 2, new ReglerEvent() {
+            @Override
+            public void reglerWurdeVerschoben(double wert) {
+                setDurchmesser(wert);
+                slide_durchmesser.setWert(durchmesser);
+                optischeBank.aktualisieren();
+            }
+
+            @Override
+            public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
+                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+            }
+
+            @Override
+            public double berechneReglerProzent(double wert, double minimum, double maximum) {
+                return Eigenschaften.linearZuProzent(wert, minimum, maximum);
+            }
+
+            @Override
+            public String berechnePhysikalischenWert(double zahl) {
+                return Eigenschaften.laengeZuCm(zahl);
+            }
+        });
     }
 
-    public void setHoehe(double nHoehe) {
-        if(nHoehe > durchmesser + 10) {
-            hoehe = nHoehe;
-        } else {
-            hoehe = durchmesser + 10;
-        }
-        formatAktualisieren();
-    }
+    private void formatAktualisieren(double nHoehe, double nDurchmesser) {
+        hoehe = Math.min(MAX_HOEHE, Math.max(MIND_HOEHE, nHoehe));
+        durchmesser = Math.max(MIND_DURCHMESSER, Math.min(hoehe - MIND_ABSTAND * 2, nDurchmesser));
 
-    public void formatAktualisieren() {
         Vektor vonVekt = new Vektor(0, durchmesser / 2);
         Vektor bisVekt = new Vektor(0, hoehe / 2);
         obereHaelfte = new Grenzflaeche_Ebene(Flaeche.MODUS_ABSORB, Vektor.addiere(mittelPunkt, vonVekt), Vektor.addiere(mittelPunkt, bisVekt));
         untereHaelfte = new Grenzflaeche_Ebene(Flaeche.MODUS_ABSORB, Vektor.subtrahiere(mittelPunkt, vonVekt), Vektor.subtrahiere(mittelPunkt, bisVekt));
 
-
         setRahmen(generiereRahmen());
+    }
+
+    public void setDurchmesser(double nDurchmesser) {
+        formatAktualisieren(hoehe, nDurchmesser);
+    }
+
+    public void setHoehe(double nHoehe) {
+        formatAktualisieren(nHoehe, durchmesser);
     }
 
     @Override
@@ -95,28 +143,16 @@ public class Blende extends Bauelement implements KannKollision {
     }
 
     @Override
-    public void waehleAus() {
-        ArrayList<Eigenschaftenregler> regler = new ArrayList<>();
+    public Eigenschaftenregler[] gibEigenschaftenregler() {
+        Eigenschaftenregler[] komponenten =  new Eigenschaftenregler[2];
+        komponenten[0] = slide_hoehe;
+        komponenten[1] = slide_durchmesser;
+        return komponenten;
+    }
 
-        JSlider slide_hoehe = new JSlider (MIND_HOEHE, MAX_HOEHE, (int)hoehe);
-        slide_hoehe.setPaintTicks(true);
-        slide_hoehe.setMajorTickSpacing(20);
-        slide_hoehe.addChangeListener(e -> {
-            setHoehe( ((JSlider) e.getSource()).getValue());
-            optischeBank.aktualisieren();
-        });
-        regler.add(new Eigenschaftenregler("Höhe", slide_hoehe));
-
-        JSlider slide_durchmesser = new JSlider (MIND_DURCHMESSER, MAX_DURCHMESSER, (int)durchmesser );
-        slide_durchmesser.setPaintTicks(true);
-        slide_durchmesser.setMajorTickSpacing(20);
-        slide_durchmesser.addChangeListener(e -> {
-            setzeDurchmesser( ((JSlider) e.getSource()).getValue());
-            optischeBank.aktualisieren();
-        });
-        regler.add(new Eigenschaftenregler("Durchmesser", slide_durchmesser));
-
-        optischeBank.getEigenschaften().setOptionen("Blende", regler);
+    @Override
+    public String gibBauelementNamen() {
+        return NAME;
     }
 
     @Override

@@ -132,7 +132,7 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener{
         }
 
         if(e.getSource().equals(werkzeug_spiegel)) {
-            Spiegel neuerSpiegel = new Spiegel(optBank, new Vektor(0, 0), Spiegel.MAX_HOEHE / 2);
+            Spiegel neuerSpiegel = new Spiegel(optBank, new Vektor(0, 0), (int)(Spiegel.MAX_HOEHE / 2));
             optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, neuerSpiegel));
         }
         if(e.getSource().equals(werkzeug_hohlspiegel)) {

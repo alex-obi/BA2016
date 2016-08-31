@@ -22,17 +22,52 @@ import java.util.ArrayList;
 
 public class PunktLichtquelle extends Lichtquelle{
 
+    public static final String NAME = "Punktlichtquelle";
     public static final String XML_PUNKTLICHT = "punkt_licht";
 
     public static double groesse = 20;
 
+    private JComboBox farben_box;
+    private JCheckBox anAus;
+
     public PunktLichtquelle(OptischeBank optischeBank, Vektor mittelpunkt, Farbe farbe) {
         super(optischeBank, mittelpunkt, farbe);
-        setRahmen(generiereRahmen());
+        initialisiere();
     }
 
     public PunktLichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement);
+        initialisiere();
+    }
+
+    private void initialisiere() {
+        formatAktualisieren();
+
+        anAus = new JCheckBox("Lampe aktiv", isAktiv());
+        anAus.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(anAus.isSelected()) {
+                    setAktiv(true);
+                } else {
+                    setAktiv(false);
+                }
+                optischeBank.aktualisieren();
+            }
+        });
+
+        farben_box = new JComboBox(Farbe.farbenpalette.keySet().toArray());
+        farben_box.setSelectedItem(Farbe.gibFarbenName(getFarbe()));
+        farben_box.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setFarbe(Farbe.farbenpalette.get(farben_box.getSelectedItem()));
+                optischeBank.aktualisieren();
+            }
+        });
+    }
+
+    private void formatAktualisieren() {
         setRahmen(generiereRahmen());
     }
 
@@ -54,49 +89,28 @@ public class PunktLichtquelle extends Lichtquelle{
     }
 
     @Override
-    public void paintComponent(Graphics2D g) {
-        g.setColor(farbe);
-        Arc2D zeichenKreis = new Arc2D.Double(mittelPunkt.getX() - groesse / 2, mittelPunkt.getY() - groesse / 2, groesse, groesse, 0, 360, Arc2D.OPEN);
-        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-        g.draw(zeichenKreis);
-        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-        g.draw(new Line2D.Double(mittelPunkt.getX(), optischeBank.getOptischeAchse().getHoehe(), mittelPunkt.getX(), mittelPunkt.getY()));
-        super.paintComponent(g);
+    public Eigenschaftenregler[] gibEigenschaftenregler() {
+        Eigenschaftenregler[] komponenten =  new Eigenschaftenregler[2];
+        komponenten[0] = new Eigenschaftenregler("", anAus);
+        komponenten[1] = new Eigenschaftenregler("Farbe", farben_box);
+        return komponenten;
     }
 
     @Override
-    public void waehleAus() {
-        super.waehleAus();
+    public String gibBauelementNamen() {
+        return NAME;
+    }
 
-        ArrayList<Eigenschaftenregler> regler = new ArrayList<>();
-
-        JComboBox farben_box = new JComboBox(Farbe.farbenpalette.keySet().toArray());
-        farben_box.setSelectedItem(Farbe.gibFarbenName(getFarbe()));
-        farben_box.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setFarbe(Farbe.farbenpalette.get(farben_box.getSelectedItem()));
-                optischeBank.aktualisieren();
-            }
-        });
-        regler.add(new Eigenschaftenregler("Farbe", farben_box));
-
-        JCheckBox anAus = new JCheckBox("Lampe aktiv", isAktiv());
-        anAus.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if(anAus.isSelected()) {
-                    setAktiv(true);
-                } else {
-                    setAktiv(false);
-                }
-                optischeBank.aktualisieren();
-            }
-        });
-        regler.add(new Eigenschaftenregler("", anAus));
-
-        optischeBank.getEigenschaften().setOptionen("Punktlichtquelle", regler);
-
+    @Override
+    public void paintComponent(Graphics2D g) {
+        g.setColor(Color.BLACK);
+        Arc2D zeichenKreis = new Arc2D.Double(mittelPunkt.getX() - groesse / 2, mittelPunkt.getY() - groesse / 2, groesse, groesse, 0, 360, Arc2D.OPEN);
+        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
+        g.draw(zeichenKreis);
+        g.setColor(farbe);
+        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
+        g.draw(new Line2D.Double(mittelPunkt.getX(), optischeBank.getOptischeAchse().getHoehe(), mittelPunkt.getX(), mittelPunkt.getY()));
+        super.paintComponent(g);
     }
 
     @Override

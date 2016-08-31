@@ -3,7 +3,10 @@ package de.hhu.alobe.ba2016.physik.elemente.absorbtion;
 
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
+import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
+import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
@@ -22,104 +25,68 @@ import java.util.ArrayList;
 
 public class Schirm extends Bauelement implements KannKollision {
 
+    public static final String NAME = "Schirm";
     public static final String XML_SCHIRM = "schirm";
 
     private double hoehe;
     public static final String XML_HOEHE = "hoehe";
-    public static final double MIND_HOEHE = 10;
-    public static final double MAX_HOEHE = 510;
-
-    private double breite;
-
-
-    private double radius;
-    public static final String XML_RADIUS = "radius";
+    public static final double MIND_HOEHE = 20;
+    public static final double MAX_HOEHE = 500;
 
     private Grenzflaeche schirmFlaeche;
 
-    public Schirm(OptischeBank optischeBank, Vektor mittelPunkt, double radius, double hoehe) {
-        super(optischeBank, mittelPunkt, TYP_SCHIRM);
-        this. radius = radius;
-        setHoehe(hoehe);
-    }
+    private Eigenschaftenregler_Slider slide_hoehe;
 
     public Schirm(OptischeBank optischeBank, Vektor mittelPunkt, double hoehe) {
         super(optischeBank, mittelPunkt, TYP_SCHIRM);
-        this. radius = 0;
-        setHoehe(hoehe);
+        initialisiere(hoehe);
     }
 
     public Schirm(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_SCHIRM);
-        this.radius = xmlElement.getAttribute(XML_RADIUS).getDoubleValue();
-        setHoehe(xmlElement.getAttribute(XML_HOEHE).getDoubleValue());
+        initialisiere(xmlElement.getAttribute(XML_HOEHE).getDoubleValue());
 
+    }
+
+    private void initialisiere(double nHoehe) {
+        formatAktualisieren(nHoehe);
+
+        slide_hoehe = new Eigenschaftenregler_Slider("Hoehe", "cm", 100, hoehe, MIND_HOEHE, MAX_HOEHE, new ReglerEvent() {
+            @Override
+            public void reglerWurdeVerschoben(double wert) {
+                setHoehe(wert);
+                optischeBank.aktualisieren();
+            }
+
+            @Override
+            public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
+                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+            }
+
+            @Override
+            public double berechneReglerProzent(double wert, double minimum, double maximum) {
+                return Eigenschaften.linearZuProzent(wert, minimum, maximum);
+            }
+
+            @Override
+            public String berechnePhysikalischenWert(double zahl) {
+                return Eigenschaften.laengeZuCm(zahl);
+            }
+        });
+    }
+
+    public void formatAktualisieren(double nHoehe) {
+        hoehe = Math.min(MAX_HOEHE, Math.max(MIND_HOEHE, nHoehe));
+
+        Vektor von = new Vektor(mittelPunkt.getX(), mittelPunkt.getY() + hoehe / 2);
+        Vektor bis = new Vektor(mittelPunkt.getX(), mittelPunkt.getY() - hoehe / 2);
+        schirmFlaeche = new Grenzflaeche_Ebene(Grenzflaeche.MODUS_ABSORB, von, bis);
+
+        setRahmen(generiereRahmen());
     }
 
     public void setHoehe(double nHoehe) {
-        if(radius != 0) {
-            this.hoehe = Math.min(nHoehe, Math.abs(radius * 2));
-        } else {
-            this.hoehe = nHoehe;
-        }
-        setRadius(radius);
-    }
-
-    public void setRadius(double radius) {
-        if(radius == 0) {
-            breite = 0;
-            Vektor von = new Vektor(mittelPunkt.getX(), mittelPunkt.getY() + hoehe / 2);
-            Vektor bis = new Vektor(mittelPunkt.getX(), mittelPunkt.getY() - hoehe / 2);
-            schirmFlaeche = new Grenzflaeche_Ebene(Grenzflaeche.MODUS_ABSORB, von, bis);
-
-            Rahmen rahmen = new Rahmen(mittelPunkt);
-            rahmen.rahmenErweitern(new Point2D.Double(-5, hoehe / 2));
-            rahmen.rahmenErweitern(new Point2D.Double(+5 , hoehe / 2));
-            rahmen.rahmenErweitern(new Point2D.Double(+5, -hoehe / 2));
-            rahmen.rahmenErweitern(new Point2D.Double(-5, -hoehe / 2));
-            setRahmen(rahmen);
-
-        } else {
-            double winkel = Math.asin(Math.abs(hoehe / (2* radius)));
-            double c = Math.sqrt(radius * radius - (hoehe * hoehe) / 4);
-            breite = Math.abs(radius) - c;
-            if(radius > 0) {
-                Vektor mp = new Vektor(mittelPunkt.getX() - radius, mittelPunkt.getY());
-                schirmFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_ABSORB, mp, radius, Math.PI * 2 - winkel, 2 * winkel);
-
-                Rahmen rahmen = new Rahmen(mittelPunkt);
-                rahmen.rahmenErweitern(new Point2D.Double(+5, hoehe / 2));
-                rahmen.rahmenErweitern(new Point2D.Double(-breite - 5, hoehe / 2));
-                rahmen.rahmenErweitern(new Point2D.Double(-breite - 5, -hoehe / 2));
-                rahmen.rahmenErweitern(new Point2D.Double(+5, -hoehe / 2));
-                setRahmen(rahmen);
-
-            } else {
-                Vektor mp = new Vektor(mittelPunkt.getX() - radius, mittelPunkt.getY());
-                schirmFlaeche = new Grenzflaeche_Sphaerisch(Grenzflaeche.MODUS_ABSORB, mp, -radius, Math.PI - winkel, 2 * winkel);
-
-                setRahmen(generiereRahmen());
-
-            }
-        }
-
-
-    }
-
-    @Override
-    public void waehleAus() {
-        ArrayList<Eigenschaftenregler> regler = new ArrayList<>();
-
-        JSlider slide_hoehe = new JSlider ((int)MIND_HOEHE, (int)MAX_HOEHE, (int)hoehe);
-        slide_hoehe.setPaintTicks(true);
-        slide_hoehe.setMajorTickSpacing(20);
-        slide_hoehe.addChangeListener(e -> {
-            setHoehe( ((JSlider) e.getSource()).getValue());
-            optischeBank.aktualisieren();
-        });
-        regler.add(new Eigenschaftenregler("Höhe", slide_hoehe));
-
-        optischeBank.getEigenschaften().setOptionen("Schirm", regler);
+        formatAktualisieren(nHoehe);
     }
 
     @Override
@@ -144,10 +111,23 @@ public class Schirm extends Bauelement implements KannKollision {
     public Rahmen generiereRahmen() {
         Rahmen rahmen = new Rahmen(mittelPunkt);
         rahmen.rahmenErweitern(new Point2D.Double(-5, hoehe / 2));
-        rahmen.rahmenErweitern(new Point2D.Double(+breite + 5, hoehe / 2));
-        rahmen.rahmenErweitern(new Point2D.Double(+breite + 5, -hoehe / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(+5 , hoehe / 2));
+        rahmen.rahmenErweitern(new Point2D.Double(+5, -hoehe / 2));
         rahmen.rahmenErweitern(new Point2D.Double(-5, -hoehe / 2));
+        setRahmen(rahmen);
         return rahmen;
+    }
+
+    @Override
+    public Eigenschaftenregler[] gibEigenschaftenregler() {
+        Eigenschaftenregler[] komponenten =  new Eigenschaftenregler[1];
+        komponenten[0] =slide_hoehe;
+        return komponenten;
+    }
+
+    @Override
+    public String gibBauelementNamen() {
+        return NAME;
     }
 
     public double getHoehe() {
@@ -158,7 +138,6 @@ public class Schirm extends Bauelement implements KannKollision {
     public Element getXmlElement() {
         Element xmlElement = super.getXmlElement();
         xmlElement.setAttribute(XML_HOEHE, String.valueOf(hoehe));
-        xmlElement.setAttribute(XML_RADIUS, String.valueOf(radius));
         return xmlElement;
     }
 
