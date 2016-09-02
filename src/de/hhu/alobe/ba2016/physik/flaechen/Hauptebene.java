@@ -14,6 +14,8 @@ public class Hauptebene extends Flaeche {
 
     Gerade hauptebene;
 
+    public static final int HAUPTEBENE_MINDESTHOEHE = 80;
+
     //Brennweite vor der Hauptebene
     double brennweiteVor;
 

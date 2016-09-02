@@ -64,7 +64,7 @@ public class Werkzeug_ElementLoeschen extends Werkzeug {
                         for (int i = 0; i < strahlengaenge.size(); i++) {
                             if (strahlengaenge.get(i).istAngeklickt(pruefKreis)) {
                                 strahlengaenge.get(i).setAktiviert(false);
-                                optischeBank.neueAktionDurchfuehren(new Aktion_StrahlengangLoeschen(optischeBank, lichtquelle, strahlengaenge.get(i)));
+                                optischeBank.neueAktionDurchfuehren(new Aktion_StrahlengangLoeschen(lichtquelle, strahlengaenge.get(i)));
                                 elementGefunden = true;
                                 break;
                             }

@@ -265,7 +265,7 @@ public class Linse extends Bauelement implements KannKollision {
         } else {
             this.hoeheLinse = Math.min(2 * Math.abs(radius1), 2 * Math.abs(r2));
         }
-        hoeheHauptebene = Math.max(hoeheLinse, Math.max(nMindHoeheHauptebene, Konstanten.HAUPTEBENE_MINDESTHOEHE));
+        hoeheHauptebene = Math.max(hoeheLinse, Math.max(nMindHoeheHauptebene, Hauptebene.HAUPTEBENE_MINDESTHOEHE));
 
         if(radius1 == -radius2) {
             brennweite = 0; //Brennweite -> unendlich

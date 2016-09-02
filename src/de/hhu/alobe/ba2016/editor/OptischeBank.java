@@ -138,7 +138,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
         optischeAchse = new OptischeAchse(250);
         zeichenBrett.neuesZeichenObjekt(optischeAchse);
 
-        eigenschaften = new Eigenschaften(this);
+        eigenschaften = new Eigenschaften();
         this.add(eigenschaften, BorderLayout.SOUTH);
 
         positionOffset = new Point(0, 0);

@@ -82,7 +82,7 @@ public class Strahl extends GeomertrischeFigur {
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
         Line2D line = new Line2D.Double(basisVektor, bisVektor);
         g.draw(line);
-        if((quellEntfernung < 0 || isAusDemUnendlichen()) && HauptFenster.get().gibAktuelleOptischeBank().isVirtuelleStrahlenAktiv()) {
+        if((quellEntfernung < 0 || isAusDemUnendlichen()) && HauptFenster.get().getAktuelleOptischeBank().isVirtuelleStrahlenAktiv()) {
             double cQuellEntfernung = quellEntfernung;
             if(isAusDemUnendlichen()) {
                 cQuellEntfernung = -10000;

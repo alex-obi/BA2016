@@ -1,7 +1,6 @@
 package de.hhu.alobe.ba2016.editor;
 
 
-import com.sun.corba.se.pept.transport.ReaderThread;
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.jdom.Dateifunktionen;
 import org.jdom2.Document;
@@ -11,34 +10,44 @@ import org.jdom2.output.XMLOutputter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Hauptfenster und Verwaltung des gesamten Programms
  */
 public class HauptFenster extends JFrame {
 
-    public static final int MIND_BREITE = 600;
-    public static final int MIND_HOEHE = 400;
 
-    //Statische Referenz zum globalen Aufruf von allen Klassen
+    //Mindestbreite des Fensters
+    private static final int MIND_BREITE = 600;
+
+    //Mindesthöhe des Fensters
+    private static final int MIND_HOEHE = 400;
+
+    //Statische Referenz zum Aufruf von jeder Programmstelle aus
     private static HauptFenster optikSimulator;
 
+    //Inhalt des gesamten Fensters/ Content Pane.
     private JPanel fensterInhalt;
 
+    //Menüleiste des Fensters
     private Menueleiste menueleiste;
+
+    //Werkzeugleiste am oberen Fensterrand zum Schnellen Auswählen durch den Benutzer
     private Panel_Werkzeuge werkzeuge;
+
+    //Optische Bank als Leinwand für alle Manipulations- und Zeichenmethoden
     private OptischeBank optBank;
 
+    //Fenster zum Erstellen von Bauelementen
     private Fenster_Bauelemente fenster_bauelemente;
 
-
-
+    /**
+     * Konstruktor zum Erstellen eines neuen Fensters. Alle Objekte werden durch vorgegebene Parameter erzeugt.
+     */
     public HauptFenster() {
         super("Optischer Baukasten");
         optikSimulator = this;
@@ -55,6 +64,7 @@ public class HauptFenster extends JFrame {
         wechseleOptischeBank(optBank);
 
         fenster_bauelemente = new Fenster_Bauelemente(this);
+        fenster_bauelemente.setVisible(true);
 
         menueleiste = new Menueleiste(this);
         this.setJMenuBar(menueleiste);
@@ -63,14 +73,30 @@ public class HauptFenster extends JFrame {
         fensterInhalt.add(werkzeuge, BorderLayout.NORTH);
 
         this.setContentPane(fensterInhalt);
-        fenster_bauelemente.setVisible(true);
         this.setVisible(true);
     }
 
+    /**
+     * @return Referenz auf dieses (einzige) Hauptfenster
+     */
+    public static HauptFenster get() {
+        return optikSimulator;
+    }
+
+    /**
+     * Wechselt zu einer neuen, leeren Optischen Bank.
+     * Die aktuelle Optische Bank geht unwiederruflich verloren!
+     */
     public void neueOptischeBank() {
         wechseleOptischeBank(new OptischeBank());
     }
 
+    /**
+     * Lädt eine neue Optische Bank aus einer Datei.
+     *
+     * @param datei Referenz auf die Datei als File.
+     * @return Neue Optische Bank. Liefert null bei Fehlschlag (Datei falsches Format, nicht leesbar, etc.) und gibt Fehlermeldung aus.
+     */
     public OptischeBank ladeNeueOptischeBank(File datei) {
         Document xmlDatei;
         try {
@@ -84,8 +110,15 @@ public class HauptFenster extends JFrame {
         return null;
     }
 
+    /**
+     * Speichert die aktuelle Optische Bank als XML-Datei in die übergebene Datei.
+     * Setzt den Dateipfad der aktuellen Optische Bank auf die neue Datei und aktualisiert den Titel des Fensters auf den neuen Namen der Datei.
+     * Liefert Fehlermeldung, falls dies nicht möglich war.
+     *
+     * @param datei Datei als File
+     */
     public void speichereAktuelleOptischeBank(File datei) {
-        Document xmlDatei = new Document(gibAktuelleOptischeBank().getXmlElement());
+        Document xmlDatei = new Document(getAktuelleOptischeBank().getXmlElement());
 
         XMLOutputter xmlOutput = new XMLOutputter();
         xmlOutput.setFormat(Format.getPrettyFormat());
@@ -93,7 +126,7 @@ public class HauptFenster extends JFrame {
             FileWriter fileWriter = new FileWriter(datei);
             xmlOutput.output(xmlDatei, fileWriter);
             fileWriter.close();
-            gibAktuelleOptischeBank().setDateiPfad(datei);
+            getAktuelleOptischeBank().setDateiPfad(datei);
             this.setTitle("Optischer Baukasten - " + Dateifunktionen.getDateiNamen(datei));
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, datei.getPath() + " konnte nicht gespeichert werden!");
@@ -101,27 +134,29 @@ public class HauptFenster extends JFrame {
         }
     }
 
+    /**
+     * Wechselt die aktuelle Optische Bank zu der übergebenen, neuen Optischen Bank.
+     * Aktualisiert den Namen des Fensters.
+     * Alte Optische Bank geht unwiederruflich verloren!
+     *
+     * @param optischeBank Neue Optische Bank, die angezeigt werden soll.
+     */
     public void wechseleOptischeBank(OptischeBank optischeBank) {
         fensterInhalt.remove(optBank);
         this.optBank = optischeBank;
         fensterInhalt.add(optBank, BorderLayout.CENTER);
         String name = optischeBank.getName();
-        if(name == null) name = "Neue Optische Bank";
+        if (name == null) name = "Neue Optische Bank";
         this.setTitle("Optischer Baukasten - " + name);
         optBank.aktualisieren();
         this.revalidate();
     }
 
-    public OptischeBank gibAktuelleOptischeBank() {
+    /**
+     * @return Aktuell angezeigt Optische Bank
+     */
+    public OptischeBank getAktuelleOptischeBank() {
         return optBank;
-    }
-
-    private Point gibMausPosition(MouseEvent e) {
-        return new Point(e.getX() - 4, e.getY() - 26);
-    }
-
-    public static HauptFenster get() {
-        return optikSimulator;
     }
 
 }

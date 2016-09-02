@@ -1,12 +1,18 @@
 package de.hhu.alobe.ba2016.editor.aktionen;
 
+/**
+ * Interface Aktion stellt sicher, dass implementierende Klassen eine Aktion durchführen, aber auch wieder rückgängig machen können.
+ */
+public interface Aktion {
 
-import de.hhu.alobe.ba2016.editor.OptischeBank;
+    /**
+     * Führe eine Aktion durch.
+     */
+    void aktionDurchfuehren();
 
-public abstract class Aktion {
-
-    public abstract void aktionDurchfuehren();
-
-    public abstract void aktionRueckgaengig();
+    /**
+     * Mache die Aktion wieder rückgängig.
+     */
+    void aktionRueckgaengig();
 
 }

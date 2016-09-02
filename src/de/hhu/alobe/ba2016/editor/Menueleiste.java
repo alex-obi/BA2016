@@ -6,50 +6,54 @@ import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_Auswahl;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_ElementLoeschen;
 import de.hhu.alobe.ba2016.jdom.Dateifunktionen;
 import de.hhu.alobe.ba2016.jdom.MeinDateiendungsFilter;
-import de.hhu.alobe.ba2016.physik.flaechen.Hauptebene;
-import org.jcp.xml.dsig.internal.dom.Utils;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
 
+/**
+ * Menüleiste des Hauptfensters mit Optionsmenüs Datei, Bearbeiten, Ansicht, etc.
+ */
 public class Menueleiste extends JMenuBar implements ActionListener, MenuListener {
 
-    HauptFenster optikSimulator;
+    //Referenz auf das Hauptfenster
+    private HauptFenster hauptFenster;
 
-    JMenu datei;
-    JMenuItem neu;
-    JMenuItem laden;
-    JMenu lokal;
+    //Menüs und Menüoptionen:
+    private JMenu datei;
+    private JMenuItem neu;
+    private JMenuItem laden;
+    private JMenu lokal;
 
-    JMenuItem speichern;
-    JMenuItem speichernUnter;
+    private JMenuItem speichern;
+    private JMenuItem speichernUnter;
 
-    JMenu bearbeiten;
-    JMenuItem rueckgaengig;
-    JMenuItem wiederholen;
-    JMenuItem elAuswahl;
-    JMenuItem elLoeschen;
+    private JMenu bearbeiten;
+    private JMenuItem rueckgaengig;
+    private JMenuItem wiederholen;
+    private JMenuItem elAuswahl;
+    private JMenuItem elLoeschen;
 
-    JMenu ansicht;
-    JMenuItem vergroessern;
-    JMenuItem verkleinern;
-    JMenuItem originalgroesse;
-    JCheckBoxMenuItem virtuelleStrahlen;
-    JRadioButtonMenuItem snelliusAktivieren;
-    JRadioButtonMenuItem hauptebenenAktivieren;
+    private JMenu ansicht;
+    private JMenuItem vergroessern;
+    private JMenuItem verkleinern;
+    private JMenuItem originalgroesse;
+    private JCheckBoxMenuItem virtuelleStrahlen;
+    private JRadioButtonMenuItem snelliusAktivieren;
+    private JRadioButtonMenuItem hauptebenenAktivieren;
 
-    JMenu hilfe;
+    /**
+     * Initialisiert eine neue Menüleiste
+     *
+     * @param hauptFenster Referenz auf das zugehörige Hauptfenster
+     */
+    public Menueleiste(HauptFenster hauptFenster) {
+        this.hauptFenster = hauptFenster;
 
-    public Menueleiste(HauptFenster optikSimulator) {
-        this.optikSimulator = optikSimulator;
-
+        //Initialisiere Menü Datei:
         datei = new JMenu("Datei");
         datei.addMenuListener(this);
         this.add(datei);
@@ -71,6 +75,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         speichernUnter.addActionListener(this);
         datei.add(speichernUnter);
 
+        //Initialisiere Menü Bearbeiten:
         bearbeiten = new JMenu("Bearbeiten");
         this.add(bearbeiten);
         rueckgaengig = new JMenuItem("Rueckgaengig");
@@ -87,6 +92,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         elLoeschen.addActionListener(this);
         bearbeiten.add(elLoeschen);
 
+        //Initialisiere Menü Ansicht:
         ansicht = new JMenu("Ansicht");
         ansicht.addMenuListener(this);
         this.add(ansicht);
@@ -114,43 +120,54 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         gruppe.add(hauptebenenAktivieren);
         ansicht.add(snelliusAktivieren);
         ansicht.add(hauptebenenAktivieren);
+    }
 
-        /*hilfe = new JMenu("Hilfe");
-        this.add(hilfe);*/
+    /**
+     * Aktualisiert die Lokalen ".SAVE_ENDUNG" Dateien im lokalen SAVE_ORDNER im Menü "lokal"
+     */
+    public void aktualisiereLokaleDateien() {
+        lokal.removeAll();
+        if (new File(Konstanten.SAVE_ORDNER).exists()) {
+            for (File datei : Dateifunktionen.getLokaleDateienMitEndung(new File(Konstanten.SAVE_ORDNER), Konstanten.SAVE_ENDUNG)) {
+                JMenuItem nItem = new JMenuItem(datei.getName().substring(0, datei.getName().length() - 4));
+                nItem.addActionListener(this);
+                lokal.add(nItem);
+            }
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        OptischeBank optischeBank = optikSimulator.gibAktuelleOptischeBank();
+        OptischeBank optischeBank = hauptFenster.getAktuelleOptischeBank();
         if (e.getSource().equals(neu)) {
-            optikSimulator.neueOptischeBank();
+            hauptFenster.neueOptischeBank();
         }
         if (e.getSource().equals(laden)) {
             JFileChooser fileChooser = new JFileChooser(Konstanten.SAVE_ORDNER);
             fileChooser.setFileFilter(new MeinDateiendungsFilter(Konstanten.SAVE_ENDUNG));
-            int retWert = fileChooser.showOpenDialog(optikSimulator);
+            int retWert = fileChooser.showOpenDialog(hauptFenster);
             if (retWert == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
-                OptischeBank nOptischeBank = optikSimulator.ladeNeueOptischeBank(file);
+                OptischeBank nOptischeBank = hauptFenster.ladeNeueOptischeBank(file);
                 if (nOptischeBank != null) {
-                    optikSimulator.wechseleOptischeBank(nOptischeBank);
+                    hauptFenster.wechseleOptischeBank(nOptischeBank);
                 }
             }
         }
         for (Component lokaleDatei : lokal.getMenuComponents()) {
             if (e.getSource().equals(lokaleDatei)) {
-                OptischeBank nOptischeBank = optikSimulator.ladeNeueOptischeBank(new File(Konstanten.SAVE_ORDNER + ((JMenuItem) lokaleDatei).getText() + "." + Konstanten.SAVE_ENDUNG));
+                OptischeBank nOptischeBank = hauptFenster.ladeNeueOptischeBank(new File(Konstanten.SAVE_ORDNER + ((JMenuItem) lokaleDatei).getText() + "." + Konstanten.SAVE_ENDUNG));
                 if (nOptischeBank != null) {
-                    optikSimulator.wechseleOptischeBank(nOptischeBank);
+                    hauptFenster.wechseleOptischeBank(nOptischeBank);
                 }
             }
         }
         if (e.getSource().equals(speichern)) {
             File pfad = optischeBank.getDateiPfad();
             if (pfad == null) {
-                String name = JOptionPane.showInputDialog(optikSimulator, "Name fuer die neue Optische Bank:", "Speichern", JOptionPane.PLAIN_MESSAGE);
-                while (name != null && !Dateifunktionen.erstelleDatei(optikSimulator, new File(Konstanten.SAVE_ORDNER + name + "." + Konstanten.SAVE_ENDUNG))) {
-                    name = JOptionPane.showInputDialog(optikSimulator, "Name nicht gueltig. Keine Sonderzeichen (<>: \"\\ / | *?) verwenden.\n Bitte neuen Namen eingeben:", "Speichern", JOptionPane.PLAIN_MESSAGE);
+                String name = JOptionPane.showInputDialog(hauptFenster, "Name fuer die neue Optische Bank:", "Speichern", JOptionPane.PLAIN_MESSAGE);
+                while (name != null && !Dateifunktionen.erstelleDatei(hauptFenster, new File(Konstanten.SAVE_ORDNER + name + "." + Konstanten.SAVE_ENDUNG))) {
+                    name = JOptionPane.showInputDialog(hauptFenster, "Name nicht gueltig. Keine Sonderzeichen (<>: \"\\ / | *?) verwenden.\n Bitte neuen Namen eingeben:", "Speichern", JOptionPane.PLAIN_MESSAGE);
                 }
                 if (name == null) {
                     return;
@@ -158,7 +175,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
                     pfad = new File(Konstanten.SAVE_ORDNER + name + "." + Konstanten.SAVE_ENDUNG);
                 }
             }
-            optikSimulator.speichereAktuelleOptischeBank(pfad);
+            hauptFenster.speichereAktuelleOptischeBank(pfad);
         }
         if (e.getSource().equals(speichernUnter)) {
             File aktDatei = optischeBank.getDateiPfad();
@@ -166,14 +183,14 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
             JFileChooser fileChooser = new JFileChooser(aktDatei);
             fileChooser.setSelectedFile(aktDatei);
             fileChooser.setFileFilter(new MeinDateiendungsFilter(Konstanten.SAVE_ENDUNG));
-            int retWert = fileChooser.showSaveDialog(optikSimulator);
+            int retWert = fileChooser.showSaveDialog(hauptFenster);
             if (retWert == JFileChooser.APPROVE_OPTION) {
                 File dateiPfad = fileChooser.getSelectedFile();
                 if (!Dateifunktionen.getDateiEndung(dateiPfad).equals(Konstanten.SAVE_ENDUNG)) {
                     dateiPfad = new File(fileChooser.getSelectedFile().getPath() + "." + Konstanten.SAVE_ENDUNG);
                 }
-                if (Dateifunktionen.erstelleDatei(optikSimulator, dateiPfad)) {
-                    optikSimulator.speichereAktuelleOptischeBank(dateiPfad);
+                if (Dateifunktionen.erstelleDatei(hauptFenster, dateiPfad)) {
+                    hauptFenster.speichereAktuelleOptischeBank(dateiPfad);
                 }
             }
         }
@@ -215,26 +232,15 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         }
     }
 
-    public void aktualisiereLokaleDateien() {
-        lokal.removeAll();
-        if (new File(Konstanten.SAVE_ORDNER).exists()) {
-            for (File datei : Dateifunktionen.getLokaleDateienMitEndung(new File(Konstanten.SAVE_ORDNER), Konstanten.SAVE_ENDUNG)) {
-                JMenuItem nItem = new JMenuItem(datei.getName().substring(0, datei.getName().length() - 4));
-                nItem.addActionListener(this);
-                lokal.add(nItem);
-            }
-        }
-    }
-
     @Override
     public void menuSelected(MenuEvent e) {
-        OptischeBank optischeBank = optikSimulator.gibAktuelleOptischeBank();
+        OptischeBank optischeBank = hauptFenster.getAktuelleOptischeBank();
         if (e.getSource().equals(datei)) {
             aktualisiereLokaleDateien();
         }
-        if(e.getSource().equals(ansicht)) {
+        if (e.getSource().equals(ansicht)) {
             virtuelleStrahlen.setSelected(optischeBank.isVirtuelleStrahlenAktiv());
-            if(optischeBank.getModus() == OptischeBank.MODUS_HAUPTEBENE) {
+            if (optischeBank.getModus() == OptischeBank.MODUS_HAUPTEBENE) {
                 hauptebenenAktivieren.setSelected(true);
                 snelliusAktivieren.setSelected(false);
             } else if (optischeBank.getModus() == OptischeBank.MODUS_SNELLIUS) {
