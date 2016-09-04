@@ -91,7 +91,7 @@ public abstract class Lichtquelle extends Bauelement {
     @Override
     public void waehleAus() {
         super.waehleAus();
-        optischeBank.werkzeugWechseln(new Werkzeug_NeuerStrahl(optischeBank, this) {
+        optischeBank.werkzeugWechseln(new Werkzeug_NeuerStrahl(this) {
         });
     }
 

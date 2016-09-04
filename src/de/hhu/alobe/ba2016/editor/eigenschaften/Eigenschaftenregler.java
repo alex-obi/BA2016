@@ -21,7 +21,7 @@ public class Eigenschaftenregler extends JPanel {
     //Titel des Eigenschaftenreglers zusammengesetzt aus Name, Einheit und Größe:
     private JLabel label_titel;
 
-    //Regler als JComponent. Es ist also jede Art von Regler möglich:
+    //Regler als JComponent. Es ist also jede Art von Regler möglich, der von JComponent erbt:
     JComponent regler;
 
     /**

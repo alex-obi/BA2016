@@ -11,24 +11,36 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
- * Einfaches Werkzeug zum Auswaehlen eines Elements und dessen Anzeige im Panel_Werkzeuge Fenster
+ * Werkzeug zum Auswaehlen und Verschieben eines Elements und dessen Anzeige im Panel_Werkzeuge Fenster
  */
-public class Werkzeug_Auswahl extends Werkzeug{
+public class Werkzeug_Auswahl extends Werkzeug {
 
+    //Element, welches durch dieses Werkzeug ausgewählt wurde:
     private Bauelement ausgewaehltesElement;
+
+    //Position des Mauszeigers, an dem das Element zuerst ausgewählt wurde
     private Vektor erstePosition;
+
+    //Position des Mittelpunkts des Bauelements, an dem das Element zuerst ausgewählt wurde
     private Vektor ersterMittelpunktBauel;
 
+    //Gibt an, ob dies die erste Verschiebung des Bauelements ist, nachdem dieses ausgewählt wurde
     private boolean ersteVerschiebung = true;
 
+    /**
+     * Initialisiert ein neues Werkzeug zur Auswahl von Bauelementen
+     *
+     * @param optischeBank Referenz auf OPtische Bank
+     */
     public Werkzeug_Auswahl(OptischeBank optischeBank) {
         super(optischeBank);
     }
 
     @Override
     public void auswahlAufheben() {
-        if(ausgewaehltesElement != null) {
+        if (ausgewaehltesElement != null) {
             ausgewaehltesElement.rahmenAusblenden();
+            ausgewaehltesElement = null;
         }
     }
 
@@ -39,27 +51,30 @@ public class Werkzeug_Auswahl extends Werkzeug{
 
     @Override
     public void mouseClicked(MouseEvent e, Vektor realePosition) {
-        if(ausgewaehltesElement != null && SwingUtilities.isLeftMouseButton(e)) {
-            ausgewaehltesElement.waehleAus();
+        if (ausgewaehltesElement != null && SwingUtilities.isLeftMouseButton(e) && ausgewaehltesElement.istAngeklickt(realePosition)) {
             ausgewaehltesElement.rahmenEinblenden();
+            ausgewaehltesElement.waehleAus();
             optischeBank.aktualisieren();
         }
     }
 
     @Override
     public void mousePressed(MouseEvent e, Vektor realePosition) {
-        if(SwingUtilities.isLeftMouseButton(e)) {
+        //Überprüfe ob die Mausaktion mit linker Maustaste ausgeführt wurde und welches Element ausgewählt wurde
+        if (SwingUtilities.isLeftMouseButton(e)) {
             erstePosition = realePosition.kopiere();
-            for(Bauelement cBauEl : optischeBank.getBauelemente()) {
-                if(cBauEl.istAngeklickt(realePosition)) {
+            for (Bauelement cBauEl : optischeBank.getBauelemente()) {
+                if (cBauEl.istAngeklickt(realePosition)) {
+                    //Hebe alte Auswahl auf
                     auswahlAufheben();
+                    //Wähle neues Element durch Änderung der Werte dieser Klasse aus
                     ausgewaehltesElement = cBauEl;
                     ersterMittelpunktBauel = cBauEl.getMittelPunkt().kopiere();
                     break;
                 }
             }
         }
-        if(SwingUtilities.isRightMouseButton(e)) {
+        if (SwingUtilities.isRightMouseButton(e)) {
             auswahlAufheben();
         }
         optischeBank.repaint();
@@ -67,12 +82,12 @@ public class Werkzeug_Auswahl extends Werkzeug{
 
     @Override
     public void mouseReleased(MouseEvent e, Vektor realePosition) {
-        if(!ersteVerschiebung) {
+        if (!ersteVerschiebung) {
             ausgewaehltesElement = null;
             ersteVerschiebung = true;
         }
 
-        if(SwingUtilities.isRightMouseButton(e)) {
+        if (SwingUtilities.isRightMouseButton(e)) {
             auswahlAufheben();
         }
 
@@ -80,21 +95,22 @@ public class Werkzeug_Auswahl extends Werkzeug{
 
     @Override
     public void mouseDragged(MouseEvent e, Vektor realePosition) {
-        if(SwingUtilities.isLeftMouseButton(e)) {
-            if(ausgewaehltesElement != null) {
-
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            if (ausgewaehltesElement != null) {
+                //Verschiebe das ausgewählte Element relativ zu der Position, an dem es zuerst ausgewählt wurde
                 Vektor verschiebung = Vektor.subtrahiere(realePosition, erstePosition);
 
-                if(Math.abs(ersterMittelpunktBauel.getY() + verschiebung.getY() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG) {
-                    if(ausgewaehltesElement.fangModusOptischeAchseAn()) {
+                if (Math.abs(ersterMittelpunktBauel.getY() + verschiebung.getY() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG) {
+                    if (ausgewaehltesElement.fangModusOptischeAchseAn()) {
                         verschiebung.setY(optischeBank.getOptischeAchse().getHoehe() - ersterMittelpunktBauel.getY());
                     }
                 }
-
                 if (ersteVerschiebung) {
+                    //Wenn es die erste Verschiebung war erstelle neue Aktion für die Optische Bank
                     optischeBank.neueAktionDurchfuehren(new Aktion_BauelementVerschieben(ausgewaehltesElement, verschiebung));
                     ersteVerschiebung = false;
                 } else {
+                    //Ansonsten überschreibe die letzte Aktion mit der neuen Verschiebung
                     optischeBank.letzteAktionUeberschreiben(new Aktion_BauelementVerschieben(ausgewaehltesElement, verschiebung));
                 }
 
@@ -104,12 +120,11 @@ public class Werkzeug_Auswahl extends Werkzeug{
 
     @Override
     public void mouseMoved(MouseEvent e, Vektor realePosition) {
-        optischeBank.setCursor(Cursor.getDefaultCursor());
-        for(Bauelement cBauEl : optischeBank.getBauelemente()) {
-            if(cBauEl.istAngeklickt(realePosition)) {
+        //Ändere Mauscursor, wenn Maus über einem Bauelement ist
+        optischeBank.getZeichenBrett().setCursor(Cursor.getDefaultCursor());
+        for (Bauelement cBauEl : optischeBank.getBauelemente()) {
+            if (cBauEl.istAngeklickt(realePosition)) {
                 optischeBank.getZeichenBrett().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            } else {
-                cBauEl.rahmenAusblenden();
             }
         }
     }

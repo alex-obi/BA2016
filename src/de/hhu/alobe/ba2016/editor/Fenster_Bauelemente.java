@@ -140,21 +140,21 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener {
                 } else {
                     nLinse = new Linse(optBank, new Vektor(0, 0), -200);
                 }
-                optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, nLinse));
+                optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(nLinse));
             }
         }
         if (e.getSource().equals(werkzeug_auge)) {
             Auge auge = new Auge(optBank, new Vektor(0, 0));
-            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, auge));
+            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(auge));
         }
 
         if (e.getSource().equals(werkzeug_spiegel)) {
             Spiegel neuerSpiegel = new Spiegel(optBank, new Vektor(0, 0), (int) (Spiegel.MAX_HOEHE / 2));
-            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, neuerSpiegel));
+            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(neuerSpiegel));
         }
         if (e.getSource().equals(werkzeug_hohlspiegel)) {
             Hohlspiegel hohlspiegel = new Hohlspiegel(optBank, new Vektor(0, 0), 400, Hohlspiegel.MAX_HOEHE / 2);
-            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, hohlspiegel));
+            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(hohlspiegel));
         }
 
         if (e.getSource().equals(werkzeug_punktlicht)) {
@@ -168,7 +168,7 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener {
                     "Schwarz");
             if (farbenString != null) {
                 Lichtquelle lampe = new PunktLichtquelle(optBank, new Vektor(0, 0), new Farbe(farbenString));
-                optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, lampe));
+                optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(lampe));
             }
         }
         if (e.getSource().equals(werkzeug_laser)) {
@@ -182,17 +182,17 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener {
                     "Schwarz");
             if (farbenString != null) {
                 ParallelLichtquelle lampe = new ParallelLichtquelle(optBank, new Vektor(0, 0), new Farbe(farbenString), ParallelLichtquelle.MAX_HOEHE / 2, 0);
-                optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, lampe));
+                optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(lampe));
             }
         }
 
         if (e.getSource().equals(werkzeug_blende)) {
             Blende blende = new Blende(optBank, new Vektor(0, 0), Blende.MAX_HOEHE / 2, Blende.MAX_HOEHE / 4);
-            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, blende));
+            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(blende));
         }
         if (e.getSource().equals(werkzeug_schirm)) {
             Schirm neuerSchirm = new Schirm(optBank, new Vektor(0, 0), Schirm.MAX_HOEHE / 2);
-            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(optBank, neuerSchirm));
+            optBank.werkzeugWechseln(new Werkzeug_NeuesBauelement(neuerSchirm));
         }
 
     }

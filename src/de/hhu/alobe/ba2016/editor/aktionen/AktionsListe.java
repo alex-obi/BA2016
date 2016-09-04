@@ -3,7 +3,7 @@ package de.hhu.alobe.ba2016.editor.aktionen;
 import java.util.ArrayList;
 
 /**
- * Liste zum Verwalten aller Benutzeraktionen mit der optischen Bank. Elemente dieser Liste sind Aktionen, die rückgängig gemacht werden können.
+ * Liste zum Verwalten aller Benutzeraktionen mit der Optischen Bank. Elemente dieser Liste sind Aktionen, die rückgängig gemacht werden können.
  * Ein Springen innerhalb dieser Liste ermöglicht also das Zurücknehmen und Wiederherstellen von Aktionen.
  */
 public class AktionsListe {

@@ -11,45 +11,76 @@ import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 
 /**
- * Nach Auswahl einer Lichtquelle können mit diesem Werkzeug neue Strahlen der optischen Bank hinzugefuegt werden
+ * Nach Auswahl einer Lichtquelle können mit diesem Werkzeug neue Strahlen der optischen Bank hinzugefuegt werden.
+ * Mit der rechten Maustaste kann wieder zum Werkzeug Auswahl gewechselt werden.
  */
-public class Werkzeug_NeuerStrahl extends  Werkzeug{
+public class Werkzeug_NeuerStrahl extends Werkzeug {
 
+    //Ausgewählte Lichtquelle, von der die Strahlenerzeugt werden sollen
     private Lichtquelle lichtquelle;
 
-    public Werkzeug_NeuerStrahl(OptischeBank optischeBank, Lichtquelle licht) {
-        super(optischeBank);
+    //Speichert den Strahl, der aktuell durch den Mauscursor erzeugt werden würde
+    private Strahlengang strahlDummy;
+
+    /**
+     * Initialisiere ein neues Werkzeug NeuerStrahl zu einer bestimmten Lichtquelle
+     *
+     * @param licht Erzeugende Lichtquelle
+     */
+    public Werkzeug_NeuerStrahl(Lichtquelle licht) {
+        super(licht.getOptischeBank());
         this.lichtquelle = licht;
     }
 
     @Override
     public void auswahlAufheben() {
         optischeBank.getZeichenBrett().setCursor(Cursor.getDefaultCursor());
+        lichtquelle.rahmenAusblenden();
+        lichtquelle.loescheStrahl(strahlDummy);
     }
 
     @Override
     public void auswaehlen() {
+        lichtquelle.rahmenEinblenden();
+        //Ändere bei Auswahl des Werkzeugs den Cursor
         optischeBank.getZeichenBrett().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
     }
 
     @Override
     public void mouseReleased(MouseEvent e, Vektor realePosition) {
-        if(SwingUtilities.isLeftMouseButton(e)) {
-            Strahlengang erzeugterStrahlengang = lichtquelle.berechneNeuenStrahl(realePosition);
-            if(erzeugterStrahlengang != null) {
-                optischeBank.neueAktionDurchfuehren(new Aktion_NeuerStrahl(lichtquelle, erzeugterStrahlengang));
+        //Bei Loslassen der linken Maustaste erstelle Aktion um einen neuen Strahl zu erstellen, der durch die Position des Cursors verläuft.
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            //Lösche das alte Dummy Element
+            lichtquelle.loescheStrahl(strahlDummy);
+            //Berechne neuen Strahl und erstelle Aktion für die Optische Bank
+            if (strahlDummy != null) {
+                optischeBank.neueAktionDurchfuehren(new Aktion_NeuerStrahl(lichtquelle, strahlDummy));
+                strahlDummy = null;
             }
         }
-        if(SwingUtilities.isRightMouseButton(e)) {
-            lichtquelle.rahmenAusblenden();
+        //Bei rechter Maustaste wechsele wieder zum Werkzeug Auswahl
+        if (SwingUtilities.isRightMouseButton(e)) {
             optischeBank.repaint();
             optischeBank.werkzeugWechseln(new Werkzeug_Auswahl(optischeBank));
         }
     }
 
+    /**
+     * Aktualisiert das Dummy Element
+     */
+    private void dummyElementAktualisieren(Vektor position) {
+        lichtquelle.loescheStrahl(strahlDummy);
+        strahlDummy = lichtquelle.berechneNeuenStrahl(position);
+        if (strahlDummy != null) lichtquelle.neuerStrahl(strahlDummy);
+        optischeBank.aktualisieren();
+    }
+
     @Override
     public void mouseDragged(MouseEvent e, Vektor realePosition) {
-
+        //Erzeuge Dummy Strahl bei Bewegung der Maus bei gedrückter linker Maustaste. Aktualisiere das Dummy Element bei jeder Bewegung
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            dummyElementAktualisieren(realePosition);
+        }
     }
 
     @Override
@@ -64,7 +95,10 @@ public class Werkzeug_NeuerStrahl extends  Werkzeug{
 
     @Override
     public void mousePressed(MouseEvent e, Vektor realePosition) {
-
+        //Erzeuge Dummy Strahl bei Druck der rechten Maustaste.
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            dummyElementAktualisieren(realePosition);
+        }
     }
 
 }

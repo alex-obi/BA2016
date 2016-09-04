@@ -1,5 +1,6 @@
 package de.hhu.alobe.ba2016.editor.werkzeuge;
 
+import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion_BauelementHinzufuegen;
 import de.hhu.alobe.ba2016.mathe.Vektor;
@@ -8,23 +9,34 @@ import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * Werkzeug zum Erstellen neuer Bauelemente
+ */
 public class Werkzeug_NeuesBauelement extends Werkzeug {
 
+    //Bauelement, das erzeugt werden soll.
     private Bauelement bauelement;
 
-    public Werkzeug_NeuesBauelement(OptischeBank optischeBank, Bauelement bauelement) {
-        super(optischeBank);
+    /**
+     * Initialisiert das Werkzeug Erstellen mit einem neuen Bauelement
+     *
+     * @param bauelement Neues Bauelement.
+     */
+    public Werkzeug_NeuesBauelement(Bauelement bauelement) {
+        super(bauelement.getOptischeBank());
         this.bauelement = bauelement;
     }
 
     @Override
     public void auswahlAufheben() {
-
+        //Lösche den Dummy wieder
+        optischeBank.getZeichenBrett().zeichenObjektLoeschen(bauelement);
     }
 
     @Override
     public void auswaehlen() {
-
+        //Füge der optischen Bank einen Dummy hinzu. Der Dummy wird noch nicht zur Berechnung von Strahlen benutzt und wird bei Verlassen des Werkzeugs wieder gelöscht
+        optischeBank.getZeichenBrett().neuesZeichenObjekt(bauelement);
     }
 
     @Override
@@ -39,10 +51,11 @@ public class Werkzeug_NeuesBauelement extends Werkzeug {
 
     @Override
     public void mouseReleased(MouseEvent e, Vektor realePosition) {
-        if(SwingUtilities.isLeftMouseButton(e)) {
-            bauelement.verschiebeUm(realePosition);
-            optischeBank.neueAktionDurchfuehren(new Aktion_BauelementHinzufuegen(optischeBank, bauelement));
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            //Wechsele wieder zum Werkzeug Auswahl. Der Dummy wird hierdurch gelöscht
             optischeBank.werkzeugWechseln(new Werkzeug_Auswahl(optischeBank));
+            //Erstelle eine Aktion um das Bauelement entgültig zur Optischen Bank hinzuzufügen
+            optischeBank.neueAktionDurchfuehren(new Aktion_BauelementHinzufuegen(optischeBank, bauelement));
         }
 
     }
@@ -54,6 +67,14 @@ public class Werkzeug_NeuesBauelement extends Werkzeug {
 
     @Override
     public void mouseMoved(MouseEvent e, Vektor realePosition) {
-
+        //Positioniert das bauelement neu. Ist es in der Nähe der Optischen Achse setze Y-Koordinate auf Höhe der Optischen Achse
+        if (Math.abs(realePosition.getY() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG) {
+            if (bauelement.fangModusOptischeAchseAn()) {
+                bauelement.setzeMittelpunktNeu(new Vektor(realePosition.getX(), optischeBank.getOptischeAchse().getHoehe()));
+            }
+        } else {
+            bauelement.setzeMittelpunktNeu(realePosition);
+        }
+        optischeBank.repaint();
     }
 }

@@ -14,7 +14,8 @@ public class Main {
     /*
         Todoliste:
          * todo: Optische Achse verschiebbar. Format änderbar.
-         * Bild auf Schirm besser darstellen
+         * todo: Bild auf Schirm besser darstellen
+         * todo: Auswahlwerkzeug überarbeiten
          *
          *
          Bugs:
@@ -23,11 +24,9 @@ public class Main {
          *
          * Zweitrangig:
          * todo: Rahmen werden nach scrollen ausgeblendet
-         * todo: Auswahl Cursor ändert sich nicht
 
          Optional:
          * todo: Strahl und Bauelement bei erstellen schon mitzeichnen. Nur diesen aktualisieren
-
          * todo: Scrollen mit Maus und Ausschnitt optimieren
 
          * todo: Parallel-, Zenit-, Brennpunktstrahl markieren und einfangen
@@ -35,11 +34,7 @@ public class Main {
 
          * todo: Eigenschaftenänderung rücknehmbar
 
-         * todo: get gib einheitlich
-
          Zweitrangig:
-         * todo: Mehrere Tabs
-         * todo: Spiegel schräg
          * todo: Garbage vermeiden
 
     */
