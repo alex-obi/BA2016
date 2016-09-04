@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 
 /**
- * Werkzeug zum Erstellen neuer Bauelemente
+ * Werkzeug zum Erstellen neuer Bauelemente.
  */
 public class Werkzeug_NeuesBauelement extends Werkzeug {
 

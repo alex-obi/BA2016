@@ -46,7 +46,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
     private JRadioButtonMenuItem hauptebenenAktivieren;
 
     /**
-     * Initialisiert eine neue Menüleiste
+     * Initialisiert eine neue Menüleiste.
      *
      * @param hauptFenster Referenz auf das zugehörige Hauptfenster
      */
@@ -124,6 +124,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
 
     /**
      * Aktualisiert die Lokalen ".SAVE_ENDUNG" Dateien im lokalen SAVE_ORDNER im Menü "lokal"
+     * @see Konstanten
      */
     public void aktualisiereLokaleDateien() {
         lokal.removeAll();

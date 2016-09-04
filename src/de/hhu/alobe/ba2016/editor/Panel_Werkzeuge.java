@@ -15,9 +15,7 @@ import java.awt.event.ActionListener;
  */
 public class Panel_Werkzeuge extends JPanel implements ActionListener {
 
-    /**
-     * Referenz auf das Hauptfenster
-     */
+     //Referenz auf das Hauptfenster
     private HauptFenster hauptFenster;
 
     //Werkzeugbuttons:

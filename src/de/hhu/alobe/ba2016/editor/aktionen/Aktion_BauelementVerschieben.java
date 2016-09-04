@@ -5,7 +5,7 @@ import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 
 /**
- * Aktion zum Verschieben eines Bauelements in der Optischen Bank
+ * Aktion zum Verschieben eines Bauelements in der Optischen Bank.
  */
 public class Aktion_BauelementVerschieben implements Aktion {
 

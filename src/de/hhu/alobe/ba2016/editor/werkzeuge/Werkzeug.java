@@ -8,7 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Implementierende Klassen stellen Methoden zur Verfügung, um die optische Bank zu bearbeiten
+ * Implementierende Klassen stellen Methoden zur Verfügung, um die optische Bank zu bearbeiten.
  * Maus und Tastatur können hierzu mit einem Werkzeug interagieren.
  * Die Klasse verwaltet Mausaktionen als MouseAdapter.
  */
@@ -18,7 +18,7 @@ public abstract class Werkzeug extends MouseAdapter {
     OptischeBank optischeBank;
 
     /**
-     * Aufruf durch erbende Klassen garantiert die Initialisierung der Referenz auf die zugehörige Optische Bank
+     * Aufruf durch erbende Klassen garantiert die Initialisierung der Referenz auf die zugehörige Optische Bank.
      *
      * @param optischeBank Referenz auf Optische Bank
      */

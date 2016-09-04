@@ -39,17 +39,17 @@ public class Spiegel extends Hohlspiegel{
 
             @Override
             public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
-                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+                return ReglerEvent.prozentZuLinear(reglerProzent, minimum, maximum);
             }
 
             @Override
             public double berechneReglerProzent(double wert, double minimum, double maximum) {
-                return Eigenschaften.linearZuProzent(wert, minimum, maximum);
+                return ReglerEvent.linearZuProzent(wert, minimum, maximum);
             }
 
             @Override
             public String berechnePhysikalischenWert(double zahl) {
-                return Eigenschaften.laengeZuCm(zahl);
+                return ReglerEvent.laengeZuCm(zahl);
             }
         });
     }

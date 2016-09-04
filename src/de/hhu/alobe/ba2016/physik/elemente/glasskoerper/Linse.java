@@ -115,17 +115,17 @@ public class Linse extends Bauelement implements KannKollision {
 
             @Override
             public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
-                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+                return ReglerEvent.prozentZuLinear(reglerProzent, minimum, maximum);
             }
 
             @Override
             public double berechneReglerProzent(double wert, double minimum, double maximum) {
-                return Eigenschaften.linearZuProzent(hoeheHauptebene, minimum, maximum);
+                return ReglerEvent.linearZuProzent(hoeheHauptebene, minimum, maximum);
             }
 
             @Override
             public String berechnePhysikalischenWert(double zahl) {
-                return Eigenschaften.laengeZuCm(zahl);
+                return ReglerEvent.laengeZuCm(zahl);
             }
         });
 
@@ -138,17 +138,17 @@ public class Linse extends Bauelement implements KannKollision {
 
             @Override
             public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
-                return Eigenschaften.prozentZuBrennweite(reglerProzent, minimum, maximum);
+                return ReglerEvent.prozentZuBrennweite(reglerProzent, minimum, maximum);
             }
 
             @Override
             public double berechneReglerProzent(double wert, double minimum, double maximum) {
-                return Eigenschaften.brennweiteZuProzent(wert, minimum, maximum);
+                return ReglerEvent.brennweiteZuProzent(wert, minimum, maximum);
             }
 
             @Override
             public String berechnePhysikalischenWert(double zahl) {
-                return Eigenschaften.laengeZuCm(zahl);
+                return ReglerEvent.laengeZuCm(zahl);
             }
         });
 
@@ -162,17 +162,17 @@ public class Linse extends Bauelement implements KannKollision {
 
             @Override
             public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
-                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+                return ReglerEvent.prozentZuLinear(reglerProzent, minimum, maximum);
             }
 
             @Override
             public double berechneReglerProzent(double wert, double minimum, double maximum) {
-                return Eigenschaften.linearZuProzent(hoeheLinse, MIND_HOEHE_LINSE, MAX_HOEHE_LINSE);
+                return ReglerEvent.linearZuProzent(hoeheLinse, MIND_HOEHE_LINSE, MAX_HOEHE_LINSE);
             }
 
             @Override
             public String berechnePhysikalischenWert(double zahl) {
-                return Eigenschaften.laengeZuCm(zahl);
+                return ReglerEvent.laengeZuCm(zahl);
             }
         });
 
@@ -185,17 +185,17 @@ public class Linse extends Bauelement implements KannKollision {
 
             @Override
             public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
-                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+                return ReglerEvent.prozentZuLinear(reglerProzent, minimum, maximum);
             }
 
             @Override
             public double berechneReglerProzent(double wert, double minimum, double maximum) {
-                return Eigenschaften.linearZuProzent(brechzahl, MIND_BRECHZAHL, MAX_BRECHZAHL);
+                return ReglerEvent.linearZuProzent(brechzahl, MIND_BRECHZAHL, MAX_BRECHZAHL);
             }
 
             @Override
             public String berechnePhysikalischenWert(double zahl) {
-                return Eigenschaften.zahlZuBrechzahl(zahl);
+                return ReglerEvent.zahlZuBrechzahl(zahl);
             }
         });
 
@@ -209,17 +209,17 @@ public class Linse extends Bauelement implements KannKollision {
 
             @Override
             public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
-                return Eigenschaften.prozentZuRadius(reglerProzent, minimum);
+                return ReglerEvent.prozentZuRadius(reglerProzent, minimum);
             }
 
             @Override
             public double berechneReglerProzent(double wert, double minimum, double maximum) {
-                return Eigenschaften.radiusZuProzent(wert, minimum, maximum);
+                return ReglerEvent.radiusZuProzent(wert, minimum, maximum);
             }
 
             @Override
             public String berechnePhysikalischenWert(double zahl) {
-                return Eigenschaften.radiusZuCm(zahl);
+                return ReglerEvent.radiusZuCm(zahl);
             }
         });
 
@@ -233,17 +233,17 @@ public class Linse extends Bauelement implements KannKollision {
 
             @Override
             public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
-                return Eigenschaften.prozentZuRadius(reglerProzent, minimum);
+                return ReglerEvent.prozentZuRadius(reglerProzent, minimum);
             }
 
             @Override
             public double berechneReglerProzent(double wert, double minimum, double maximum) {
-                return Eigenschaften.radiusZuProzent(wert, minimum, maximum);
+                return ReglerEvent.radiusZuProzent(wert, minimum, maximum);
             }
 
             @Override
             public String berechnePhysikalischenWert(double zahl) {
-                return Eigenschaften.radiusZuCm(zahl);
+                return ReglerEvent.radiusZuCm(zahl);
             }
         });
     }

@@ -6,7 +6,7 @@ package de.hhu.alobe.ba2016.editor.aktionen;
 public interface Aktion {
 
     /**
-     * Führe eine Aktion durch.
+     * Führe die Aktion durch.
      */
     void aktionDurchfuehren();
 

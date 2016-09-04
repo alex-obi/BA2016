@@ -1,7 +1,6 @@
 package de.hhu.alobe.ba2016.physik.elemente.Auge;
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
-import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
 import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
@@ -15,8 +14,6 @@ import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import org.jdom2.Element;
 
-import javax.print.attribute.standard.MediaSize;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -83,17 +80,17 @@ public class Auge extends Bauelement implements KannKollision {
 
             @Override
             public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
-                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+                return ReglerEvent.prozentZuLinear(reglerProzent, minimum, maximum);
             }
 
             @Override
             public double berechneReglerProzent(double wert, double minimum, double maximum) {
-                return Eigenschaften.linearZuProzent(wert, minimum, maximum);
+                return ReglerEvent.linearZuProzent(wert, minimum, maximum);
             }
 
             @Override
             public String berechnePhysikalischenWert(double zahl) {
-                return Eigenschaften.abstandNetzhautSicht(ABSTAND_NETZHAUT_NORMAL, zahl, 5);
+                return ReglerEvent.abstandNetzhautSicht(ABSTAND_NETZHAUT_NORMAL, zahl, 5);
             }
         });
 
@@ -106,12 +103,12 @@ public class Auge extends Bauelement implements KannKollision {
 
             @Override
             public double berechneReglerWert(double reglerProzent, double minimum, double maximum) {
-                return Eigenschaften.prozentZuLinear(reglerProzent, minimum, maximum);
+                return ReglerEvent.prozentZuLinear(reglerProzent, minimum, maximum);
             }
 
             @Override
             public double berechneReglerProzent(double wert, double minimum, double maximum) {
-                return Eigenschaften.linearZuProzent(wert, minimum, maximum);
+                return ReglerEvent.linearZuProzent(wert, minimum, maximum);
             }
 
             @Override

@@ -59,7 +59,7 @@ public abstract class Grafiken {
      * Lädt eine Grafikdatei als BufferedImage
      *
      * @param ort Pfad zu der Datei
-     * @return Grafik als BufferedImage
+     * @return Grafik als BufferedImage, null wenn Laden nicht möglich war
      */
     private static BufferedImage ladeBild(String ort) {
         try {

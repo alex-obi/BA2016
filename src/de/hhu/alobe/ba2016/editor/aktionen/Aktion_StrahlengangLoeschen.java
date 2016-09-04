@@ -5,7 +5,7 @@ import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 /**
- * Aktion zum Löschen eines Strahlengangs aus einer Lichtquelle
+ * Aktion zum Löschen eines Strahlengangs aus einer Lichtquelle.
  */
 public class Aktion_StrahlengangLoeschen implements Aktion {
 

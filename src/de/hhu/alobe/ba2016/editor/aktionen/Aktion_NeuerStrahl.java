@@ -5,7 +5,7 @@ import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 /**
- * Aktion zum Erstellen eines neuen Strahlengangs von einer Lichtquelle
+ * Aktion zum Erstellen eines neuen Strahlengangs von einer Lichtquelle.
  */
 public class Aktion_NeuerStrahl implements Aktion {
 

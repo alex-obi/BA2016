@@ -11,7 +11,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
- * Werkzeug zum Auswaehlen und Verschieben eines Elements und dessen Anzeige im Panel_Werkzeuge Fenster
+ * Werkzeug zum Auswaehlen und Verschieben eines Elements und dessen Anzeige.
  */
 public class Werkzeug_Auswahl extends Werkzeug {
 
@@ -28,7 +28,7 @@ public class Werkzeug_Auswahl extends Werkzeug {
     private boolean ersteVerschiebung = true;
 
     /**
-     * Initialisiert ein neues Werkzeug zur Auswahl von Bauelementen
+     * Initialisiert ein neues Werkzeug zur Auswahl von Bauelementen.
      *
      * @param optischeBank Referenz auf OPtische Bank
      */

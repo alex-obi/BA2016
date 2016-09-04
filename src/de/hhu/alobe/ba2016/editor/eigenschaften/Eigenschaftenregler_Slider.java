@@ -12,10 +12,10 @@ public class Eigenschaftenregler_Slider extends Eigenschaftenregler implements C
     //Schnittstelle zur Interaktion mit der Optischen Bank als ReglerEvent
     private ReglerEvent event;
 
-    //Minimum der Regelgröße bei Stellung auf 0 Prozent
+    //Minimum der Regelgröße bei Stellung auf 0.0 Prozent
     private double minimum;
 
-    //Maximum der Regelgröße bei Stellung auf 100 Prozent
+    //Maximum der Regelgröße bei Stellung auf 1.0 (100%) Prozent
     private double maximum;
 
     /**
@@ -26,7 +26,7 @@ public class Eigenschaftenregler_Slider extends Eigenschaftenregler implements C
      * @param anzahlWerte    Anzahl der diskreten Werte, die durch diesen Regler eingestellt werden können (ideal zwischen 100 und 500)
      * @param momentanerWert Momentaner Wert der Regelgröße zur Initialisierung des Reglers
      * @param minimum        Minimum der Regelgröße bei Stellung auf 0 Prozent
-     * @param maximum        Maximum der Regelgröße bei Stellung auf 100 Prozent
+     * @param maximum        Maximum der Regelgröße bei Stellung auf 1.0 (100) Prozent
      * @param event          Schnittstelle als ReglerEvent
      */
     public Eigenschaftenregler_Slider(String name, String einheit, int anzahlWerte, double momentanerWert, double minimum, double maximum, ReglerEvent event) {

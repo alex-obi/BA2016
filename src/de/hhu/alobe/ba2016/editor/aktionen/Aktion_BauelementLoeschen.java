@@ -12,7 +12,7 @@ public class Aktion_BauelementLoeschen implements Aktion {
     //Referenz auf die Optische Bank:
     private OptischeBank optischeBank;
 
-    //Bauelement, dass gelöscht werden soll.
+    //Bauelement, das gelöscht werden soll.
     private Bauelement bauelement;
 
     /**

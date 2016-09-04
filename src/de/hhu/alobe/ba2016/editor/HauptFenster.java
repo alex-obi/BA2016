@@ -16,11 +16,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Hauptfenster und Verwaltung des gesamten Programms
+ * Hauptfenster und Verwaltung des gesamten Programms.
  */
 public class HauptFenster extends JFrame {
-
-
+    
     //Mindestbreite des Fensters
     private static final int MIND_BREITE = 600;
 
@@ -28,7 +27,7 @@ public class HauptFenster extends JFrame {
     private static final int MIND_HOEHE = 400;
 
     //Statische Referenz zum Aufruf von jeder Programmstelle aus
-    private static HauptFenster optikSimulator;
+    private static HauptFenster hauptFenster;
 
     //Inhalt des gesamten Fensters/ Content Pane.
     private JPanel fensterInhalt;
@@ -50,7 +49,7 @@ public class HauptFenster extends JFrame {
      */
     public HauptFenster() {
         super("Optischer Baukasten");
-        optikSimulator = this;
+        hauptFenster = this;
 
         this.setSize(Konstanten.FENSTER_X, Konstanten.FENSTER_Y);
         this.setMinimumSize(new Dimension(MIND_BREITE, MIND_HOEHE));
@@ -80,7 +79,7 @@ public class HauptFenster extends JFrame {
      * @return Referenz auf dieses (einzige) Hauptfenster
      */
     public static HauptFenster get() {
-        return optikSimulator;
+        return hauptFenster;
     }
 
     /**

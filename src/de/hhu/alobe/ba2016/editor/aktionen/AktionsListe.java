@@ -39,7 +39,7 @@ public class AktionsListe {
     }
 
     /**
-     * Überschreibt die Aktion an der aktuellen Position in der Liste.
+     * Überschreibt die Aktion an der aktuellen Position in der Liste. Die alte Aktion wird zuvor rückgängig gemacht.
      *
      * @param aktion Neue Aktion.
      */

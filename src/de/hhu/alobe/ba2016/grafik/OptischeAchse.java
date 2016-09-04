@@ -15,6 +15,7 @@ public class OptischeAchse implements Zeichenbar {
 
     /**
      * Initialisiere Optische Achse
+     *
      * @param hoehe Neue Höhe
      */
     public OptischeAchse(double hoehe) {
@@ -22,7 +23,6 @@ public class OptischeAchse implements Zeichenbar {
     }
 
     /**
-     *
      * @return Höhe der Optischen Achse als double
      */
     public double getHoehe() {

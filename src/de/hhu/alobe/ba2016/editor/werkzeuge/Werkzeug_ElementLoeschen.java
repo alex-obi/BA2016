@@ -28,12 +28,12 @@ public class Werkzeug_ElementLoeschen extends Werkzeug {
     private Lichtquelle lezteLichtquelle;
 
     /**
-     * Radius um den Cursor, in dem Strahlen eingefangen und gelöscht werden können
+     * Radius um den Cursor, in dem Strahlen eingefangen und gelöscht werden können.
      */
     public static final double FANGRADIUS_STRAHL = 10;
 
     /**
-     * Initialisiere ein neues Werkzeug Löschen zu der übergebenen Optischen Bank
+     * Initialisiere ein neues Werkzeug Löschen zu der übergebenen Optischen Bank.
      *
      * @param optischeBank Referenz auf Optische Bank
      */

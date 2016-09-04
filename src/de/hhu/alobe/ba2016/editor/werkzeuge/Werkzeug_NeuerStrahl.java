@@ -1,6 +1,5 @@
 package de.hhu.alobe.ba2016.editor.werkzeuge;
 
-import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.aktionen.Aktion_NeuerStrahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
@@ -16,7 +15,7 @@ import java.awt.event.MouseEvent;
  */
 public class Werkzeug_NeuerStrahl extends Werkzeug {
 
-    //Ausgewählte Lichtquelle, von der die Strahlenerzeugt werden sollen
+    //Ausgewählte Lichtquelle, von der die Strahlen erzeugt werden sollen
     private Lichtquelle lichtquelle;
 
     //Speichert den Strahl, der aktuell durch den Mauscursor erzeugt werden würde
@@ -60,7 +59,6 @@ public class Werkzeug_NeuerStrahl extends Werkzeug {
         }
         //Bei rechter Maustaste wechsele wieder zum Werkzeug Auswahl
         if (SwingUtilities.isRightMouseButton(e)) {
-            optischeBank.repaint();
             optischeBank.werkzeugWechseln(new Werkzeug_Auswahl(optischeBank));
         }
     }

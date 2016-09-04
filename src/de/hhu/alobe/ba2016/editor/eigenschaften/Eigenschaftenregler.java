@@ -29,7 +29,7 @@ public class Eigenschaftenregler extends JPanel {
      *
      * @param name    Name der Regelgröße.
      * @param einheit Einheit der Regelgröße.
-     * @param groesse Wert der Regelgröße.
+     * @param groesse Momentaner Wert der Regelgröße.
      * @param regler  Regler zur Manipulation der Regelgröße.
      */
     public Eigenschaftenregler(String name, String einheit, String groesse, JComponent regler) {
