@@ -38,8 +38,8 @@ public class Hauptebene extends Flaeche {
     }
 
     @Override
-    public double kollisionUeberpruefen(Strahlengang cStrGng) {
-        return hauptebene.gibSchnittEntfernung(cStrGng.getAktuellerStrahl());
+    public double kollisionUeberpruefen(Strahl strahl) {
+        return hauptebene.gibSchnittEntfernung(strahl);
     }
 
     @Override

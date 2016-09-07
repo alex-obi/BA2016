@@ -8,10 +8,8 @@ import de.hhu.alobe.ba2016.mathe.Kreis;
 import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Strahlengang implements Zeichenbar{
 

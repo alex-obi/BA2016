@@ -6,41 +6,83 @@ import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 /**
- * Implementierende Klassen stellen Methoden zur Verfügung um Kollisionen mit Strahlen zu verarbeiten
+ * Stellt Methoden zur Verfügung um Kollisionen mit Strahlen zu verarbeiten.
  */
 public abstract class Grenzflaeche extends Flaeche {
 
-    protected double n1; //Brechzahl aussen (Richtung, in die Normalenvektor zeigt)
-    protected double n2; //Brechzahl innen
+    //Brechzahl aussen (Richtung, in die Normalenvektor zeigt)
+    private double n1;
 
-    public Grenzflaeche(int modus) {
+    //Brechzahl innen
+    private double n2;
+
+    /**
+     * Initialisiert die Grenzfläche mit einem bestimmten Modus
+     * @param modus Berechnungsmodus, wie eintreffenden Strahlen verändert werden.
+     */
+    Grenzflaeche(int modus) {
         this.n1 = 1;
         this.n2 = 1;
         this.modus = modus;
     }
 
-    public Grenzflaeche(int modus, double n1, double n2) {
+    /**
+     * Initialisiert die Grenzfläche mit einem bestimmten Modus und einer äußeren und einer inneren Brechzahl
+     * @param modus Berechnungsmodus, wie eintreffenden Strahlen verändert werden.
+     * @param n1 Äußere Brechzahl (Auf der Seite, auf die der Normalenvektor zeigt)
+     * @param n2 Innere Brechzahl
+     */
+    Grenzflaeche(int modus, double n1, double n2) {
         this.n1 = n1;
         this.n2 = n2;
         this.modus = modus;
     }
 
-    public abstract Vektor gibTangentialVektor (Vektor position);
-
-    public abstract Vektor gibNormalenVektor (Vektor position);
-
-    public Vektor gibReflektiertenVektor (Vektor einfallVektor, Vektor position) {
-        Vektor normalVektor = gibNormalenVektor(position);
-        Vektor tangentialVektor = gibTangentialVektor(position);
-        double normalAnteil = -Vektor.skalarprodukt(einfallVektor, normalVektor);
-        double tangentialAnteil = Vektor.skalarprodukt(einfallVektor, tangentialVektor);
-        Vektor normalAnteilVektor = Vektor.multipliziere(normalVektor, normalAnteil);
-        Vektor tangentialAnteilVektor = Vektor.multipliziere(tangentialVektor, tangentialAnteil);
-        Vektor ausfallsVektor = Vektor.addiere(normalAnteilVektor, tangentialAnteilVektor);
-        return ausfallsVektor;
+    /**
+     * Gibt den Tangentialvektor zu einem bestimmten Punkt auf der Fläche.
+     * @param position Ein Punkt auf der Fläche.
+     * @return Tangentialvektor an dem übergebenen Punkt.
+     */
+    public Vektor gibTangentialVektor (Vektor position) {
+        Vektor normalenVektor = gibNormalenVektor(position);
+        return new Vektor(normalenVektor.getY(), -normalenVektor.getX());
     }
 
-    public Vektor gibGebrochenenVektor (Vektor einfallVektor, Vektor position) {
+    /**
+     * Gibt den Normalenvektor zu einem bestimmten Punkt auf der Fläche.
+     * @param position Ein Punkt auf der Fläche.
+     * @return Normalenvektor an dem übergebenen Punkt.
+     */
+    public abstract Vektor gibNormalenVektor (Vektor position);
+
+    /**
+     * Berechnet die Richtung, in die ein einfallender Strahl reflektiert wird.
+     * @param einfallVektor Richtung des einfallenden Strahls.
+     * @param position Punkt, an dem der Strahl auf die Fläche trifft.
+     * @return Richtung des reflektierten Strahls
+     */
+    private Vektor gibReflektiertenVektor (Vektor einfallVektor, Vektor position) {
+        //Berechne Normal- und Tangentialvektor an position
+        Vektor normalVektor = gibNormalenVektor(position);
+        Vektor tangentialVektor = gibTangentialVektor(position);
+
+        //Berechne Normal- und Tangentialanteil des Einfallsvektor
+        double normalAnteil = Vektor.skalarprodukt(einfallVektor, normalVektor);
+        double tangentialAnteil = Vektor.skalarprodukt(einfallVektor, tangentialVektor);
+
+        //Berechne relektierten Vektor aus dem Tangentialanteil und dem gespiegelten Normalanteil und gebe diesen zurück
+        Vektor normalReflektion = Vektor.multipliziere(normalVektor, -normalAnteil);
+        Vektor tangentialReflektion = Vektor.multipliziere(tangentialVektor, tangentialAnteil);
+        return Vektor.addiere(normalReflektion, tangentialReflektion);
+    }
+
+    /**
+     * Berechnet die Richtung, in die ein einfallender Strahl gebrochen wird.
+     * @param einfallVektor Richtung des einfallenden Strahls.
+     * @param position Punkt, an dem der Strahl auf die Fläche trifft.
+     * @return Richtung des gebrochenen Strahls. null bei Totalreflektion.
+     */
+    private Vektor gibGebrochenenVektor (Vektor einfallVektor, Vektor position) {
         Vektor normalVektor = gibNormalenVektor(position);
         Vektor tangentialVektor = gibTangentialVektor(position);
         double einfallsWinkel = Math.acos(Math.abs(Vektor.skalarprodukt(einfallVektor, normalVektor)));
@@ -64,9 +106,9 @@ public abstract class Grenzflaeche extends Flaeche {
     }
 
     /**
-     * Manipuliert den eintreffenden Strahlengang abhaengig von den physikalischen Panel_Werkzeuge des Objekts.
-     * @param cStrGng Zu manipulierender Strahlengang
-     * @param position Schnittpunkt mit der Grenzflaeche
+     * Manipuliert den eintreffenden Strahlengang abhaengig vom Berechnungsmodus dieser Fläche.
+     * @param cStrGng Zu manipulierender Strahlengang.
+     * @param position Schnittpunkt mit der Grenzflaeche.
      */
     public void kollisionDurchfuehren(Strahlengang cStrGng, Vektor position) {
         if (modus == MODUS_ABSORB) {
@@ -74,7 +116,6 @@ public abstract class Grenzflaeche extends Flaeche {
         }
         if (modus == MODUS_REFLEKT) {
             Vektor reflektion = gibReflektiertenVektor(cStrGng.getAktuellerStrahl().getRichtungsVektor(), position);
-            Vektor vonBis = Vektor.subtrahiere(position, cStrGng.getAktuellerStrahl().getBasisVektor());
             Strahl reflektionsStrahl = new Strahl(position, reflektion);
             cStrGng.neuenStrahlAnhaengen(reflektionsStrahl);
         }
@@ -90,27 +131,4 @@ public abstract class Grenzflaeche extends Flaeche {
         }
     }
 
-    public double getN1() {
-        return n1;
-    }
-
-    public void setN1(double n1) {
-        this.n1 = n1;
-    }
-
-    public double getN2() {
-        return n2;
-    }
-
-    public void setN2(double n2) {
-        this.n2 = n2;
-    }
-
-    public int getModus() {
-        return modus;
-    }
-
-    public void setModus(int modus) {
-        this.modus = modus;
-    }
 }

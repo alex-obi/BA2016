@@ -2,6 +2,7 @@ package de.hhu.alobe.ba2016.physik.flaechen;
 
 
 import de.hhu.alobe.ba2016.mathe.Gerade;
+import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
@@ -23,18 +24,13 @@ public class Grenzflaeche_Ebene extends Grenzflaeche{
     }
 
     @Override
-    public Vektor gibTangentialVektor(Vektor position) {
-        return ebene.getRichtungsVektor();
-    }
-
-    @Override
     public Vektor gibNormalenVektor(Vektor position) {
         return ebene.getRichtungsVektor().gibNormalenVektor();
     }
 
     @Override
-    public double kollisionUeberpruefen(Strahlengang cStrGng) {
-        return ebene.gibSchnittEntfernung(cStrGng.getAktuellerStrahl());
+    public double kollisionUeberpruefen(Strahl strahl) {
+        return ebene.gibSchnittEntfernung(strahl);
     }
 
     @Override

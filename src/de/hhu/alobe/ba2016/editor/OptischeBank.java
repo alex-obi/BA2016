@@ -60,9 +60,6 @@ public class OptischeBank extends JPanel implements Speicherbar {
     //Optionsleiste zum Anzeigen von Reglern von Bauelementen
     private Eigenschaften eigenschaften;
 
-    //Offset zum Verschieben des Bildausschnittes
-    private Point positionOffset;
-
     //Art der Berechnung der Strahlen (Hauptebene oder reale Brechung durch Snellius Formel)
     private int modus = MODUS_HAUPTEBENE;
     //Name des modus in XML
@@ -157,8 +154,6 @@ public class OptischeBank extends JPanel implements Speicherbar {
 
         eigenschaften = new Eigenschaften();
         this.add(eigenschaften, BorderLayout.SOUTH);
-
-        positionOffset = new Point(0, 0);
 
         bauelemente = new ArrayList<>();
         lichtquellen = new ArrayList<>();
@@ -304,8 +299,10 @@ public class OptischeBank extends JPanel implements Speicherbar {
                 }
             }
             if (ersteKoll != null) {
+                //Strahlengang ist auf eine Fläche getroffen
                 ersteKoll.kollisionDurchfuehren();
             } else {
+                //Strahlengang ist auf keine Fläche mehr getroffen
                 break;
             }
         }
