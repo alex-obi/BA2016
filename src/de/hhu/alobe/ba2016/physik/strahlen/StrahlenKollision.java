@@ -22,9 +22,10 @@ public class StrahlenKollision {
 
     /**
      * Initialisiert ein neues StrahlenKollisions Objekt
-     * @param distanz Distanz, die der aktuelle Strahl des Strahlengangs bis zur Fläche zurueckgelegt hat
+     *
+     * @param distanz      Distanz, die der aktuelle Strahl des Strahlengangs bis zur Fläche zurueckgelegt hat
      * @param strahlengang Strahlengang, der betrachtet wird
-     * @param kollFlaeche Fläche, mit dem der Strahlengang kollidiert ist
+     * @param kollFlaeche  Fläche, mit dem der Strahlengang kollidiert ist
      */
     public StrahlenKollision(double distanz, Strahlengang strahlengang, Flaeche kollFlaeche) {
         this.distanz = distanz;
@@ -36,7 +37,7 @@ public class StrahlenKollision {
      * Führt die Kollision des Strahls mit der übergebenen Fläche aus. Es ist sinnvoll vor Aufruf dieser Funktion zu überprüfen, dass dise Kollision
      * wirklich die erste Kollision des aktuellen Strahls des Strahlengangs mit einer Fläche ist.
      */
-    public void kollisionDurchfuehren () {
+    public void kollisionDurchfuehren() {
         Vektor position = Vektor.multipliziere(strahlengang.getAktuellerStrahl().getRichtungsVektor(), distanz);
         position.addiere(strahlengang.getAktuellerStrahl().getBasisVektor());
         kollFlaeche.kollisionDurchfuehren(strahlengang, position);
@@ -44,15 +45,16 @@ public class StrahlenKollision {
 
     /**
      * Statische Methode, um aus einer Liste von Strahlen Kollisionen das Element zu finden, das die kleinste zurückgelegte Distanz des aktuellen Strahls des Strahlengangs hat.
+     *
      * @param kollisionen Liste von StrahlenKollisions Objekten. null als Objekt in der Liste erlaubt.
      * @return Das StrahlenKollisions Objekt mit der kleinsten Distanz
      */
     public static StrahlenKollision getErsteKollision(ArrayList<StrahlenKollision> kollisionen) {
-        if(kollisionen == null) return null;
-        if(kollisionen.size() == 0) return null;
+        if (kollisionen == null) return null;
+        if (kollisionen.size() == 0) return null;
         StrahlenKollision cKHandler = kollisionen.get(0);
-        for(int i = 1; i < kollisionen.size(); i++) {
-            if(kollisionen.get(i) != null) {
+        for (int i = 1; i < kollisionen.size(); i++) {
+            if (kollisionen.get(i) != null) {
                 if (cKHandler == null || cKHandler.getDistanz() > kollisionen.get(i).getDistanz()) {
                     cKHandler = kollisionen.get(i);
                 }

@@ -26,7 +26,6 @@ public class Main {
          * todo: Rahmen werden nach scrollen ausgeblendet
 
          Optional:
-         * todo: Synchronized kritische Abschnitte
          * todo: Scrollen mit Maus und Ausschnitt optimieren
 
          * todo: Parallel-, Zenit-, Brennpunktstrahl markieren und einfangen

@@ -6,6 +6,7 @@ import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 /**
+ * Grenzfläche zwischen zwei Medien mit unterschiedlichen Brechzahlen und Eigenschaften wie Reflektion und Absorbtion von Strahlen.
  * Stellt Methoden zur Verfügung um Kollisionen mit Strahlen zu verarbeiten.
  */
 public abstract class Grenzflaeche extends Flaeche {
@@ -18,6 +19,7 @@ public abstract class Grenzflaeche extends Flaeche {
 
     /**
      * Initialisiert die Grenzfläche mit einem bestimmten Modus
+     *
      * @param modus Berechnungsmodus, wie eintreffenden Strahlen verändert werden.
      */
     Grenzflaeche(int modus) {
@@ -28,9 +30,10 @@ public abstract class Grenzflaeche extends Flaeche {
 
     /**
      * Initialisiert die Grenzfläche mit einem bestimmten Modus und einer äußeren und einer inneren Brechzahl
+     *
      * @param modus Berechnungsmodus, wie eintreffenden Strahlen verändert werden.
-     * @param n1 Äußere Brechzahl (Auf der Seite, auf die der Normalenvektor zeigt)
-     * @param n2 Innere Brechzahl
+     * @param n1    Äußere Brechzahl (Auf der Seite, auf die der Normalenvektor zeigt)
+     * @param n2    Innere Brechzahl
      */
     Grenzflaeche(int modus, double n1, double n2) {
         this.n1 = n1;
@@ -40,28 +43,32 @@ public abstract class Grenzflaeche extends Flaeche {
 
     /**
      * Gibt den Tangentialvektor zu einem bestimmten Punkt auf der Fläche.
+     *
      * @param position Ein Punkt auf der Fläche.
-     * @return Tangentialvektor an dem übergebenen Punkt.
+     * @return Normierter Tangentialvektor an dem übergebenen Punkt.
      */
-    public Vektor gibTangentialVektor (Vektor position) {
+    public Vektor gibTangentialVektor(Vektor position) {
         Vektor normalenVektor = gibNormalenVektor(position);
         return new Vektor(normalenVektor.getY(), -normalenVektor.getX());
     }
 
     /**
      * Gibt den Normalenvektor zu einem bestimmten Punkt auf der Fläche.
+     * Der Normalenvektor muss auf Länge 1 normiert sein.
+     *
      * @param position Ein Punkt auf der Fläche.
-     * @return Normalenvektor an dem übergebenen Punkt.
+     * @return Normierter Normalenvektor an dem übergebenen Punkt.
      */
-    public abstract Vektor gibNormalenVektor (Vektor position);
+    public abstract Vektor gibNormalenVektor(Vektor position);
 
     /**
      * Berechnet die Richtung, in die ein einfallender Strahl reflektiert wird.
+     *
      * @param einfallVektor Richtung des einfallenden Strahls.
-     * @param position Punkt, an dem der Strahl auf die Fläche trifft.
+     * @param position      Punkt, an dem der Strahl auf die Fläche trifft.
      * @return Richtung des reflektierten Strahls
      */
-    private Vektor gibReflektiertenVektor (Vektor einfallVektor, Vektor position) {
+    private Vektor gibReflektiertenVektor(Vektor einfallVektor, Vektor position) {
         //Berechne Normal- und Tangentialvektor an position
         Vektor normalVektor = gibNormalenVektor(position);
         Vektor tangentialVektor = gibTangentialVektor(position);
@@ -71,43 +78,60 @@ public abstract class Grenzflaeche extends Flaeche {
         double tangentialAnteil = Vektor.skalarprodukt(einfallVektor, tangentialVektor);
 
         //Berechne relektierten Vektor aus dem Tangentialanteil und dem gespiegelten Normalanteil und gebe diesen zurück
-        Vektor normalReflektion = Vektor.multipliziere(normalVektor, -normalAnteil);
-        Vektor tangentialReflektion = Vektor.multipliziere(tangentialVektor, tangentialAnteil);
-        return Vektor.addiere(normalReflektion, tangentialReflektion);
+        Vektor normalReflexion = Vektor.multipliziere(normalVektor, -normalAnteil);
+        Vektor tangentialReflexion = Vektor.multipliziere(tangentialVektor, tangentialAnteil);
+        return Vektor.addiere(normalReflexion, tangentialReflexion);
     }
 
     /**
      * Berechnet die Richtung, in die ein einfallender Strahl gebrochen wird.
+     *
      * @param einfallVektor Richtung des einfallenden Strahls.
-     * @param position Punkt, an dem der Strahl auf die Fläche trifft.
-     * @return Richtung des gebrochenen Strahls. null bei Totalreflektion.
+     * @param position      Punkt, an dem der Strahl auf die Fläche trifft.
+     * @return Richtung des gebrochenen Strahls. null bei Totalreflexion.
      */
-    private Vektor gibGebrochenenVektor (Vektor einfallVektor, Vektor position) {
+    private Vektor gibGebrochenenVektor(Vektor einfallVektor, Vektor position) {
+        //Berechne Normal- und Tangentialvektor an position
         Vektor normalVektor = gibNormalenVektor(position);
         Vektor tangentialVektor = gibTangentialVektor(position);
+
+        //Berechne Normal- und Tangentialanteil des Einfallsvektor
+        double normalAnteil = Vektor.skalarprodukt(einfallVektor, normalVektor);
+        double tangentialAnteil = Vektor.skalarprodukt(einfallVektor, tangentialVektor);
+
         double einfallsWinkel = Math.acos(Math.abs(Vektor.skalarprodukt(einfallVektor, normalVektor)));
         double ausfallsWinkel;
-        Vektor normalAnteilAusfall;
-        Vektor tangentialAnteilAusfall;
-        if(Vektor.skalarprodukt(einfallVektor, normalVektor) < 0) { //Vektoren zeigen in unterschiedliche Richtungen
+
+        //Normal- und Tangentialanteil des gebrochenen Vektors als Vektoren
+        Vektor normalBrechung;
+        Vektor tangentialBrechung;
+
+        //Fallunterscheidung für 4 mögliche Richtungen bei gegebenem Einfallswinkel
+        if (normalAnteil < 0) {
             ausfallsWinkel = Math.asin((n1 * Math.sin(einfallsWinkel) / n2));
-            normalAnteilAusfall = Vektor.multipliziere(normalVektor, -Math.cos(ausfallsWinkel));
-        } else {
+            if (Double.isNaN(ausfallsWinkel)) return null; //Totalreflexion (ausfallsWinkel nicht berechenbar)
+            normalBrechung = Vektor.multipliziere(normalVektor, -Math.cos(ausfallsWinkel));
+        } else if (normalAnteil > 0) {
             ausfallsWinkel = Math.asin((n2 * Math.sin(einfallsWinkel) / n1));
-            normalAnteilAusfall = Vektor.multipliziere(normalVektor, Math.cos(ausfallsWinkel));
-        }
-        if(Double.isNaN(ausfallsWinkel)) return null; //Totalreflexion (ausfallsWinkel nicht berechenbar)
-        if(Vektor.skalarprodukt(einfallVektor, tangentialVektor) >= 0) {
-            tangentialAnteilAusfall = Vektor.multipliziere(tangentialVektor, Math.sin(ausfallsWinkel));
+            if (Double.isNaN(ausfallsWinkel)) return null; //Totalreflexion (ausfallsWinkel nicht berechenbar)
+            normalBrechung = Vektor.multipliziere(normalVektor, Math.cos(ausfallsWinkel));
         } else {
-            tangentialAnteilAusfall = Vektor.multipliziere(tangentialVektor, -Math.sin(ausfallsWinkel));
+            return null; //Nicht klar in welche Richtung gebrochen werden soll, da Einfallsvektor parallel zu Tangentialvektor ist
         }
-        return Vektor.addiere(normalAnteilAusfall, tangentialAnteilAusfall);
+
+        if (tangentialAnteil >= 0) {
+            tangentialBrechung = Vektor.multipliziere(tangentialVektor, Math.sin(ausfallsWinkel));
+        } else {
+            tangentialBrechung = Vektor.multipliziere(tangentialVektor, -Math.sin(ausfallsWinkel));
+        }
+
+        return Vektor.addiere(normalBrechung, tangentialBrechung);
     }
 
     /**
      * Manipuliert den eintreffenden Strahlengang abhaengig vom Berechnungsmodus dieser Fläche.
-     * @param cStrGng Zu manipulierender Strahlengang.
+     *
+     * @param cStrGng  Zu manipulierender Strahlengang.
      * @param position Schnittpunkt mit der Grenzflaeche.
      */
     public void kollisionDurchfuehren(Strahlengang cStrGng, Vektor position) {
@@ -115,13 +139,13 @@ public abstract class Grenzflaeche extends Flaeche {
             cStrGng.strahlengangBeenden(position);
         }
         if (modus == MODUS_REFLEKT) {
-            Vektor reflektion = gibReflektiertenVektor(cStrGng.getAktuellerStrahl().getRichtungsVektor(), position);
-            Strahl reflektionsStrahl = new Strahl(position, reflektion);
-            cStrGng.neuenStrahlAnhaengen(reflektionsStrahl);
+            Vektor reflexion = gibReflektiertenVektor(cStrGng.getAktuellerStrahl().getRichtungsVektor(), position);
+            Strahl reflexionsStrahl = new Strahl(position, reflexion);
+            cStrGng.neuenStrahlAnhaengen(reflexionsStrahl);
         }
         if (modus == MODUS_BRECHUNG) {
             Vektor brechung = gibGebrochenenVektor(cStrGng.getAktuellerStrahl().getRichtungsVektor(), position);
-            if(brechung != null) {
+            if (brechung != null) {
                 Strahl gebrochenerStrahl = new Strahl(position, brechung);
                 cStrGng.neuenStrahlAnhaengen(gebrochenerStrahl);
             } else {

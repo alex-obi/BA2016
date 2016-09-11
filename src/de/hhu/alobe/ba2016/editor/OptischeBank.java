@@ -309,25 +309,11 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Aktualisiert die Optische Bank in einem neuen Thread um durch Aufruf vom EDT diesen nicht zu blockieren.
+     * Aktualisiert die Optische Bank.
      * Es werden alle Strahlen neu Berechnet.
      * Anschließend werden alle Elemente durch den Aufruf von repaint neu gezeichnet.
      */
     public void aktualisieren() {
-        Thread aktThread = new Thread() {
-            @Override
-            public void run() {
-                aktualisierenThreadSicher();
-            }
-        };
-        aktThread.run();
-    }
-
-    /*
-    Aktualisiert die Optische Bank, indem ein mit synchronized abgesicherter Bereich betreten wird,
-    der verhindert, dass mehrere Threads gleichzeitig die Optische Bank aktualisieren.
-    */
-    private synchronized void aktualisierenThreadSicher() {
         strahlenNeuBerechnen();
         this.repaint();
         zeichenRahmen.repaint();

@@ -35,11 +35,12 @@ public abstract class Flaeche extends GeomertrischeFigur {
 
     /**
      * Gibt ein StrahlenKollisions Objekt zurück, das zum Verwalten der Kollision eines Strahlengangs mit dieser Fläche benutzt wird.
+     *
      * @param cStrGng Zu überprüfender Strahl
      * @return StrahlenKollisions Objekt, falls Kollision existiert. null sonst.
      */
     public StrahlenKollision gibKollision(Strahlengang cStrGng) {
-        if(cStrGng.getAktuellerStrahl() == null) return null;
+        if (cStrGng.getAktuellerStrahl() == null) return null;
         double entfernung = kollisionUeberpruefen(cStrGng.getAktuellerStrahl());
         if (entfernung >= Konstanten.MIND_ENTFERNUNG_STRAHL) {
             return new StrahlenKollision(entfernung, cStrGng, this);
@@ -50,6 +51,7 @@ public abstract class Flaeche extends GeomertrischeFigur {
 
     /**
      * Gibt die Entfernung zurück, die der übergebene Strahl zurückgelegt hat, bis er auf diese Fläche trifft.
+     *
      * @param strahl Strahl, mit dem Kollision überprüft werden soll
      * @return Distanz, die der Strahl bis zum Auftreffen zurückgelegt hat. Ein negativer Wert bedeutet, dass der Strahl nicht mit dieser Fläche zusammentrifft!
      */
@@ -57,7 +59,8 @@ public abstract class Flaeche extends GeomertrischeFigur {
 
     /**
      * Führt die Kollision eines Strahlengangs auf Basis eines Kollisionspunktes aus.
-     * @param cStrGng Strahlengang, der betrachtet wird
+     *
+     * @param cStrGng  Strahlengang, der betrachtet wird
      * @param position Punkt, an dem der Strahlengang auf diese Fläche getroffen ist
      */
     public abstract void kollisionDurchfuehren(Strahlengang cStrGng, Vektor position);

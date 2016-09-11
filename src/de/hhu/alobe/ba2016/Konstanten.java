@@ -47,9 +47,14 @@ public abstract class Konstanten {
     public static final double ZOOM_STUFE = 0.2;
 
     /**
-     * Distanz, bis Bauelemente direkt auf die Achse gesetzt werden
+     * Distanz, bis Bauelemente direkt auf die Achse gesetzt werden.
      */
     public static final int OPTISCHEACHSE_FANGENTFERNUNG = 25;
+
+    /**
+     * Toleranzwert, ab dem g = f bei Abbildungen angenommen wird.
+     */
+    public static final double TOLERANZ_ABBILDUNG_UNENDLICH = 7;
 
     /**
      * Gibt an wieviele Pixel pro Zentimeter angezeigt werden zur Längenskalierung. Dieser Wert ist ein Schätzwert und kann von Gerät zu Gerät variieren.

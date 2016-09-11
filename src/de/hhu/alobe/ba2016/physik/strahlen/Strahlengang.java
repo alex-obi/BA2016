@@ -11,7 +11,7 @@ import de.hhu.alobe.ba2016.mathe.Vektor;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Strahlengang implements Zeichenbar{
+public class Strahlengang implements Zeichenbar {
 
     //Speichert die Startwerte um Strahlengang zurücksetzen zu können
     private Strahl anfangsStrahl;
@@ -31,7 +31,7 @@ public class Strahlengang implements Zeichenbar{
         strahlenAbschnitte = new ArrayList<>();
     }
 
-    public void neuenStrahlAnhaengen (Strahl neuerStrahl) {
+    public void neuenStrahlAnhaengen(Strahl neuerStrahl) {
         if (strahlenAbschnitte.size() >= Konstanten.MAX_STRAHLLAENGE) {
             strahlengangBeenden(neuerStrahl.getBasisVektor());
             return;
@@ -40,25 +40,25 @@ public class Strahlengang implements Zeichenbar{
         this.aktuellerStrahl = neuerStrahl;
     }
 
-    public void strahlengangBeenden (Vektor letztePosition) {
+    public void strahlengangBeenden(Vektor letztePosition) {
         //todo: Laenge besser als Vektor
         strahlenAbschnitte.add(new Gerade(aktuellerStrahl, Vektor.gibAbstand(letztePosition, aktuellerStrahl.getBasisVektor())));
         aktuellerStrahl = null;
     }
 
-    public void resetteStrahlengang () {
+    public void resetteStrahlengang() {
         this.aktuellerStrahl = anfangsStrahl;
         strahlenAbschnitte = new ArrayList<>();
     }
 
     public ArrayList<Vektor> gibBildpunkte(boolean auchVirtuell) {
         ArrayList<Vektor> retList = new ArrayList<>();
-        for(Gerade g : strahlenAbschnitte) {
-            if(g.getQuellEntfernung() != 0 && g.getQuellEntfernung() < g.getLaenge() && (g.getQuellEntfernung() > 0 || auchVirtuell)) {
+        for (Gerade g : strahlenAbschnitte) {
+            if (g.getQuellEntfernung() != 0 && g.getQuellEntfernung() < g.getLaenge() && (g.getQuellEntfernung() > 0 || auchVirtuell)) {
                 retList.add(g.gibQuellPunkt());
             }
         }
-        if(aktuellerStrahl != null) {
+        if (aktuellerStrahl != null) {
             if (aktuellerStrahl.getQuellEntfernung() != 0 && (aktuellerStrahl.getQuellEntfernung() > 0 || auchVirtuell)) {
                 retList.add(aktuellerStrahl.gibQuellPunkt());
             }
@@ -67,11 +67,11 @@ public class Strahlengang implements Zeichenbar{
     }
 
     public boolean istAngeklickt(Kreis pruefKreis) {
-        if(aktuellerStrahl != null) {
+        if (aktuellerStrahl != null) {
             if (pruefKreis.schneidetStrahl(aktuellerStrahl)) return true;
         }
-        for(Gerade gerade : strahlenAbschnitte) {
-            if(pruefKreis.schneidetGerade(gerade)) return true;
+        for (Gerade gerade : strahlenAbschnitte) {
+            if (pruefKreis.schneidetGerade(gerade)) return true;
         }
         return false;
     }
@@ -79,13 +79,13 @@ public class Strahlengang implements Zeichenbar{
     @Override
     public void paintComponent(Graphics2D g) {
         Color alteFarbe = g.getColor();
-        if(aktiviert) {
+        if (aktiviert) {
             g.setColor(Color.RED);
         }
-        for(int i = 0; i < strahlenAbschnitte.size(); i++) {
+        for (int i = 0; i < strahlenAbschnitte.size(); i++) {
             strahlenAbschnitte.get(i).paintComponent(g);
         }
-        if(aktuellerStrahl != null) {
+        if (aktuellerStrahl != null) {
             aktuellerStrahl.paintComponent(g);
         }
         g.setColor(alteFarbe);
