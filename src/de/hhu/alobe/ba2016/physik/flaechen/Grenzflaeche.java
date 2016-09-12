@@ -134,22 +134,26 @@ public abstract class Grenzflaeche extends Flaeche {
      * @param cStrGng  Zu manipulierender Strahlengang.
      * @param position Schnittpunkt mit der Grenzflaeche.
      */
+    @Override
     public void kollisionDurchfuehren(Strahlengang cStrGng, Vektor position) {
         if (modus == MODUS_ABSORB) {
+            //Strahlengang wird hier beendet
             cStrGng.strahlengangBeenden(position);
         }
         if (modus == MODUS_REFLEKT) {
+            //An den Strahlengang wird ein neuer, reflektierter Strahl angehaengt
             Vektor reflexion = gibReflektiertenVektor(cStrGng.getAktuellerStrahl().getRichtungsVektor(), position);
             Strahl reflexionsStrahl = new Strahl(position, reflexion);
             cStrGng.neuenStrahlAnhaengen(reflexionsStrahl);
         }
         if (modus == MODUS_BRECHUNG) {
+            //
             Vektor brechung = gibGebrochenenVektor(cStrGng.getAktuellerStrahl().getRichtungsVektor(), position);
             if (brechung != null) {
                 Strahl gebrochenerStrahl = new Strahl(position, brechung);
                 cStrGng.neuenStrahlAnhaengen(gebrochenerStrahl);
             } else {
-                //Totalreflexion
+                //Totalreflexion. Kein gebrochener Strahl. Der Strahlengang wird hier beendet
                 cStrGng.strahlengangBeenden(position);
             }
         }

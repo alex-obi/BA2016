@@ -4,6 +4,7 @@ package de.hhu.alobe.ba2016.editor;
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_Auswahl;
 import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_ElementLoeschen;
+import de.hhu.alobe.ba2016.grafik.OptischeAchse;
 import de.hhu.alobe.ba2016.jdom.Dateifunktionen;
 import de.hhu.alobe.ba2016.jdom.MeinDateiendungsFilter;
 
@@ -41,6 +42,12 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
     private JMenuItem vergroessern;
     private JMenuItem verkleinern;
     private JMenuItem originalgroesse;
+
+    private JMenu achsenStil;
+    private JRadioButtonMenuItem achseDurchgezogen;
+    private JRadioButtonMenuItem achseGestrichelt;
+    private JRadioButtonMenuItem achseGepunktet;
+
     private JCheckBoxMenuItem virtuelleStrahlen;
     private JRadioButtonMenuItem snelliusAktivieren;
     private JRadioButtonMenuItem hauptebenenAktivieren;
@@ -105,6 +112,25 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         originalgroesse = new JMenuItem("Originale Groesse");
         originalgroesse.addActionListener(this);
         ansicht.add(originalgroesse);
+        ansicht.addSeparator();
+
+        achsenStil = new JMenu("Stil Optische Achse");
+        achsenStil.addMenuListener(this);
+        ansicht.add(achsenStil);
+        ButtonGroup gruppe1 = new ButtonGroup();
+        achseDurchgezogen = new JRadioButtonMenuItem("Durchgezogen");
+        achseDurchgezogen.addActionListener(this);
+        achseGestrichelt = new JRadioButtonMenuItem("Gesrichelt");
+        achseGestrichelt.addActionListener(this);
+        achseGepunktet = new JRadioButtonMenuItem("Gepunktet");
+        achseGepunktet.addActionListener(this);
+        gruppe1.add(achseDurchgezogen);
+        gruppe1.add(achseGestrichelt);
+        gruppe1.add(achseGepunktet);
+        achsenStil.add(achseDurchgezogen);
+        achsenStil.add(achseGestrichelt);
+        achsenStil.add(achseGepunktet);
+
         ansicht.addSeparator();
         virtuelleStrahlen = new JCheckBoxMenuItem("Virtuelle Bilder", false);
         virtuelleStrahlen.addActionListener(this);
@@ -219,6 +245,18 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
             optischeBank.setZoom(1);
             optischeBank.aktualisieren();
         }
+        if (e.getSource().equals(achseDurchgezogen)) {
+            optischeBank.getOptischeAchse().setModus(OptischeAchse.MODUS_DURCHGEZOGEN);
+            optischeBank.aktualisieren();
+        }
+        if (e.getSource().equals(achseGestrichelt)) {
+            optischeBank.getOptischeAchse().setModus(OptischeAchse.MODUS_GESTRICHELT);
+            optischeBank.aktualisieren();
+        }
+        if (e.getSource().equals(achseGepunktet)) {
+            optischeBank.getOptischeAchse().setModus(OptischeAchse.MODUS_GEPUNKTET);
+            optischeBank.aktualisieren();
+        }
         if (e.getSource().equals(virtuelleStrahlen)) {
             optischeBank.setVirtuelleStrahlenAktiv(virtuelleStrahlen.isSelected());
             optischeBank.aktualisieren();
@@ -238,6 +276,18 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         OptischeBank optischeBank = hauptFenster.getAktuelleOptischeBank();
         if (e.getSource().equals(datei)) {
             aktualisiereLokaleDateien();
+        }
+        if(e.getSource().equals(achsenStil)) {
+            switch (optischeBank.getOptischeAchse().getModus()) {
+                case OptischeAchse.MODUS_DURCHGEZOGEN:
+                    achseDurchgezogen.setSelected(true);
+                    break;
+                case OptischeAchse.MODUS_GESTRICHELT:
+                    achseGestrichelt.setSelected(true);
+                    break;
+                case OptischeAchse.MODUS_GEPUNKTET:
+                    achseGepunktet.setSelected(true);
+            }
         }
         if (e.getSource().equals(ansicht)) {
             virtuelleStrahlen.setSelected(optischeBank.isVirtuelleStrahlenAktiv());

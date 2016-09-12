@@ -155,6 +155,10 @@ public class Auge extends Bauelement implements KannKollision {
         untereBegrenzung = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_ABSORB, Vektor.addiere(mittelPunkt, new Vektor(b, c)), r, Math.PI + alpha, ext);
     }
 
+    public Netzhaut getNetzhaut() {
+        return netzhaut;
+    }
+
     @Override
     public void verschiebeUm(Vektor verschiebung) {
         mittelPunkt.addiere(verschiebung);

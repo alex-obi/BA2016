@@ -7,6 +7,7 @@ import de.hhu.alobe.ba2016.editor.werkzeuge.Werkzeug_NeuerStrahl;
 import de.hhu.alobe.ba2016.mathe.Strahl;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
+import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Schirm;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import org.jdom2.Element;
 
@@ -109,8 +110,18 @@ public abstract class Lichtquelle extends Bauelement {
             strahlenZeichnen(g);
             //Bilder Zeichnen, die von dieser Lampe entstehen
                 for (Vektor bildPunkt : gibBildpunkte(optischeBank.isVirtuelleStrahlenAktiv())) {
-                    g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
-                    g.draw(new Line2D.Double(bildPunkt.getX(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getX(), bildPunkt.getY()));
+                    boolean aufSchirm = false;
+                    for(Schirm schirm : optischeBank.getSchirme()) {
+                        Vektor schirmPunkt = schirm.gibKollisionsPunkt(bildPunkt);
+                        if(schirmPunkt != null) {
+                            aufSchirm = true;
+                            g.fillArc(schirmPunkt.getXint() - 5, schirmPunkt.getYint() - 5, 10, 10, 0, 360);
+                        }
+                    }
+                    if(!aufSchirm) {
+                        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
+                        g.draw(new Line2D.Double(bildPunkt.getX(), optischeBank.getOptischeAchse().getHoehe(), bildPunkt.getX(), bildPunkt.getY()));
+                    }
             }
         }
         super.paintComponent(g);

@@ -41,6 +41,13 @@ public class Grenzflaeche_Ebene extends Grenzflaeche {
         this.ebene = new Gerade(von_Vektor, bis_Vektor);
     }
 
+    /**
+     * @return Kollisionsgerade der Grenzflaeche
+     */
+    public Gerade getEbene() {
+        return ebene;
+    }
+
     @Override
     public Vektor gibNormalenVektor(Vektor position) {
         return ebene.getRichtungsVektor().gibNormalenVektor();

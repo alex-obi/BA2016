@@ -54,7 +54,7 @@ public class Strahlengang implements Zeichenbar {
     public ArrayList<Vektor> gibBildpunkte(boolean auchVirtuell) {
         ArrayList<Vektor> retList = new ArrayList<>();
         for (Gerade g : strahlenAbschnitte) {
-            if (g.getQuellEntfernung() != 0 && g.getQuellEntfernung() < g.getLaenge() && (g.getQuellEntfernung() > 0 || auchVirtuell)) {
+            if (g.getQuellEntfernung() != 0 && g.getQuellEntfernung() < g.getLaenge() + Konstanten.TOLERANZ_BILD && (g.getQuellEntfernung() > 0 || auchVirtuell)) {
                 retList.add(g.gibQuellPunkt());
             }
         }

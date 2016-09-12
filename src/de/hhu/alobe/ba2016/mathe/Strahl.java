@@ -78,14 +78,14 @@ public class Strahl extends GeomertrischeFigur {
 
     @Override
     public void paintComponent(Graphics2D g) {
-        Vektor bisVektor = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, 10000));
+        Vektor bisVektor = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, 3000));
         g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
         Line2D line = new Line2D.Double(basisVektor, bisVektor);
         g.draw(line);
         if((quellEntfernung < 0 || isAusDemUnendlichen()) && HauptFenster.get().getAktuelleOptischeBank().isVirtuelleStrahlenAktiv()) {
             double cQuellEntfernung = quellEntfernung;
             if(isAusDemUnendlichen()) {
-                cQuellEntfernung = -10000;
+                cQuellEntfernung = -3000;
             }
             Vektor bisVektorVirtuell = Vektor.addiere(basisVektor, Vektor.multipliziere(richtungsVektor, cQuellEntfernung));
             g.setStroke(new BasicStroke(Konstanten.LINIENDICKE, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 5.0f, new float[] {10.0f,4.0f}, 0.0f));

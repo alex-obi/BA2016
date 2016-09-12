@@ -7,6 +7,7 @@ import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
 import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
+import de.hhu.alobe.ba2016.mathe.Kreis;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
@@ -33,7 +34,7 @@ public class Schirm extends Bauelement implements KannKollision {
     public static final double MIND_HOEHE = 20;
     public static final double MAX_HOEHE = 500;
 
-    private Grenzflaeche schirmFlaeche;
+    private Grenzflaeche_Ebene schirmFlaeche;
 
     private Eigenschaftenregler_Slider slide_hoehe;
 
@@ -87,6 +88,20 @@ public class Schirm extends Bauelement implements KannKollision {
 
     public void setHoehe(double nHoehe) {
         formatAktualisieren(nHoehe);
+    }
+
+    /**
+     * Prueft, ob der uebergebene Punkt in der Naehe dieses Schirms liegt und gebe einen Punkt zurueck, der auf dem Schirm in der Naehe liegt.
+     * @param bildpunkt
+     * @return
+     */
+    public Vektor gibKollisionsPunkt(Vektor bildpunkt) {
+        Kreis k = new Kreis(bildpunkt, 3);
+        if(k.schneidetGerade(schirmFlaeche.getEbene())) {
+            return new Vektor(mittelPunkt.getX(), bildpunkt.getY());
+        } else {
+            return null;
+        }
     }
 
     @Override

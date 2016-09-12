@@ -78,13 +78,16 @@ public class OptischeBank extends JPanel implements Speicherbar {
     //Gibt an, ob virtuelle Strahlen und Bilder geeichnet werden sollen
     private boolean virtuelleStrahlenAktiv = false;
     //Name von virtuelleStrahlenAktiv in XML
-    public static final String XML_VIRTUELLE_STRAHLEN = "virtuelle_strahlen";
+    private static final String XML_VIRTUELLE_STRAHLEN = "virtuelle_strahlen";
 
     //Liste aller Bauelemente, die dieser Optischen Bank hinzugefügt wurden
     private ArrayList<Bauelement> bauelemente;
 
     //Liste aller Lichtquellen, die dieser Optischen Bank hinzugefügt wurden
     private ArrayList<Lichtquelle> lichtquellen;
+
+    //Liste aller Schirme, die dieser Optischen Bank hinzugefügt wurden
+    private ArrayList<Schirm> schirme;
 
     //Liste aller Objekte, die Kollision mit Lichtstrahlen ausführen, die dieser Optischen Bank hinzugefügt wurden
     private ArrayList<KannKollision> kollisionsObjekte;
@@ -95,6 +98,9 @@ public class OptischeBank extends JPanel implements Speicherbar {
     //Die optische Achse
     private OptischeAchse optischeAchse;
 
+    //Name des Zeichenmodus der Optischen Achse in XML
+    private static final String XML_ACHSENMODUS= "modusAchse";
+
     //Aktuell ausgewaehltes Werkzeug zur Tastatur-/ Mausinteraktion
     Werkzeug aktuellesWerkzeug;
 
@@ -102,7 +108,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
      * Initialisiert neue, leere Optische Bank ohne Voreinstellungen
      */
     public OptischeBank() {
-        initialisiere(1);
+        initialisiere(1, OptischeAchse.MODUS_GESTRICHELT);
     }
 
     /**
@@ -115,7 +121,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     public OptischeBank(Element xmlElement, File dateiPfad) throws Exception {
         this.dateiPfad = dateiPfad;
         setName(Dateifunktionen.getDateiNamen(dateiPfad));
-        initialisiere(xmlElement.getAttribute(XML_ZOOM).getDoubleValue());
+        initialisiere(xmlElement.getAttribute(XML_ZOOM).getDoubleValue(), xmlElement.getAttribute(XML_ACHSENMODUS).getIntValue());
         modus = xmlElement.getAttribute(XML_MODUS).getIntValue();
         virtuelleStrahlenAktiv = xmlElement.getAttribute(XML_VIRTUELLE_STRAHLEN).getBooleanValue();
         Iterator<?> bauelemente = xmlElement.getChildren().iterator();
@@ -136,7 +142,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     //Initialisiert die Optische Bank
-    private void initialisiere(double zoom) {
+    private void initialisiere(double zoom, int achsenModus) {
         setLayout(new BorderLayout());
         setOpaque(true);
 
@@ -145,11 +151,11 @@ public class OptischeBank extends JPanel implements Speicherbar {
         zeichenBrett = new Zeichenbrett(this);
 
         zeichenRahmen = new JScrollPane(zeichenBrett);
-        groesse = new Point(2000, 600);
+        groesse = new Point(3000, 600);
         zeichenBrett.setPreferredSize(new Dimension(groesse.x, groesse.y));
         this.add(zeichenRahmen, BorderLayout.CENTER);
 
-        optischeAchse = new OptischeAchse(250);
+        optischeAchse = new OptischeAchse(300, achsenModus);
         zeichenBrett.neuesZeichenObjekt(optischeAchse);
 
         eigenschaften = new Eigenschaften();
@@ -157,6 +163,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
 
         bauelemente = new ArrayList<>();
         lichtquellen = new ArrayList<>();
+        schirme = new ArrayList<>();
         kollisionsObjekte = new ArrayList<>();
 
         aktionsListe = new AktionsListe();
@@ -204,12 +211,14 @@ public class OptischeBank extends JPanel implements Speicherbar {
                 break;
             case Bauelement.TYP_SCHIRM:
                 kollisionsObjekte.add((Schirm) bauelement);
+                schirme.add((Schirm)bauelement);
                 break;
             case Bauelement.TYP_BLENDE:
                 kollisionsObjekte.add((Blende) bauelement);
                 break;
             case Bauelement.TYP_AUGE:
                 kollisionsObjekte.add((Auge) bauelement);
+                schirme.add(((Auge)bauelement).getNetzhaut());
         }
         zeichenBrett.neuesZeichenObjekt(bauelement);
         bauelemente.add(bauelement);
@@ -221,6 +230,9 @@ public class OptischeBank extends JPanel implements Speicherbar {
      * @param bauelement Zu Löschendes Bauelement
      */
     public void bauelementLoeschen(Bauelement bauelement) {
+        if(bauelement.getTyp() == Bauelement.TYP_AUGE) {
+            schirme.remove(((Auge)bauelement).getNetzhaut());
+        }
         zeichenBrett.zeichenObjektLoeschen(bauelement);
         kollisionsObjekte.remove(bauelement);
         bauelemente.remove(bauelement);
@@ -386,6 +398,13 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
+     * @return Liste der Schirme
+     */
+    public ArrayList<Schirm> getSchirme() {
+        return schirme;
+    }
+
+    /**
      * @return Liste aller Bauelemente
      */
     public ArrayList<Bauelement> getBauelemente() {
@@ -438,6 +457,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     public Element getXmlElement() {
         Element xmlElement = new Element(getXmlElementTyp());
         xmlElement.setAttribute(XML_MODUS, String.valueOf(modus));
+        xmlElement.setAttribute(XML_ACHSENMODUS, String.valueOf(optischeAchse.getModus()));
         xmlElement.setAttribute(XML_VIRTUELLE_STRAHLEN, String.valueOf(virtuelleStrahlenAktiv));
         xmlElement.setAttribute(XML_ZOOM, String.valueOf(zoom));
         for (Bauelement cBau : bauelemente) {

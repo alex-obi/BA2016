@@ -68,10 +68,8 @@ public class Werkzeug_NeuesBauelement extends Werkzeug {
     @Override
     public void mouseMoved(MouseEvent e, Vektor realePosition) {
         //Positioniert das bauelement neu. Ist es in der Nähe der Optischen Achse setze Y-Koordinate auf Höhe der Optischen Achse
-        if (Math.abs(realePosition.getY() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG) {
-            if (bauelement.fangModusOptischeAchseAn()) {
-                bauelement.setzeMittelpunktNeu(new Vektor(realePosition.getX(), optischeBank.getOptischeAchse().getHoehe()));
-            }
+        if (Math.abs(realePosition.getY() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG && bauelement.fangModusOptischeAchseAn()) {
+            bauelement.setzeMittelpunktNeu(new Vektor(realePosition.getX(), optischeBank.getOptischeAchse().getHoehe()));
         } else {
             bauelement.setzeMittelpunktNeu(realePosition);
         }

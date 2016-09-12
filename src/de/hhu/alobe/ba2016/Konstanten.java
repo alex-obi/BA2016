@@ -57,6 +57,11 @@ public abstract class Konstanten {
     public static final double TOLERANZ_ABBILDUNG_UNENDLICH = 7;
 
     /**
+     * Toleranzwert, der angibt in welcher Entfernung hinter einem Schirm ein Bild trotzdem eingefangen und gezeichnet wird.
+     */
+    public static final double TOLERANZ_BILD = 1;
+
+    /**
      * Gibt an wieviele Pixel pro Zentimeter angezeigt werden zur Längenskalierung. Dieser Wert ist ein Schätzwert und kann von Gerät zu Gerät variieren.
      */
     public static final double PIXEL_PRO_CM = 36;

@@ -34,6 +34,11 @@ public abstract class Flaeche extends GeomertrischeFigur {
     public static final int MODUS_BRECHUNG = 3;
 
     /**
+     *
+     */
+    public static final int MODUS_SCHIRM = 4;
+
+    /**
      * Gibt ein StrahlenKollisions Objekt zurück, das zum Verwalten der Kollision eines Strahlengangs mit dieser Fläche benutzt wird.
      *
      * @param cStrGng Zu überprüfender Strahl
