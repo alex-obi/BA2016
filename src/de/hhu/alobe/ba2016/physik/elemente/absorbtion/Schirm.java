@@ -1,9 +1,7 @@
 package de.hhu.alobe.ba2016.physik.elemente.absorbtion;
 
 
-import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
-import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
 import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
@@ -13,29 +11,51 @@ import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 import de.hhu.alobe.ba2016.physik.elemente.Rahmen;
 import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche;
 import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Ebene;
-import de.hhu.alobe.ba2016.physik.flaechen.Grenzflaeche_Sphaerisch;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 import org.jdom2.Element;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
+/**
+ * Bauelement Schirm als Gerade, die Strahlen absorbiert. Zeigt an, wenn ein Bild auf diesen Schirm projeziert wird.
+ */
 public class Schirm extends Bauelement implements KannKollision {
 
+    /**
+     * Name des Bauelements.
+     */
     public static final String NAME = "Schirm";
+
+    /**
+     * Name des Schirms im XML-Dokument.
+     */
     public static final String XML_SCHIRM = "schirm";
 
+    //Höhe des Schirms
     private double hoehe;
+
+    /**
+     * Name der Höhe im XML-Dokument.
+     */
     public static final String XML_HOEHE = "hoehe";
+
+    /**
+     * Mindestwert für die Höhe.
+     */
     public static final double MIND_HOEHE = 20;
+
+    /**
+     * Maximalwert für die Höhe.
+     */
     public static final double MAX_HOEHE = 500;
 
+    //Fläche des Schirms
     private Grenzflaeche_Ebene schirmFlaeche;
 
+    //Eigenschaftenregler zur Manipulation des Schirms durch den Benutzer.
     private Eigenschaftenregler_Slider slide_hoehe;
 
     public Schirm(OptischeBank optischeBank, Vektor mittelPunkt, double hoehe) {

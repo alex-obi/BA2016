@@ -6,65 +6,90 @@ import de.hhu.alobe.ba2016.mathe.Vektor;
 
 import java.awt.*;
 
+/**
+ * Klasse entspricht einem Objekt, dass gezeichnet und innerhalb eines Rahmens angeklickt werden kann.
+ */
 public abstract class Auswahlobjekt implements Zeichenbar {
 
+    /**
+     * Mittelpunkt des Objekts. Bestandteile werden relativ zu diesem Punkt erstellt.
+     */
     protected Vektor mittelPunkt;
+
+    /**
+     * Name des Mittelpunkts im XML-Dokument.
+     */
     public static final String XML_MITTELPUNKT = "Mittelpunkt";
 
-    protected boolean rahmenSichtbar;
-    protected Rahmen rahmen;
+    //Gibt an, ob der Rahmen sichtbar ist, also gezeichnet werden soll.
+    private boolean rahmenSichtbar;
 
-    protected Cursor mausZeiger;
+    //Rahmen, der um das Objekt gezeichnet werden kann und innerhalb dessen das Objekt angeklickt werden kann.
+    private Rahmen rahmen;
 
-    public Auswahlobjekt(Vektor nMittelPunkt, Rahmen nRahmen, Cursor nMausZeiger) {
-        rahmen = nRahmen;
-        mittelPunkt = nMittelPunkt;
-        mausZeiger = nMausZeiger;
-    }
-
+    /**
+     * Initialisiert das Auswahlobjekt mit einem Mittelpunkt.
+     *
+     * @param nMittelPunkt Mittelpunkt des Auswahlobjekts.
+     */
     public Auswahlobjekt(Vektor nMittelPunkt) {
         rahmen = new Rahmen();
         mittelPunkt = nMittelPunkt;
-        mausZeiger = Cursor.getDefaultCursor();
     }
 
+    /**
+     * Gibt an, ob der übergebene Punkt innerhalb des Rahmens liegt.
+     *
+     * @param pruefVektor Position, an dem geklickt wurde.
+     * @return Wahrheitswert, ob Punkt innerhalb des Rahmens liegt.
+     */
     public boolean istAngeklickt(Vektor pruefVektor) {
         return rahmen.istVektorInRahmen(pruefVektor);
     }
 
-    public Cursor getMausZeiger() {
-        return mausZeiger;
-    }
-
-    public void setMausZeiger(Cursor mausZeiger) {
-        this.mausZeiger = mausZeiger;
-    }
-
+    /**
+     * @return Rahmen dieses Objekts.
+     */
     public Rahmen getRahmen() {
         return rahmen;
     }
 
+    /**
+     * @param rahmen Neuer Rahmen dieses Objekts.
+     */
     public void setRahmen(Rahmen rahmen) {
         this.rahmen = rahmen;
     }
 
+    /**
+     * Abstrakte Funktion, die durch erbende Klassen implementiert wird und ausgeführt wird, wenn das Objekt angeklickt wurde.
+     */
     public abstract void waehleAus();
 
+    /**
+     * Macht den Rahmen dieses Objekts sichtbar.
+     */
     public void rahmenEinblenden() {
         rahmenSichtbar = true;
     }
 
+    /**
+     * Blendet den Rahmen dieses Objekts aus.
+     */
     public void rahmenAusblenden() {
         rahmenSichtbar = false;
     }
 
+    /**
+     * @return Mittelpunkt dieses Objekts.
+     */
     public Vektor getMittelPunkt() {
         return mittelPunkt;
     }
 
     @Override
     public void paintComponent(Graphics2D g) {
-        if(rahmenSichtbar) {
+        if (rahmenSichtbar) {
             rahmen.paintComponent(g);
         }
     }

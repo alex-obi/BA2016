@@ -2,7 +2,6 @@ package de.hhu.alobe.ba2016.physik.elemente.absorbtion;
 
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
-import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
 import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
@@ -21,37 +20,91 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+/**
+ * Bauelement Blende als Gerade mit einer Öffnung, durch die Strahlen hindurch kommen.
+ */
 public class Blende extends Bauelement implements KannKollision {
 
+    /**
+     * Name des Bauelements
+     */
     public static final String NAME = "Blende";
+
+    /**
+     * Name der Blende im XML-Dokument
+     */
     public static final String XML_BLENDE = "blende";
 
+    //Durchmesser der Öffnung
     private double durchmesser;
-    public static final String XML_DURCHMESSER = "durchmesser";
-    public static final double MIND_DURCHMESSER = 0;
-    public static final double MIND_ABSTAND = 10; //Mindestlänge der Außenbegrenzungen der Blende
 
+    /**
+     * Name des Durchmessers im XML-Dokument.
+     */
+    public static final String XML_DURCHMESSER = "durchmesser";
+
+    /**
+     * Mindestwert für Durchmesser.
+     */
+    public static final double MIND_DURCHMESSER = 0;
+
+    /**
+     * Mindestlänge der Außenbegrenzungen der Blende.
+     */
+    public static final double MIND_ABSTAND = 10;
+
+    //Höhe der gesamten Blende.
     private double hoehe;
+
+    /**
+     * Name der Höhe im XML-Dokument.
+     */
     public static final String XML_HOEHE = "hoehe";
+
+    /**
+     * Mindestwert für die Höhe.
+     */
     public static final double MIND_HOEHE = 20;
+
+    /**
+     * Maximalwert für die Höhe.
+     */
     public static final double MAX_HOEHE = 500;
 
+    //Obere Hälfte der Blende als Grenzfläche.
     private Grenzflaeche obereHaelfte;
+
+    //Untere Hälfte der Blende als Grenzfläche.
     private Grenzflaeche untereHaelfte;
 
+    //Eigenschaftenregler zur Manipulation des Schirms durch den Benutzer.
     private Eigenschaftenregler_Slider slide_hoehe;
     private Eigenschaftenregler_Slider slide_durchmesser;
 
+    /**
+     * Initialisiert neue Blende mit Höhe und Durchmesser.
+     * @param optischeBank Referenz auf Optische Bank.
+     * @param mittelPunkt Mittelpunkt der Blende.
+     * @param hoehe Höhe der Blende.
+     * @param durchmesser Durchmesser der Öffnung der Blende.
+     */
     public Blende(OptischeBank optischeBank, Vektor mittelPunkt, double hoehe, double durchmesser) {
         super(optischeBank, mittelPunkt, Bauelement.TYP_BLENDE);
         initialisiere(hoehe, durchmesser);
     }
 
+    /**
+     * Initialisiert neue Blende mit einem jdom-Element.
+     * @param optischeBank Referenz auf Optische Bank
+     * @param xmlElement jdom2.Element, was benötigte Werte enthält.
+     * @throws Exception Exception, die geworfen wird, wenn ein Fehler bei der Initialisierung passiert.
+     */
     public Blende(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement, TYP_BLENDE);
         initialisiere(xmlElement.getAttribute(XML_HOEHE).getDoubleValue(), xmlElement.getAttribute(XML_DURCHMESSER).getDoubleValue());
     }
 
+    //Funktion um die Werte der Blende zu initialisieren und die Manipulationsregler zu erstellen.
     private void initialisiere(double nHoehe, double nDurchmesser) {
         formatAktualisieren(nHoehe, nDurchmesser);
 
@@ -104,6 +157,7 @@ public class Blende extends Bauelement implements KannKollision {
         });
     }
 
+    //Aktualisiert das Format dieser Blende.
     private void formatAktualisieren(double nHoehe, double nDurchmesser) {
         hoehe = Math.min(MAX_HOEHE, Math.max(MIND_HOEHE, nHoehe));
         durchmesser = Math.max(MIND_DURCHMESSER, Math.min(hoehe - MIND_ABSTAND * 2, nDurchmesser));
@@ -116,10 +170,16 @@ public class Blende extends Bauelement implements KannKollision {
         setRahmen(generiereRahmen());
     }
 
+    /**
+     * @param nDurchmesser Neuer Durchmesser der Öffnung der Blende.
+     */
     public void setDurchmesser(double nDurchmesser) {
         formatAktualisieren(hoehe, nDurchmesser);
     }
 
+    /**
+     * @param nHoehe Neue Höhe der Blende.
+     */
     public void setHoehe(double nHoehe) {
         formatAktualisieren(nHoehe, durchmesser);
     }

@@ -9,28 +9,58 @@ import java.util.ArrayList;
 
 public class Rahmen extends Polygon implements Zeichenbar {
 
+    /**
+     * Farbe aller Rahmen.
+     */
     public static Color rahmenFarbe = Color.RED;
 
-    Vektor mittelpunkt;
+    //Mittelpunkt des Rahmens
+    private Vektor mittelpunkt;
 
+    /**
+     * Initialisiert neuen Rahmen ohne Kanten.
+     */
     public Rahmen() {
         mittelpunkt = new Vektor(0, 0);
     }
 
+    /**
+     * Initialisiere neuen Rahmen ohne Kanten mit Mittelpunkt.
+     *
+     * @param nMittelpunkt Mittelpunkt des Rahmens.
+     */
     public Rahmen(Vektor nMittelpunkt) {
         mittelpunkt = nMittelpunkt;
     }
 
+    /**
+     * Erstelle Rahmen über Verbindung von Punktes zu einem Polygon.
+     *
+     * @param mittelpunkt Mittelpunkt des Rahmens.
+     * @param punkte      Punkte des Polygons.
+     */
     public Rahmen(Vektor mittelpunkt, ArrayList<Point2D.Double> punkte) {
-        for(Point2D.Double punkt : punkte) {
-            addPoint((int)punkt.x, (int)punkt.y);
+        this.mittelpunkt = mittelpunkt;
+        for (Point2D.Double punkt : punkte) {
+            addPoint((int) punkt.x, (int) punkt.y);
         }
     }
 
+    /**
+     * Erweitert den Rahmen mit einem neuen Punkt.
+     *
+     * @param nPunkt Neuer Punkt.
+     */
     public void rahmenErweitern(Point2D.Double nPunkt) {
-        addPoint((int)nPunkt.x, (int)nPunkt.y);
+        addPoint((int) nPunkt.x, (int) nPunkt.y);
     }
 
+    /**
+     * Gibt an, ob der übergebene Vektor in diesem Rahmen liegt.
+     *
+     * @param pruefVektor Position, an dem der Mauscursor liegt.
+     * @return Wahrheitswert, ob Rahmen angeklickt wurde.
+     */
     public boolean istVektorInRahmen(Vektor pruefVektor) {
         Vektor verschoben = Vektor.subtrahiere(pruefVektor, mittelpunkt);
         return this.contains(verschoben.getX(), verschoben.getY());

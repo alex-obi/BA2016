@@ -13,23 +13,35 @@ import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 import java.awt.*;
 
+/**
+ * Hornhaut eines Auges.
+ */
 public class Hornhaut implements KannKollision, Zeichenbar {
 
-    public static final double BRECHZAHL_HORNHAUT = 1.376;
+    //Brechzahl des Kammerwassers hinter der Hornhaut
+    private static final double BRECHZAHL_HORNHAUT = 1.376;
 
+    //Refrenz auf das zugehörige Auge
     private Auge auge;
 
+    //Fläche der Hornhaut
     private Grenzflaeche grenzflaeche;
 
+    //Hauptebene der Hornhaut
     private Hauptebene hauptebene;
 
+    //Position der Hornhaut
     private Vektor position;
 
-    private double radius;
-
+    /**
+     * Initialisiere neue Hornhaut mit einem Radius.
+     *
+     * @param auge     Referenz auf das zugehörige Auge.
+     * @param position Position der Hornhaut.
+     * @param radius   Radius der Hornhaut.
+     */
     public Hornhaut(Auge auge, Vektor position, double radius) {
         this.auge = auge;
-        this.radius = radius;
         this.position = position;
         double hoehenfaktor = 1.5;
         this.hauptebene = new Hauptebene(Hauptebene.MODUS_BRECHUNG, position, 2.660 * radius, 3.660 * radius, 1.3 * radius * hoehenfaktor);
@@ -37,6 +49,11 @@ public class Hornhaut implements KannKollision, Zeichenbar {
         this.grenzflaeche = new Grenzflaeche_Sphaerisch(Flaeche.MODUS_BRECHUNG, 1, BRECHZAHL_HORNHAUT, new Vektor(position.getX() + radius, position.getY()), radius, Math.PI - alpha, alpha * 2);
     }
 
+    /**
+     * Verschiebt die Position der Hornhaut um den übergebenen Vektor.
+     *
+     * @param verschiebung Vektor, um den die Hornhaut verschoben werden soll.
+     */
     public void verschiebeUm(Vektor verschiebung) {
         position.addiere(verschiebung);
         grenzflaeche.verschiebeUm(verschiebung);
@@ -50,7 +67,7 @@ public class Hornhaut implements KannKollision, Zeichenbar {
                 return grenzflaeche.gibKollision(cStrGng);
             case OptischeBank.MODUS_HAUPTEBENE:
                 StrahlenKollision sK = grenzflaeche.gibKollision(cStrGng);
-                if(sK != null) {
+                if (sK != null) {
                     return new StrahlenKollision(sK.getDistanz(), cStrGng, hauptebene);
                 }
         }
@@ -67,8 +84,6 @@ public class Hornhaut implements KannKollision, Zeichenbar {
             case OptischeBank.MODUS_HAUPTEBENE:
                 g.setColor(Color.GRAY);
                 grenzflaeche.paintComponent(g);
-                /*g.setColor(Color.BLACK);
-                hauptebene.paintComponent(g);*/
                 break;
         }
     }

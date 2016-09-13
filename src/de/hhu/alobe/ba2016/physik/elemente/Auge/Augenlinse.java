@@ -1,25 +1,44 @@
 package de.hhu.alobe.ba2016.physik.elemente.Auge;
 
-import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.elemente.glasskoerper.Linse;
 import org.jdom2.Element;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
 
-
+/**
+ * Linse eines Auges.
+ */
 public class Augenlinse extends Linse {
 
+    /**
+     * Name der Augenlinse im XML-Dokument.
+     */
     public static final String XML_AUGENLINSE = "augenlinse";
 
-    public static final double HOEHE = 80;
+    //Höhe der Augenlinse
+    private static final double HOEHE = 80;
 
+    /**
+     * Initialisiert eine neue Augenlinse mit Brechzahl und Radis
+     *
+     * @param auge      Referenz auf das zugehörige Auge.
+     * @param position  Position der Linse.
+     * @param brechzahl Brechzahl der Augenlinse.
+     * @param radius    Radius der Augenlinse.
+     */
     public Augenlinse(Auge auge, Vektor position, double brechzahl, double radius) {
         super(auge.getOptischeBank(), position, brechzahl, HOEHE, 0, radius, radius);
     }
 
+    /**
+     * Initialisiert das Auge mit einem jdom2.Element, das die benötigten Attribute enthält.
+     *
+     * @param auge       Referenz auf das zugehörige Auge.
+     * @param xmlElement jdom2.Element.
+     * @throws Exception Exception, die geworfen wird, wenn beim Initialisieren ein Fehler passiert.
+     */
     public Augenlinse(Auge auge, Element xmlElement) throws Exception {
         super(auge.getOptischeBank(), xmlElement);
     }
