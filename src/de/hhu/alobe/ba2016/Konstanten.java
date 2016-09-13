@@ -47,6 +47,16 @@ public abstract class Konstanten {
     public static final double ZOOM_STUFE = 0.2;
 
     /**
+     * Minimale Vergroesserung durch Zoom.
+     */
+    public static final double ZOOM_MIN = 0.4;
+
+    /**
+     * Maximale Vergroesserung durch Zoom.
+     */
+    public static final double ZOOM_MAX = 4.0;
+
+    /**
      * Distanz, bis Bauelemente direkt auf die Achse gesetzt werden.
      */
     public static final int OPTISCHEACHSE_FANGENTFERNUNG = 25;

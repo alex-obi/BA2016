@@ -10,20 +10,11 @@ import java.io.File;
  * Klasse zum Programmeinstieg
  */
 public class Main {
-
     /*
         Todoliste:
-         * todo: Optische Achse verschiebbar. Format änderbar.
-         * todo: Bild auf Schirm besser darstellen
          * todo: Auswahlwerkzeug überarbeiten
-         *
-         *
+
          Bugs:
-         * Wichtig:
-         * todo: Parallellicht auf 0 Grad zurückstellen führt zu komischem Wackeln des Strahlengangs
-         *
-         * Zweitrangig:
-         * todo: Rahmen werden nach scrollen ausgeblendet
 
          Optional:
          * todo: Scrollen mit Maus und Ausschnitt optimieren

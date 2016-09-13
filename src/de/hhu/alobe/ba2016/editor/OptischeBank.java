@@ -99,7 +99,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     private OptischeAchse optischeAchse;
 
     //Name des Zeichenmodus der Optischen Achse in XML
-    private static final String XML_ACHSENMODUS= "modusAchse";
+    private static final String XML_ACHSENMODUS = "modusAchse";
 
     //Aktuell ausgewaehltes Werkzeug zur Tastatur-/ Mausinteraktion
     Werkzeug aktuellesWerkzeug;
@@ -211,14 +211,14 @@ public class OptischeBank extends JPanel implements Speicherbar {
                 break;
             case Bauelement.TYP_SCHIRM:
                 kollisionsObjekte.add((Schirm) bauelement);
-                schirme.add((Schirm)bauelement);
+                schirme.add((Schirm) bauelement);
                 break;
             case Bauelement.TYP_BLENDE:
                 kollisionsObjekte.add((Blende) bauelement);
                 break;
             case Bauelement.TYP_AUGE:
                 kollisionsObjekte.add((Auge) bauelement);
-                schirme.add(((Auge)bauelement).getNetzhaut());
+                schirme.add(((Auge) bauelement).getNetzhaut());
         }
         zeichenBrett.neuesZeichenObjekt(bauelement);
         bauelemente.add(bauelement);
@@ -230,9 +230,10 @@ public class OptischeBank extends JPanel implements Speicherbar {
      * @param bauelement Zu Löschendes Bauelement
      */
     public void bauelementLoeschen(Bauelement bauelement) {
-        if(bauelement.getTyp() == Bauelement.TYP_AUGE) {
-            schirme.remove(((Auge)bauelement).getNetzhaut());
+        if (bauelement.getTyp() == Bauelement.TYP_AUGE) {
+            schirme.remove(((Auge) bauelement).getNetzhaut());
         }
+        schirme.remove(bauelement);
         zeichenBrett.zeichenObjektLoeschen(bauelement);
         kollisionsObjekte.remove(bauelement);
         bauelemente.remove(bauelement);
@@ -335,7 +336,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
      * Erhöht die Vergrößerung der Optischen Bank
      */
     public void zoomStufeRein() {
-        zoom *= (1 + Konstanten.ZOOM_STUFE);
+        setZoom(zoom *= (1 + Konstanten.ZOOM_STUFE));
 
         zeichenBrett.setPreferredSize(new Dimension((int) (groesse.getX() * zoom), (int) (groesse.getY() * zoom)));
         zeichenBrett.revalidate();
@@ -345,19 +346,20 @@ public class OptischeBank extends JPanel implements Speicherbar {
      * Verringert die Vergrößerung der Optischen Bank
      */
     public void zoomStufeRaus() {
-        zoom /= (1 + Konstanten.ZOOM_STUFE);
+        setZoom(zoom / (1 + Konstanten.ZOOM_STUFE));
 
         zeichenBrett.setPreferredSize(new Dimension((int) (groesse.getX() * zoom), (int) (groesse.getY() * zoom)));
         zeichenBrett.revalidate();
     }
 
     /**
-     * Setzt die Vergrößerung der Optischen Bank auf einen bestimmten Wert
+     * Setzt die Vergrößerung der Optischen Bank auf einen bestimmten Wert in dem Intervall [Konstanten.ZOOM_MIN, Konstanten.ZOOM_MAX]
      *
-     * @param zoom Wert der Vergrößerung
+     * @param nZoom Wert der Vergrößerung
+     * @see Konstanten
      */
-    public void setZoom(double zoom) {
-        this.zoom = zoom;
+    public void setZoom(double nZoom) {
+        this.zoom = Math.min(Math.max(Konstanten.ZOOM_MIN, nZoom), Konstanten.ZOOM_MAX);
         zeichenBrett.setPreferredSize(new Dimension((int) (groesse.getX() * zoom), (int) (groesse.getY() * zoom)));
         zeichenBrett.revalidate();
     }

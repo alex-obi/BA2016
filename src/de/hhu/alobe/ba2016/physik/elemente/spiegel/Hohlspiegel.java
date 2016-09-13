@@ -13,6 +13,7 @@ import de.hhu.alobe.ba2016.physik.flaechen.*;
 import de.hhu.alobe.ba2016.physik.strahlen.KannKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
+import javafx.fxml.JavaFXBuilderFactory;
 import org.jdom2.Element;
 
 import javax.swing.*;
@@ -156,6 +157,7 @@ public class Hohlspiegel extends Bauelement implements KannKollision{
     public void paintComponent(Graphics2D g) {
         switch (optischeBank.getModus()) {
             case OptischeBank.MODUS_SNELLIUS:
+                g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
                 g.setColor(new Color(62, 195, 221));
                 spiegelFlaeche.paintComponent(g);
                 break;

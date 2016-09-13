@@ -71,10 +71,10 @@ public class OptischeAchse implements Zeichenbar {
                 g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
                 break;
             case MODUS_GESTRICHELT:
-                g.setStroke(new BasicStroke(Konstanten.LINIENDICKE, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 5.0f, new float[] {10.0f,8.0f}, 0.0f));
+                g.setStroke(new BasicStroke(Konstanten.LINIENDICKE, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_BEVEL, 5.0f, new float[] {7.0f,5.0f}, 0.0f));
                 break;
             case MODUS_GEPUNKTET:
-                g.setStroke(new BasicStroke(Konstanten.LINIENDICKE, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 5.0f, new float[] {Konstanten.LINIENDICKE}, 0.0f));
+                g.setStroke(new BasicStroke(Konstanten.LINIENDICKE * 1.5f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 5.0f, new float[] {Konstanten.LINIENDICKE * 1.5f}, 0.0f));
         }
         g.draw(new Line2D.Double(0, hoehe, 3000, hoehe));
     }

@@ -1,5 +1,6 @@
 package de.hhu.alobe.ba2016.physik.elemente.Licht;
 
+import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
@@ -79,7 +80,7 @@ public class ParallelLichtquelle extends Lichtquelle {
             }
         });
 
-        slide_neigung = new Eigenschaftenregler_Slider("Neigungswinkel", "°", 500, neigungsWinkel, MIND_NEIGUNG, MAX_NEIGUNG, new ReglerEvent() {
+        slide_neigung = new Eigenschaftenregler_Slider("Neigungswinkel", "°", 100, neigungsWinkel, MIND_NEIGUNG, MAX_NEIGUNG, new ReglerEvent() {
             @Override
             public void reglerWurdeVerschoben(double wert) {
                 setNeigung(wert);
@@ -137,14 +138,19 @@ public class ParallelLichtquelle extends Lichtquelle {
         neigungsWinkel = nNeigungsWinkel;
         for(Strahlengang cStrg : strahlengaenge) {
             cStrg.resetteStrahlengang();
-            double relativeNeigung;
-            if(cStrg.getAnfangsStrahl().getRichtungsVektor().getX() < 0) { //Strahl geht in Richtung linker Seite
-                relativeNeigung = (nNeigungsWinkel + Math.PI) - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
+            if(nNeigungsWinkel == 0) {
+                cStrg.getAnfangsStrahl().getRichtungsVektor().setY(0);
+                cStrg.getAnfangsStrahl().getRichtungsVektor().setX(Math.signum(cStrg.getAnfangsStrahl().getRichtungsVektor().getX()));
             } else {
-                relativeNeigung = nNeigungsWinkel - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
+                double relativeNeigung;
+                if(cStrg.getAnfangsStrahl().getRichtungsVektor().getX() < 0) { //Strahl geht in Richtung linker Seite
+                    relativeNeigung = (nNeigungsWinkel + Math.PI) - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
+                } else {
+                    relativeNeigung = nNeigungsWinkel - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
+                }
+                cStrg.getAnfangsStrahl().getRichtungsVektor().dreheUmWinkel(relativeNeigung);
             }
 
-            cStrg.getAnfangsStrahl().getRichtungsVektor().dreheUmWinkel(relativeNeigung);
         }
     }
 
@@ -216,6 +222,7 @@ public class ParallelLichtquelle extends Lichtquelle {
 
     @Override
     public void paintComponent(Graphics2D g) {
+        g.setStroke(new BasicStroke(Konstanten.LINIENDICKE));
         g.setColor(Color.BLACK);
         g.draw(new Rectangle2D.Double(mittelPunkt.getX() - breite / 2, mittelPunkt.getY() - hoehe / 2, breite, hoehe));
         g.setColor(farbe);
