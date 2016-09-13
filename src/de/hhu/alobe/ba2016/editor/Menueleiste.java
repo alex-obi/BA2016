@@ -194,7 +194,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
             if (pfad == null) {
                 String name = JOptionPane.showInputDialog(hauptFenster, "Name fuer die neue Optische Bank:", "Speichern", JOptionPane.PLAIN_MESSAGE);
                 while (name != null && !Dateifunktionen.erstelleDatei(hauptFenster, new File(Konstanten.SAVE_ORDNER + name + "." + Konstanten.SAVE_ENDUNG))) {
-                    name = JOptionPane.showInputDialog(hauptFenster, "Name nicht gueltig. Keine Sonderzeichen (<>: \"\\ / | *?) verwenden.\n Bitte neuen Namen eingeben:", "Speichern", JOptionPane.PLAIN_MESSAGE);
+                    name = JOptionPane.showInputDialog(hauptFenster, "Lokales Speichern nicht moeglich. Keine Sonderzeichen (<>: \"\\ / | *?) verwenden.\n Bitte neuen Namen eingeben:", "Speichern", JOptionPane.PLAIN_MESSAGE);
                 }
                 if (name == null) {
                     return;

@@ -49,7 +49,7 @@ public class Main {
         if (!new File(Konstanten.SAVE_ORDNER).exists()) {
             boolean geschafft = new File(Konstanten.SAVE_ORDNER).mkdir();
             if (!geschafft) {
-                JOptionPane.showMessageDialog(null, "Speicherordner \"" + Konstanten.SAVE_ORDNER + "\" konnte nicht erstellt werden");
+                JOptionPane.showMessageDialog(null, "Speicherordner \"" + Konstanten.SAVE_ORDNER + "\" konnte nicht erstellt werden. Lokales Speichern nicht moeglich!");
                 return false;
             }
         }

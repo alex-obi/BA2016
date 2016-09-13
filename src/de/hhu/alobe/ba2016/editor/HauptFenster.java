@@ -148,6 +148,7 @@ public class HauptFenster extends JFrame {
         if (name == null) name = "Neue Optische Bank";
         this.setTitle("Optischer Baukasten - " + name);
         optBank.aktualisieren();
+
         this.revalidate();
     }
 

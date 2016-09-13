@@ -146,14 +146,14 @@ public class OptischeBank extends JPanel implements Speicherbar {
         setLayout(new BorderLayout());
         setOpaque(true);
 
-        this.zoom = zoom;
-
         zeichenBrett = new Zeichenbrett(this);
-
-        zeichenRahmen = new JScrollPane(zeichenBrett);
         groesse = new Point(3000, 600);
         zeichenBrett.setPreferredSize(new Dimension(groesse.x, groesse.y));
+
+        zeichenRahmen = new JScrollPane(zeichenBrett);
         this.add(zeichenRahmen, BorderLayout.CENTER);
+
+        setZoom(zoom);
 
         optischeAchse = new OptischeAchse(300, achsenModus);
         zeichenBrett.neuesZeichenObjekt(optischeAchse);
@@ -337,9 +337,6 @@ public class OptischeBank extends JPanel implements Speicherbar {
      */
     public void zoomStufeRein() {
         setZoom(zoom *= (1 + Konstanten.ZOOM_STUFE));
-
-        zeichenBrett.setPreferredSize(new Dimension((int) (groesse.getX() * zoom), (int) (groesse.getY() * zoom)));
-        zeichenBrett.revalidate();
     }
 
     /**
@@ -347,9 +344,6 @@ public class OptischeBank extends JPanel implements Speicherbar {
      */
     public void zoomStufeRaus() {
         setZoom(zoom / (1 + Konstanten.ZOOM_STUFE));
-
-        zeichenBrett.setPreferredSize(new Dimension((int) (groesse.getX() * zoom), (int) (groesse.getY() * zoom)));
-        zeichenBrett.revalidate();
     }
 
     /**
