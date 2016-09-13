@@ -7,26 +7,43 @@ import java.awt.geom.Arc2D;
 import java.util.ArrayList;
 
 /**
- * Ein Kreis definiert durch einen Mittelpunkt und Radius
- * Es ist möglich durch Übergabe von 2 Winkeln nur einen Kreisabschnitt zu definieren
+ * Ein Kreis definiert durch einen Mittelpunkt und Radius.
+ * Es ist möglich durch Initialisierung mit 2 Winkeln nur einen Kreisbogen zu definieren.
  */
 public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
 
+    //Mittelpunkt des Kreises
     private Vektor mittelpunkt;
+
+    //Radius des Kreises
     private double radius;
 
     //Gibt den Bereich eines Kreisbogens an. vonWinkel gibt den Startwinkel an. extWinkel die Laenge als Bogenmass in math. pos. Richtung
     private double vonWinkel;
     private double extWinkel;
 
-    public Kreis (Vektor mittelpunktVektor, double radius) {
+    /**
+     * Initialisiert einen vollständigen Kreis.
+     *
+     * @param mittelpunktVektor Mittelpunkt des Kreises.
+     * @param radius            Radius des Kreises.
+     */
+    public Kreis(Vektor mittelpunktVektor, double radius) {
         this.mittelpunkt = mittelpunktVektor;
         this.radius = radius;
         vonWinkel = 0;
         extWinkel = 2 * Math.PI;
     }
 
-    public Kreis (Vektor mittelpunktVektor, double radius, double vonWinkel, double extWinkel) {
+    /**
+     * Initialisiert einen Kreisbogen
+     *
+     * @param mittelpunktVektor Mittelpunkt des Kreisobgens.
+     * @param radius            Radius des Kreisbogens.
+     * @param vonWinkel         Winkel, ab dem Kreisbogen definiert ist.
+     * @param extWinkel         Länge des Kreisbogens als Winkelangabe in rad
+     */
+    public Kreis(Vektor mittelpunktVektor, double radius, double vonWinkel, double extWinkel) {
         this.mittelpunkt = mittelpunktVektor;
         this.radius = radius;
         this.vonWinkel = vonWinkel;
@@ -34,19 +51,20 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
     }
 
     /**
-     * Gibt ob und nach welcher Entfernung ein Strahl das erste mal auf den Kreis trifft
-     * @return Entfernung von Basis des Strahls entlang der Richtung bis der Strahl auf den Kreis trifft
-     * -1 als Rueckgabe bedeutet, dass kein Schnittpunkt gefunden wurde
+     * Gibt ob und nach welcher Entfernung ein Strahl das erste mal auf den Kreis trifft.
+     *
+     * @return Entfernung von Basis des Strahls entlang der Richtung bis der Strahl auf den Kreis trifft.
+     * -1 als Rueckgabe bedeutet, dass kein Schnittpunkt gefunden wurde.
      */
     @Override
-    public double gibSchnittEntfernung (Strahl strahl) {
+    public double gibSchnittEntfernung(Strahl strahl) {
         Vektor normalenVektor = strahl.getRichtungsVektor().gibNormalenVektor();
         Strahl tempStrahl = new Strahl(mittelpunkt, normalenVektor);
 
         double tempLamdas[] = Strahl.gibSchnittentfernungen(tempStrahl, strahl);
         if (tempLamdas == null) return -1; //Bei der Berechnung ist ein Fehler passiert
 
-        if(Math.abs(tempLamdas[0]) > radius) return -1; //Strahl passiert den Kreis ohne Beruehrung
+        if (Math.abs(tempLamdas[0]) > radius) return -1; //Strahl passiert den Kreis ohne Beruehrung
 
         double offsetLamda = Math.pow(radius * radius - tempLamdas[0] * tempLamdas[0], 0.5);
 
@@ -55,7 +73,7 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
         Vektor schnittpunkt2 = Vektor.addiere(Vektor.multipliziere(strahl.getRichtungsVektor(), tempLamdas[1] + offsetLamda), strahl.getBasisVektor());
         schnittpunkt2.subtrahiere(mittelpunkt);
 
-        if(vonWinkel + extWinkel <= 2 * Math.PI) {
+        if (vonWinkel + extWinkel <= 2 * Math.PI) {
             if (schnittpunkt1.gibRichtungsWinkel() >= vonWinkel && schnittpunkt1.gibRichtungsWinkel() <= (vonWinkel + extWinkel)) {
                 return (tempLamdas[1] - offsetLamda);
             } else if (schnittpunkt2.gibRichtungsWinkel() >= vonWinkel && schnittpunkt2.gibRichtungsWinkel() <= (vonWinkel + extWinkel)) {
@@ -74,28 +92,26 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
         }
     }
 
+    /**
+     * Gibt an, ob dieser Kreis einen Strahl schneidet
+     *
+     * @param strahl Strahl, mit dem Schnittpunkt geprüft werden soll.
+     * @return Wahrheitswert, ob der Strahl den Kreis schneidet.
+     */
     public boolean schneidetStrahl(Strahl strahl) {
         double entfernung = gibSchnittEntfernung(strahl);
-        return (entfernung >= 0);
-    }
-
-    public boolean schneidetGerade(Gerade gerade) {
-        double entfernung = gibSchnittEntfernung(gerade);
-        return (entfernung >= 0 && entfernung <= gerade.getLaenge());
+        return (entfernung > 0);
     }
 
     /**
-     * Gibt den Schnittpunkt einer Geraden mit diesem Kreis zurueck, wenn dieser existiert
-     * @param strahl Strahl
-     * @return Schnittpunkt
-     * null als Rueckgabe bedeutet, dass kein Schnittpunkt existiert
+     * Gibt an, ob dieser Kreis eine Gerade schneidet
+     *
+     * @param gerade Gerade, mit der Schnittpunkt geprüft werden soll.
+     * @return Wahrheitswert, ob der Strahl den Kreis schneidet.
      */
-    @Override
-    public Vektor gibSchnittpunkt (Strahl strahl) {
-        double entfernung = gibSchnittEntfernung(strahl);
-        if (entfernung < 0) return null;
-        Vektor schnittpunkt = Vektor.addiere(strahl.getBasisVektor(), Vektor.multipliziere(strahl.getRichtungsVektor(), entfernung));
-        return schnittpunkt;
+    public boolean schneidetGerade(Gerade gerade) {
+        double entfernung = gibSchnittEntfernung(gerade);
+        return (entfernung > 0 && entfernung < gerade.getLaenge());
     }
 
     @Override
@@ -113,20 +129,18 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
         g.draw(zeichenKreis);
     }
 
+    /**
+     * @return Mittelpunkt des Kreises als Vektor.
+     */
     public Vektor getMittelpunkt() {
         return mittelpunkt;
     }
 
+    /**
+     * @param mittelpunkt Neuer Mittelpunkt des Kreises als Vektor.
+     */
     public void setMittelpunkt(Vektor mittelpunkt) {
         this.mittelpunkt = mittelpunkt;
-    }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
     }
 
 }
