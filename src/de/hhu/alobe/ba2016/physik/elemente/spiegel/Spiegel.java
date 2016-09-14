@@ -1,33 +1,56 @@
 package de.hhu.alobe.ba2016.physik.elemente.spiegel;
 
 import de.hhu.alobe.ba2016.editor.OptischeBank;
-import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
 import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
 import de.hhu.alobe.ba2016.mathe.Vektor;
 import org.jdom2.Element;
 
-import javax.swing.*;
-import java.util.ArrayList;
 
-public class Spiegel extends Hohlspiegel{
+/**
+ * Spiegel als Hohlspiegel mit Radius -> unendlich.
+ */
+public class Spiegel extends Hohlspiegel {
 
+    /**
+     * Name des Bauelements.
+     */
     public static final String NAME = "Spiegel";
+
+    /**
+     * Name des Spiegels im XML-Dokument.
+     */
     public static final String XML_SPIEGEL = "spiegel";
 
+    //Eigenschaftenregler zur Manipulation des Spiegels durch den Benutzer:
     private Eigenschaftenregler_Slider slide_hoehe;
 
+    /**
+     * Initialisiere Spiegel mit Höhe.
+     *
+     * @param optischeBank Referenz auf Optische Bank.
+     * @param mittelPunkt  Mittelpunkt des Spiegels.
+     * @param hoehe        Höhe des Spiegels.
+     */
     public Spiegel(OptischeBank optischeBank, Vektor mittelPunkt, float hoehe) {
         super(optischeBank, mittelPunkt, 0, hoehe);
         initialisiere();
     }
 
+    /**
+     * Initialisiere Spiegel über jdom2.Element.
+     *
+     * @param optischeBank Referenz auf Optische Bank.
+     * @param xmlElement   jdom2.Element, das benötigte Attribute enthält.
+     * @throws Exception Expection, die geworfen wird, wenn bei der Initialisierung ein Fehler passiert.
+     */
     public Spiegel(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement);
         initialisiere();
     }
 
+    //Initialisiere die Werte des Spiegels und erstelle Eigenschaftenregler zur Manipulation des Spiegels durch den Benutzer.
     private void initialisiere() {
 
         slide_hoehe = new Eigenschaftenregler_Slider("Hoehe", "cm", 100, hoehe, MIND_HOEHE, MAX_HOEHE, new ReglerEvent() {
@@ -56,7 +79,7 @@ public class Spiegel extends Hohlspiegel{
 
     @Override
     public Eigenschaftenregler[] gibEigenschaftenregler() {
-        Eigenschaftenregler[] komponenten =  new Eigenschaftenregler[1];
+        Eigenschaftenregler[] komponenten = new Eigenschaftenregler[1];
         komponenten[0] = slide_hoehe;
         return komponenten;
     }

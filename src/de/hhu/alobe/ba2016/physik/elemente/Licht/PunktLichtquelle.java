@@ -18,28 +18,54 @@ import java.awt.event.ItemListener;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
-public class PunktLichtquelle extends Lichtquelle{
+/**
+ * Punktförmige Lichtquelle.
+ */
+public class PunktLichtquelle extends Lichtquelle {
 
+    /**
+     * Name des Bauelements
+     */
     public static final String NAME = "Punktlichtquelle";
+
+    /**
+     * Name der Punktlichtquelle im XML-Dokument.
+     */
     public static final String XML_PUNKTLICHT = "punkt_licht";
 
+    //Durchmesser der grafischen Darstellung
     public static double groesse = 20;
 
+    //Eigenschaftenregler zur Manipulation der Werte der Punktlichtquelle durch den Benutzer:
     private JComboBox farben_box;
     private JCheckBox anAus;
 
+    /**
+     * Initialisiere Punktlichtquelle mit einer Farbe.
+     *
+     * @param optischeBank Referenz auf Optische Bank.
+     * @param mittelpunkt  Mittelpunkt der Punktlichtquelle.
+     * @param farbe        Farbe der Punktlichtquelle.
+     */
     public PunktLichtquelle(OptischeBank optischeBank, Vektor mittelpunkt, Farbe farbe) {
         super(optischeBank, mittelpunkt, farbe);
         initialisiere();
     }
 
+    /**
+     * Initialisiere Punktlichtquelle mit einem jdom2.Element.
+     *
+     * @param optischeBank Referenz auf Optische Bank.
+     * @param xmlElement   jdom2.Element, das die benötigten Attribute enthält.
+     * @throws Exception Exception, die geworfen wird, wenn bei der Initialisierung etwas schief läuft.
+     */
     public PunktLichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement);
         initialisiere();
     }
 
+    //Initialisiere die Werte der Punktlichtquelle
     private void initialisiere() {
         formatAktualisieren();
 
@@ -47,7 +73,7 @@ public class PunktLichtquelle extends Lichtquelle{
         anAus.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(anAus.isSelected()) {
+                if (anAus.isSelected()) {
                     setAktiv(true);
                 } else {
                     setAktiv(false);
@@ -67,6 +93,7 @@ public class PunktLichtquelle extends Lichtquelle{
         });
     }
 
+    //Aktualisiere das Format der Punktlichtquelle
     private void formatAktualisieren() {
         setRahmen(generiereRahmen());
     }
@@ -90,7 +117,7 @@ public class PunktLichtquelle extends Lichtquelle{
 
     @Override
     public Eigenschaftenregler[] gibEigenschaftenregler() {
-        Eigenschaftenregler[] komponenten =  new Eigenschaftenregler[2];
+        Eigenschaftenregler[] komponenten = new Eigenschaftenregler[2];
         komponenten[0] = new Eigenschaftenregler("", anAus);
         komponenten[1] = new Eigenschaftenregler("Farbe", farben_box);
         return komponenten;

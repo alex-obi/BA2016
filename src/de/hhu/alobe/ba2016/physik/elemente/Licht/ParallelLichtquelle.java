@@ -2,7 +2,6 @@ package de.hhu.alobe.ba2016.physik.elemente.Licht;
 
 import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
-import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaften;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
 import de.hhu.alobe.ba2016.editor.eigenschaften.ReglerEvent;
@@ -20,40 +19,94 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
 
+/**
+ * Lichtquelle, die parallele Strahlen erzeugt, die bei der Behandlung durch Hauptebenen aus dem Unendlichen kommen.
+ */
 public class ParallelLichtquelle extends Lichtquelle {
 
+    /**
+     * Name des Bauelements.
+     */
     public static final String NAME = "Parallele Lichtquelle";
+
+    /**
+     * Name der Parallellichtquelle im XML-Dokument.
+     */
     public static final String XML_PARALLELLICHT = "parallel_licht";
 
+    //Breite der Parallellichtquelle
     private double breite = 20;
 
+    //Höhe der Parallellichtquelle
     private double hoehe;
+
+    /**
+     * Name für die Höhe im XML-Dokument.
+     */
     public static final String XML_HOEHE = "hoehe";
+
+    /**
+     * Mindestwert für die Höhe.
+     */
     public static final int MIND_HOEHE = 100;
+
+    /**
+     * Maximalwert für die Höhe.
+     */
     public static final int MAX_HOEHE = 600;
 
-    double neigungsWinkel;
+    //Neigungswinkel, mit dem Strahlen erzeugt werden.
+    private double neigungsWinkel;
+
+    /**
+     * Name für den Neigungswinkel im XML-Dokument.
+     */
     public static final String XML_NEIGUNG = "neigung";
-    public static final double MIND_NEIGUNG = - Math.PI / 4;
+
+    /**
+     * Mindestwert für den Neigungswinkel.
+     */
+    public static final double MIND_NEIGUNG = -Math.PI / 4;
+
+    /**
+     * Maximalwert für den Neigungswinkel.
+     */
     public static final double MAX_NEIGUNG = Math.PI / 4;
 
+    //Eigenschaftenregler zur Manipulation der Werte der Parallellichtquelle durch den Benutzer:
     private JCheckBox anAus;
     private JComboBox farben_box;
     private Eigenschaftenregler_Slider slide_neigung;
     private Eigenschaftenregler_Slider slide_hoehe;
 
+    /**
+     * Initialisiere Parallellichtquelle miz Farbe, Höhe und Neigungswinkel.
+     *
+     * @param optischeBank   Referenz auf Optische Bank.
+     * @param mittelPunkt    Mittelpunkt der Parallellichtquelle.
+     * @param farbe          Farbe der Parallellichtquelle.
+     * @param hoehe          Höhe der Parallellichtquelle.
+     * @param neigungsWinkel Neigungswinkel der Parallellichtquelle.
+     */
     public ParallelLichtquelle(OptischeBank optischeBank, Vektor mittelPunkt, Farbe farbe, int hoehe, double neigungsWinkel) {
         super(optischeBank, mittelPunkt, farbe);
         initialisiere(hoehe, neigungsWinkel);
     }
 
+    /**
+     * Initialisiere Parallellichtquelle mit einem jdom2.Element
+     *
+     * @param optischeBank Referenz auf Optische Bank.
+     * @param xmlElement   jdom2.Element mit den benötigten Attributen.
+     * @throws Exception Exception, die geworfen wird, wenn beim Initialisieren etwas schief läuft.
+     */
     public ParallelLichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement);
         initialisiere(xmlElement.getAttribute(XML_HOEHE).getDoubleValue(), xmlElement.getAttribute(XML_NEIGUNG).getDoubleValue());
     }
 
+    //Initialisiere die Werte der Parallellichtquelle und erstelle Eigenschaftenregler
     private void initialisiere(double nHoehe, double nNeigungsWinkel) {
         formatAktualisieren(nHoehe, nNeigungsWinkel);
 
@@ -61,7 +114,7 @@ public class ParallelLichtquelle extends Lichtquelle {
         anAus.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(anAus.isSelected()) {
+                if (anAus.isSelected()) {
                     setAktiv(true);
                 } else {
                     setAktiv(false);
@@ -127,6 +180,7 @@ public class ParallelLichtquelle extends Lichtquelle {
         });
     }
 
+    //Aktualisiere das Format der Parallellichtquelle
     private void formatAktualisieren(double nHoehe, double nNeigungsWinkel) {
         this.hoehe = Math.min(MAX_HOEHE, Math.max(nHoehe, MIND_HOEHE));
         this.neigungsWinkel = Math.min(MAX_NEIGUNG, Math.max(nNeigungsWinkel, MIND_NEIGUNG));
@@ -134,16 +188,19 @@ public class ParallelLichtquelle extends Lichtquelle {
         setRahmen(generiereRahmen());
     }
 
+    /**
+     * @param nNeigungsWinkel Neuer Neigungswinkel.
+     */
     public void setNeigung(double nNeigungsWinkel) {
         neigungsWinkel = nNeigungsWinkel;
-        for(Strahlengang cStrg : strahlengaenge) {
+        for (Strahlengang cStrg : strahlengaenge) {
             cStrg.resetteStrahlengang();
-            if(nNeigungsWinkel == 0) {
+            if (nNeigungsWinkel == 0) {
                 cStrg.getAnfangsStrahl().getRichtungsVektor().setY(0);
                 cStrg.getAnfangsStrahl().getRichtungsVektor().setX(Math.signum(cStrg.getAnfangsStrahl().getRichtungsVektor().getX()));
             } else {
                 double relativeNeigung;
-                if(cStrg.getAnfangsStrahl().getRichtungsVektor().getX() < 0) { //Strahl geht in Richtung linker Seite
+                if (cStrg.getAnfangsStrahl().getRichtungsVektor().getX() < 0) { //Strahl geht in Richtung linker Seite
                     relativeNeigung = (nNeigungsWinkel + Math.PI) - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
                 } else {
                     relativeNeigung = nNeigungsWinkel - cStrg.getAnfangsStrahl().getRichtungsVektor().gibRichtungsWinkel();
@@ -154,26 +211,18 @@ public class ParallelLichtquelle extends Lichtquelle {
         }
     }
 
+    /**
+     * @param nHoehe Neue Höhe.
+     */
     public void setHoehe(double nHoehe) {
         hoehe = nHoehe;
         Rectangle2D hitbox = new Rectangle.Double(mittelPunkt.getX() - breite / 2, mittelPunkt.getY() - hoehe / 2, breite, hoehe);
-        for(int i = 0;i < strahlengaenge.size(); i++) {
-            if(!hitbox.contains(strahlengaenge.get(i).getAnfangsStrahl().getBasisVektor())) {
+        for (int i = 0; i < strahlengaenge.size(); i++) {
+            if (!hitbox.contains(strahlengaenge.get(i).getAnfangsStrahl().getBasisVektor())) {
                 strahlengaenge.remove(i);
             }
         }
         rahmenAktualisieren();
-    }
-
-    public double getNeigungsWinkel() {
-        return neigungsWinkel;
-    }
-
-    public void setNeigungsWinkel(double nNeigungsWinkel) {
-        double aenderung = nNeigungsWinkel - neigungsWinkel;
-        for(Strahlengang cStrG : strahlengaenge) {
-            cStrG.getAktuellerStrahl().getRichtungsVektor().dreheUmWinkel(nNeigungsWinkel);
-        }
     }
 
     @Override
@@ -188,7 +237,7 @@ public class ParallelLichtquelle extends Lichtquelle {
         richtung.dreheUmWinkel(neigungsWinkel);
         Vektor basis = new Vektor(-Math.cos(neigungsWinkel) * (strahlPunkt.getX() - mittelPunkt.getX()), -Math.sin(neigungsWinkel) * (strahlPunkt.getX() - mittelPunkt.getX()));
         basis.addiere(strahlPunkt);
-        if(Math.abs(basis.getYint() - mittelPunkt.getYint()) < hoehe / 2) {
+        if (Math.abs(basis.getYint() - mittelPunkt.getYint()) < hoehe / 2) {
             return new Strahlengang(new Strahl(basis, richtung, 0, true));
         } else {
             return null;
@@ -207,7 +256,7 @@ public class ParallelLichtquelle extends Lichtquelle {
 
     @Override
     public Eigenschaftenregler[] gibEigenschaftenregler() {
-        Eigenschaftenregler[] komponenten =  new Eigenschaftenregler[4];
+        Eigenschaftenregler[] komponenten = new Eigenschaftenregler[4];
         komponenten[0] = new Eigenschaftenregler("", anAus);
         komponenten[1] = new Eigenschaftenregler("Farbe", farben_box);
         komponenten[2] = slide_neigung;
