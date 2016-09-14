@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 /**
  * Ein Kreis definiert durch einen Mittelpunkt und Radius.
- * Es ist möglich durch Initialisierung mit 2 Winkeln nur einen Kreisbogen zu definieren.
+ * Es ist moeglich durch Initialisierung mit 2 Winkeln nur einen Kreisbogen zu definieren.
  */
 public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
 
@@ -23,7 +23,7 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
     private double extWinkel;
 
     /**
-     * Initialisiert einen vollständigen Kreis.
+     * Initialisiert einen vollstaendigen Kreis.
      *
      * @param mittelpunktVektor Mittelpunkt des Kreises.
      * @param radius            Radius des Kreises.
@@ -41,7 +41,7 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
      * @param mittelpunktVektor Mittelpunkt des Kreisobgens.
      * @param radius            Radius des Kreisbogens.
      * @param vonWinkel         Winkel, ab dem Kreisbogen definiert ist.
-     * @param extWinkel         Länge des Kreisbogens als Winkelangabe in rad
+     * @param extWinkel         Laenge des Kreisbogens als Winkelangabe in rad
      */
     public Kreis(Vektor mittelpunktVektor, double radius, double vonWinkel, double extWinkel) {
         this.mittelpunkt = mittelpunktVektor;
@@ -95,7 +95,7 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
     /**
      * Gibt an, ob dieser Kreis einen Strahl schneidet
      *
-     * @param strahl Strahl, mit dem Schnittpunkt geprüft werden soll.
+     * @param strahl Strahl, mit dem Schnittpunkt geprueft werden soll.
      * @return Wahrheitswert, ob der Strahl den Kreis schneidet.
      */
     public boolean schneidetStrahl(Strahl strahl) {
@@ -106,7 +106,7 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
     /**
      * Gibt an, ob dieser Kreis eine Gerade schneidet
      *
-     * @param gerade Gerade, mit der Schnittpunkt geprüft werden soll.
+     * @param gerade Gerade, mit der Schnittpunkt geprueft werden soll.
      * @return Wahrheitswert, ob der Strahl den Kreis schneidet.
      */
     public boolean schneidetGerade(Gerade gerade) {

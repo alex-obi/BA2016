@@ -15,16 +15,16 @@ import java.awt.event.MouseEvent;
  */
 public class Werkzeug_Auswahl extends Werkzeug {
 
-    //Element, welches durch dieses Werkzeug ausgewählt wurde:
+    //Element, welches durch dieses Werkzeug ausgewaehlt wurde:
     private Bauelement ausgewaehltesElement;
 
-    //Position des Mauszeigers, an dem das Element zuerst ausgewählt wurde
+    //Position des Mauszeigers, an dem das Element zuerst ausgewaehlt wurde
     private Vektor erstePosition;
 
-    //Position des Mittelpunkts des Bauelements, an dem das Element zuerst ausgewählt wurde
+    //Position des Mittelpunkts des Bauelements, an dem das Element zuerst ausgewaehlt wurde
     private Vektor ersterMittelpunktBauel;
 
-    //Gibt an, ob dies die erste Verschiebung des Bauelements ist, nachdem dieses ausgewählt wurde
+    //Gibt an, ob dies die erste Verschiebung des Bauelements ist, nachdem dieses ausgewaehlt wurde
     private boolean ersteVerschiebung = true;
 
     /**
@@ -60,14 +60,14 @@ public class Werkzeug_Auswahl extends Werkzeug {
 
     @Override
     public void mousePressed(MouseEvent e, Vektor realePosition) {
-        //Überprüfe ob die Mausaktion mit linker Maustaste ausgeführt wurde und welches Element ausgewählt wurde
+        //Ueberpruefe ob die Mausaktion mit linker Maustaste ausgefuehrt wurde und welches Element ausgewaehlt wurde
         if (SwingUtilities.isLeftMouseButton(e)) {
             erstePosition = realePosition.kopiere();
             for (Bauelement cBauEl : optischeBank.getBauelemente()) {
                 if (cBauEl.istAngeklickt(realePosition)) {
                     //Hebe alte Auswahl auf
                     auswahlAufheben();
-                    //Wähle neues Element durch Änderung der Werte dieser Klasse aus
+                    //Waehle neues Element durch Aenderung der Werte dieser Klasse aus
                     ausgewaehltesElement = cBauEl;
                     ersterMittelpunktBauel = cBauEl.getMittelPunkt().kopiere();
                     break;
@@ -97,7 +97,7 @@ public class Werkzeug_Auswahl extends Werkzeug {
     public void mouseDragged(MouseEvent e, Vektor realePosition) {
         if (SwingUtilities.isLeftMouseButton(e)) {
             if (ausgewaehltesElement != null) {
-                //Verschiebe das ausgewählte Element relativ zu der Position, an dem es zuerst ausgewählt wurde
+                //Verschiebe das ausgewaehlte Element relativ zu der Position, an dem es zuerst ausgewaehlt wurde
                 Vektor verschiebung = Vektor.subtrahiere(realePosition, erstePosition);
 
                 if (Math.abs(ersterMittelpunktBauel.getY() + verschiebung.getY() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG) {
@@ -106,11 +106,11 @@ public class Werkzeug_Auswahl extends Werkzeug {
                     }
                 }
                 if (ersteVerschiebung) {
-                    //Wenn es die erste Verschiebung war erstelle neue Aktion für die Optische Bank
+                    //Wenn es die erste Verschiebung war erstelle neue Aktion fuer die Optische Bank
                     optischeBank.neueAktionDurchfuehren(new Aktion_BauelementVerschieben(ausgewaehltesElement, verschiebung));
                     ersteVerschiebung = false;
                 } else {
-                    //Ansonsten überschreibe die letzte Aktion mit der neuen Verschiebung
+                    //Ansonsten ueberschreibe die letzte Aktion mit der neuen Verschiebung
                     optischeBank.letzteAktionUeberschreiben(new Aktion_BauelementVerschieben(ausgewaehltesElement, verschiebung));
                 }
 
@@ -120,7 +120,7 @@ public class Werkzeug_Auswahl extends Werkzeug {
 
     @Override
     public void mouseMoved(MouseEvent e, Vektor realePosition) {
-        //Ändere Mauscursor, wenn Maus über einem Bauelement ist
+        //Aendere Mauscursor, wenn Maus ueber einem Bauelement ist
         optischeBank.getZeichenBrett().setCursor(Cursor.getDefaultCursor());
         for (Bauelement cBauEl : optischeBank.getBauelemente()) {
             if (cBauEl.istAngeklickt(realePosition)) {

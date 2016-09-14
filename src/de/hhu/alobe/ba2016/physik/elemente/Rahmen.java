@@ -34,7 +34,7 @@ public class Rahmen extends Polygon implements Zeichenbar {
     }
 
     /**
-     * Erstelle Rahmen über Verbindung von Punktes zu einem Polygon.
+     * Erstelle Rahmen ueber Verbindung von Punktes zu einem Polygon.
      *
      * @param mittelpunkt Mittelpunkt des Rahmens.
      * @param punkte      Punkte des Polygons.
@@ -56,7 +56,7 @@ public class Rahmen extends Polygon implements Zeichenbar {
     }
 
     /**
-     * Gibt an, ob der übergebene Vektor in diesem Rahmen liegt.
+     * Gibt an, ob der uebergebene Vektor in diesem Rahmen liegt.
      *
      * @param pruefVektor Position, an dem der Mauscursor liegt.
      * @return Wahrheitswert, ob Rahmen angeklickt wurde.

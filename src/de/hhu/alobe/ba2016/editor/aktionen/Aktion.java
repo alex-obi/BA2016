@@ -1,17 +1,17 @@
 package de.hhu.alobe.ba2016.editor.aktionen;
 
 /**
- * Interface Aktion stellt sicher, dass implementierende Klassen eine Aktion durchführen, aber auch wieder rückgängig machen können.
+ * Interface Aktion stellt sicher, dass implementierende Klassen eine Aktion durchfuehren, aber auch wieder rueckgaengig machen koennen.
  */
 public interface Aktion {
 
     /**
-     * Führe die Aktion durch.
+     * Fuehre die Aktion durch.
      */
     void aktionDurchfuehren();
 
     /**
-     * Mache die Aktion wieder rückgängig.
+     * Mache die Aktion wieder rueckgaengig.
      */
     void aktionRueckgaengig();
 

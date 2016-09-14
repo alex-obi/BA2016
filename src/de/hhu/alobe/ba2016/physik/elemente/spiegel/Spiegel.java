@@ -27,11 +27,11 @@ public class Spiegel extends Hohlspiegel {
     private Eigenschaftenregler_Slider slide_hoehe;
 
     /**
-     * Initialisiere Spiegel mit Höhe.
+     * Initialisiere Spiegel mit Hoehe.
      *
      * @param optischeBank Referenz auf Optische Bank.
      * @param mittelPunkt  Mittelpunkt des Spiegels.
-     * @param hoehe        Höhe des Spiegels.
+     * @param hoehe        Hoehe des Spiegels.
      */
     public Spiegel(OptischeBank optischeBank, Vektor mittelPunkt, float hoehe) {
         super(optischeBank, mittelPunkt, 0, hoehe);
@@ -39,10 +39,10 @@ public class Spiegel extends Hohlspiegel {
     }
 
     /**
-     * Initialisiere Spiegel über jdom2.Element.
+     * Initialisiere Spiegel ueber jdom2.Element.
      *
      * @param optischeBank Referenz auf Optische Bank.
-     * @param xmlElement   jdom2.Element, das benötigte Attribute enthält.
+     * @param xmlElement   jdom2.Element, das benoetigte Attribute enthaelt.
      * @throws Exception Expection, die geworfen wird, wenn bei der Initialisierung ein Fehler passiert.
      */
     public Spiegel(OptischeBank optischeBank, Element xmlElement) throws Exception {

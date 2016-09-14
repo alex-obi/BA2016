@@ -6,8 +6,8 @@ import de.hhu.alobe.ba2016.mathe.Vektor;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 /**
- * Grenzfläche zwischen zwei Medien mit unterschiedlichen Brechzahlen und Eigenschaften wie Reflektion und Absorbtion von Strahlen.
- * Stellt Methoden zur Verfügung um Kollisionen mit Strahlen zu verarbeiten.
+ * Grenzflaeche zwischen zwei Medien mit unterschiedlichen Brechzahlen und Eigenschaften wie Reflektion und Absorbtion von Strahlen.
+ * Stellt Methoden zur Verfuegung um Kollisionen mit Strahlen zu verarbeiten.
  */
 public abstract class Grenzflaeche extends Flaeche {
 
@@ -18,9 +18,9 @@ public abstract class Grenzflaeche extends Flaeche {
     private double n2;
 
     /**
-     * Initialisiert die Grenzfläche mit einem bestimmten Modus
+     * Initialisiert die Grenzflaeche mit einem bestimmten Modus
      *
-     * @param modus Berechnungsmodus, wie eintreffenden Strahlen verändert werden.
+     * @param modus Berechnungsmodus, wie eintreffenden Strahlen veraendert werden.
      */
     Grenzflaeche(int modus) {
         this.n1 = 1;
@@ -29,10 +29,10 @@ public abstract class Grenzflaeche extends Flaeche {
     }
 
     /**
-     * Initialisiert die Grenzfläche mit einem bestimmten Modus und einer äußeren und einer inneren Brechzahl
+     * Initialisiert die Grenzflaeche mit einem bestimmten Modus und einer aeusseren und einer inneren Brechzahl
      *
-     * @param modus Berechnungsmodus, wie eintreffenden Strahlen verändert werden.
-     * @param n1    Äußere Brechzahl (Auf der Seite, auf die der Normalenvektor zeigt)
+     * @param modus Berechnungsmodus, wie eintreffenden Strahlen veraendert werden.
+     * @param n1    Aeussere Brechzahl (Auf der Seite, auf die der Normalenvektor zeigt)
      * @param n2    Innere Brechzahl
      */
     Grenzflaeche(int modus, double n1, double n2) {
@@ -42,10 +42,10 @@ public abstract class Grenzflaeche extends Flaeche {
     }
 
     /**
-     * Gibt den Tangentialvektor zu einem bestimmten Punkt auf der Fläche.
+     * Gibt den Tangentialvektor zu einem bestimmten Punkt auf der Flaeche.
      *
-     * @param position Ein Punkt auf der Fläche.
-     * @return Normierter Tangentialvektor an dem übergebenen Punkt.
+     * @param position Ein Punkt auf der Flaeche.
+     * @return Normierter Tangentialvektor an dem uebergebenen Punkt.
      */
     public Vektor gibTangentialVektor(Vektor position) {
         Vektor normalenVektor = gibNormalenVektor(position);
@@ -53,11 +53,11 @@ public abstract class Grenzflaeche extends Flaeche {
     }
 
     /**
-     * Gibt den Normalenvektor zu einem bestimmten Punkt auf der Fläche.
-     * Der Normalenvektor muss auf Länge 1 normiert sein.
+     * Gibt den Normalenvektor zu einem bestimmten Punkt auf der Flaeche.
+     * Der Normalenvektor muss auf Laenge 1 normiert sein.
      *
-     * @param position Ein Punkt auf der Fläche.
-     * @return Normierter Normalenvektor an dem übergebenen Punkt.
+     * @param position Ein Punkt auf der Flaeche.
+     * @return Normierter Normalenvektor an dem uebergebenen Punkt.
      */
     public abstract Vektor gibNormalenVektor(Vektor position);
 
@@ -65,7 +65,7 @@ public abstract class Grenzflaeche extends Flaeche {
      * Berechnet die Richtung, in die ein einfallender Strahl reflektiert wird.
      *
      * @param einfallVektor Richtung des einfallenden Strahls.
-     * @param position      Punkt, an dem der Strahl auf die Fläche trifft.
+     * @param position      Punkt, an dem der Strahl auf die Flaeche trifft.
      * @return Richtung des reflektierten Strahls
      */
     private Vektor gibReflektiertenVektor(Vektor einfallVektor, Vektor position) {
@@ -77,7 +77,7 @@ public abstract class Grenzflaeche extends Flaeche {
         double normalAnteil = Vektor.skalarprodukt(einfallVektor, normalVektor);
         double tangentialAnteil = Vektor.skalarprodukt(einfallVektor, tangentialVektor);
 
-        //Berechne relektierten Vektor aus dem Tangentialanteil und dem gespiegelten Normalanteil und gebe diesen zurück
+        //Berechne relektierten Vektor aus dem Tangentialanteil und dem gespiegelten Normalanteil und gebe diesen zurueck
         Vektor normalReflexion = Vektor.multipliziere(normalVektor, -normalAnteil);
         Vektor tangentialReflexion = Vektor.multipliziere(tangentialVektor, tangentialAnteil);
         return Vektor.addiere(normalReflexion, tangentialReflexion);
@@ -87,7 +87,7 @@ public abstract class Grenzflaeche extends Flaeche {
      * Berechnet die Richtung, in die ein einfallender Strahl gebrochen wird.
      *
      * @param einfallVektor Richtung des einfallenden Strahls.
-     * @param position      Punkt, an dem der Strahl auf die Fläche trifft.
+     * @param position      Punkt, an dem der Strahl auf die Flaeche trifft.
      * @return Richtung des gebrochenen Strahls. null bei Totalreflexion.
      */
     private Vektor gibGebrochenenVektor(Vektor einfallVektor, Vektor position) {
@@ -106,7 +106,7 @@ public abstract class Grenzflaeche extends Flaeche {
         Vektor normalBrechung;
         Vektor tangentialBrechung;
 
-        //Fallunterscheidung für 4 mögliche Richtungen bei gegebenem Einfallswinkel
+        //Fallunterscheidung fuer 4 moegliche Richtungen bei gegebenem Einfallswinkel
         if (normalAnteil < 0) {
             ausfallsWinkel = Math.asin((n1 * Math.sin(einfallsWinkel) / n2));
             if (Double.isNaN(ausfallsWinkel)) return null; //Totalreflexion (ausfallsWinkel nicht berechenbar)
@@ -129,7 +129,7 @@ public abstract class Grenzflaeche extends Flaeche {
     }
 
     /**
-     * Manipuliert den eintreffenden Strahlengang abhaengig vom Berechnungsmodus dieser Fläche.
+     * Manipuliert den eintreffenden Strahlengang abhaengig vom Berechnungsmodus dieser Flaeche.
      *
      * @param cStrGng  Zu manipulierender Strahlengang.
      * @param position Schnittpunkt mit der Grenzflaeche.

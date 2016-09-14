@@ -29,13 +29,13 @@ public class Werkzeug_NeuesBauelement extends Werkzeug {
 
     @Override
     public void auswahlAufheben() {
-        //Lösche den Dummy wieder
+        //Loesche den Dummy wieder
         optischeBank.getZeichenBrett().zeichenObjektLoeschen(bauelement);
     }
 
     @Override
     public void auswaehlen() {
-        //Füge der optischen Bank einen Dummy hinzu. Der Dummy wird noch nicht zur Berechnung von Strahlen benutzt und wird bei Verlassen des Werkzeugs wieder gelöscht
+        //Fuege der optischen Bank einen Dummy hinzu. Der Dummy wird noch nicht zur Berechnung von Strahlen benutzt und wird bei Verlassen des Werkzeugs wieder geloescht
         optischeBank.getZeichenBrett().neuesZeichenObjekt(bauelement);
     }
 
@@ -52,9 +52,9 @@ public class Werkzeug_NeuesBauelement extends Werkzeug {
     @Override
     public void mouseReleased(MouseEvent e, Vektor realePosition) {
         if (SwingUtilities.isLeftMouseButton(e)) {
-            //Wechsele wieder zum Werkzeug Auswahl. Der Dummy wird hierdurch gelöscht
+            //Wechsele wieder zum Werkzeug Auswahl. Der Dummy wird hierdurch geloescht
             optischeBank.werkzeugWechseln(new Werkzeug_Auswahl(optischeBank));
-            //Erstelle eine Aktion um das Bauelement entgültig zur Optischen Bank hinzuzufügen
+            //Erstelle eine Aktion um das Bauelement entgueltig zur Optischen Bank hinzuzufuegen
             optischeBank.neueAktionDurchfuehren(new Aktion_BauelementHinzufuegen(optischeBank, bauelement));
         }
 
@@ -67,7 +67,7 @@ public class Werkzeug_NeuesBauelement extends Werkzeug {
 
     @Override
     public void mouseMoved(MouseEvent e, Vektor realePosition) {
-        //Positioniert das bauelement neu. Ist es in der Nähe der Optischen Achse setze Y-Koordinate auf Höhe der Optischen Achse
+        //Positioniert das bauelement neu. Ist es in der Naehe der Optischen Achse setze Y-Koordinate auf Hoehe der Optischen Achse
         if (Math.abs(realePosition.getY() - optischeBank.getOptischeAchse().getHoehe()) < Konstanten.OPTISCHEACHSE_FANGENTFERNUNG && bauelement.fangModusOptischeAchseAn()) {
             bauelement.setzeMittelpunktNeu(new Vektor(realePosition.getX(), optischeBank.getOptischeAchse().getHoehe()));
         } else {

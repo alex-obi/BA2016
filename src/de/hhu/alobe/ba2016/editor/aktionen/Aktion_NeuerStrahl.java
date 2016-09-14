@@ -9,7 +9,7 @@ import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
  */
 public class Aktion_NeuerStrahl implements Aktion {
 
-    //Zugehörige Lichtquelle:
+    //Zugehoerige Lichtquelle:
     private Lichtquelle lichtquelle;
 
     //Strahlengang, der erzeugt wird:
@@ -28,13 +28,13 @@ public class Aktion_NeuerStrahl implements Aktion {
 
     @Override
     public void aktionDurchfuehren() {
-        //Füge einen neuen Strahl zur Lichtquelle hinzu:
+        //Fuege einen neuen Strahl zur Lichtquelle hinzu:
         lichtquelle.neuerStrahl(erzeugterStrahlengang);
     }
 
     @Override
     public void aktionRueckgaengig() {
-        //Lösche den Strahl wieder aus der Lichtquelle:
+        //Loesche den Strahl wieder aus der Lichtquelle:
         lichtquelle.loescheStrahl(erzeugterStrahlengang);
     }
 

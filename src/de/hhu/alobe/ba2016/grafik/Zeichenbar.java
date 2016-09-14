@@ -4,7 +4,7 @@ package de.hhu.alobe.ba2016.grafik;
 import java.awt.*;
 
 /**
- * Interface zum Bereitstellen der Methode paintComponent für alle Objekte die gezeichnet werden können
+ * Interface zum Bereitstellen der Methode paintComponent fuer alle Objekte die gezeichnet werden koennen
  */
 public interface Zeichenbar {
 

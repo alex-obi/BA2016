@@ -3,8 +3,8 @@ package de.hhu.alobe.ba2016.editor.aktionen;
 import java.util.ArrayList;
 
 /**
- * Liste zum Verwalten aller Benutzeraktionen mit der Optischen Bank. Elemente dieser Liste sind Aktionen, die rückgängig gemacht werden können.
- * Ein Springen innerhalb dieser Liste ermöglicht also das Zurücknehmen und Wiederherstellen von Aktionen.
+ * Liste zum Verwalten aller Benutzeraktionen mit der Optischen Bank. Elemente dieser Liste sind Aktionen, die rueckgaengig gemacht werden koennen.
+ * Ein Springen innerhalb dieser Liste ermoeglicht also das Zuruecknehmen und Wiederherstellen von Aktionen.
  */
 public class AktionsListe {
 
@@ -23,7 +23,7 @@ public class AktionsListe {
     }
 
     /**
-     * Fügt eine neue Aktion der Liste hinzu.
+     * Fuegt eine neue Aktion der Liste hinzu.
      *
      * @param aktion Neue Aktion.
      */
@@ -39,7 +39,7 @@ public class AktionsListe {
     }
 
     /**
-     * Überschreibt die Aktion an der aktuellen Position in der Liste. Die alte Aktion wird zuvor rückgängig gemacht.
+     * Ueberschreibt die Aktion an der aktuellen Position in der Liste. Die alte Aktion wird zuvor rueckgaengig gemacht.
      *
      * @param aktion Neue Aktion.
      */
@@ -49,7 +49,7 @@ public class AktionsListe {
     }
 
     /**
-     * Macht die Aktion an der aktuellen Position in der Liste rückgängig.
+     * Macht die Aktion an der aktuellen Position in der Liste rueckgaengig.
      */
     public void undo() {
         if (aktuellePosition >= 0) {
@@ -59,7 +59,7 @@ public class AktionsListe {
     }
 
     /**
-     * Führt die Aktion der aktuellen Position in der Liste erneut aus.
+     * Fuehrt die Aktion der aktuellen Position in der Liste erneut aus.
      */
     public void redo() {
         if (aktuellePosition < aktionen.size() - 1 && !aktionen.isEmpty()) {

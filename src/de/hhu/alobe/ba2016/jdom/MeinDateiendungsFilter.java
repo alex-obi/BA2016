@@ -13,7 +13,7 @@ public class MeinDateiendungsFilter extends FileFilter {
     private String dateiEndung;
 
     /**
-     * Initialisiert neuen Filter mit übergebener Dateiendung.
+     * Initialisiert neuen Filter mit uebergebener Dateiendung.
      *
      * @param dateiEndung Dateiendung, nach der gefiltert werden soll.
      */

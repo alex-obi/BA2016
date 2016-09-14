@@ -23,7 +23,7 @@ public class HauptFenster extends JFrame {
     //Mindestbreite des Fensters
     private static final int MIND_BREITE = 600;
 
-    //Mindesthöhe des Fensters
+    //Mindesthoehe des Fensters
     private static final int MIND_HOEHE = 400;
 
     //Statische Referenz zum Aufruf von jeder Programmstelle aus
@@ -32,13 +32,13 @@ public class HauptFenster extends JFrame {
     //Inhalt des gesamten Fensters/ Content Pane.
     private JPanel fensterInhalt;
 
-    //Menüleiste des Fensters
+    //Menueleiste des Fensters
     private Menueleiste menueleiste;
 
-    //Werkzeugleiste am oberen Fensterrand zum Schnellen Auswählen durch den Benutzer
+    //Werkzeugleiste am oberen Fensterrand zum Schnellen Auswaehlen durch den Benutzer
     private Panel_Werkzeuge werkzeuge;
 
-    //Optische Bank als Leinwand für alle Manipulations- und Zeichenmethoden
+    //Optische Bank als Leinwand fuer alle Manipulations- und Zeichenmethoden
     private OptischeBank optBank;
 
     //Fenster zum Erstellen von Bauelementen
@@ -91,7 +91,7 @@ public class HauptFenster extends JFrame {
     }
 
     /**
-     * Lädt eine neue Optische Bank aus einer Datei.
+     * Laedt eine neue Optische Bank aus einer Datei.
      *
      * @param datei Referenz auf die Datei als File.
      * @return Neue Optische Bank. Liefert null bei Fehlschlag (Datei falsches Format, nicht leesbar, etc.) und gibt Fehlermeldung aus.
@@ -110,9 +110,9 @@ public class HauptFenster extends JFrame {
     }
 
     /**
-     * Speichert die aktuelle Optische Bank als XML-Datei in die übergebene Datei.
+     * Speichert die aktuelle Optische Bank als XML-Datei in die uebergebene Datei.
      * Setzt den Dateipfad der aktuellen Optische Bank auf die neue Datei und aktualisiert den Titel des Fensters auf den neuen Namen der Datei.
-     * Liefert Fehlermeldung, falls dies nicht möglich war.
+     * Liefert Fehlermeldung, falls dies nicht moeglich war.
      *
      * @param datei Datei als File
      */
@@ -134,7 +134,7 @@ public class HauptFenster extends JFrame {
     }
 
     /**
-     * Wechselt die aktuelle Optische Bank zu der übergebenen, neuen Optischen Bank.
+     * Wechselt die aktuelle Optische Bank zu der uebergebenen, neuen Optischen Bank.
      * Aktualisiert den Namen des Fensters.
      * Alte Optische Bank geht unwiederruflich verloren!
      *

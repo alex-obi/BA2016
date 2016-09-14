@@ -4,33 +4,33 @@ import de.hhu.alobe.ba2016.Konstanten;
 
 /**
  * Abstrakte Klasse um Interaktion mit einem Eigenschaftenregler zu erleichtern. Hierbei wird davon ausgegangen, dass der Regler einen prozentualen Wert einstellen kann.
- * Erbende Klassen bieten dann Methoden um die Reglerstellung zu interpretieren und zu verändern.
- * Diese Klasse beinhaltet statische Methoden, die benutzt werden können, um die Regelgröß interpretieren und verändern zu könnnen.
+ * Erbende Klassen bieten dann Methoden um die Reglerstellung zu interpretieren und zu veraendern.
+ * Diese Klasse beinhaltet statische Methoden, die benutzt werden koennen, um die Regelgroess interpretieren und veraendern zu koennnen.
  */
 public abstract class ReglerEvent {
 
     /**
-     * Hier sollen Aktionen implementiert werden, die bei einer Änderung der Reglerstellung ausgeführt werden sollen.
+     * Hier sollen Aktionen implementiert werden, die bei einer Aenderung der Reglerstellung ausgefuehrt werden sollen.
      *
-     * @param wert Neuer Wert der Regelgröße
+     * @param wert Neuer Wert der Regelgroesse
      */
     public abstract void reglerWurdeVerschoben(double wert);
 
     /**
-     * Berechnet zu einer bestimmten Reglerstellung (reglerProzent: 0.0 bis 1.0) den Wert der resultierenden Regelgröße.
+     * Berechnet zu einer bestimmten Reglerstellung (reglerProzent: 0.0 bis 1.0) den Wert der resultierenden Regelgroesse.
      *
      * @param reglerProzent Reglerstellung in Prozent
      * @param minimum       Minimum des Reglers
      * @param maximum       Maximum des Reglers
-     * @return Wert der Regelgröße
+     * @return Wert der Regelgroesse
      */
     public abstract double berechneReglerWert(double reglerProzent, double minimum, double maximum);
 
     /**
-     * Gibt an welche Reglerstellung benötigt wird, um eine bestimmte Regelgröße zu erreichen. Es ist darauf zu achten, dass die
+     * Gibt an welche Reglerstellung benoetigt wird, um eine bestimmte Regelgroesse zu erreichen. Es ist darauf zu achten, dass die
      * Berechnung der Umkehrfunktion von 'berechneReglerWert' entspricht.
      *
-     * @param wert    Neuer Wert der Regelgröße
+     * @param wert    Neuer Wert der Regelgroesse
      * @param minimum Minimum des Reglers
      * @param maximum Maximum des Reglers
      * @return Neue Reglerstellung in Prozent
@@ -38,16 +38,16 @@ public abstract class ReglerEvent {
     public abstract double berechneReglerProzent(double wert, double minimum, double maximum);
 
     /**
-     * Berechnet zu der Regelgröße den korrekten physikalischen Wert und gibt diesen gerundet als Zeichenkette zurück.
+     * Berechnet zu der Regelgroesse den korrekten physikalischen Wert und gibt diesen gerundet als Zeichenkette zurueck.
      *
-     * @param zahl Regelgröße
-     * @return Physikalischer Wert der Regelgröße
+     * @param zahl Regelgroesse
+     * @return Physikalischer Wert der Regelgroesse
      */
     public abstract String berechnePhysikalischenWert(double zahl);
 
     /**
-     * Berechnet einen prozentualen Wert für einen Radius zur Benutzung in einem Eigenschaftenregler.
-     * Rundet auf 0.0/ 1.0 bei Überschreiten des gültigen Prozentbereichs.
+     * Berechnet einen prozentualen Wert fuer einen Radius zur Benutzung in einem Eigenschaftenregler.
+     * Rundet auf 0.0/ 1.0 bei Ueberschreiten des gueltigen Prozentbereichs.
      *
      * @param radius     Radius
      * @param mindRadius Mindest Radius
@@ -62,11 +62,11 @@ public abstract class ReglerEvent {
     }
 
     /**
-     * Berechnet aus einem Prozentualer Wert (0.0 bis 1.0) eines Eigenschaftenreglers den Wert für einen Radius.
+     * Berechnet aus einem Prozentualer Wert (0.0 bis 1.0) eines Eigenschaftenreglers den Wert fuer einen Radius.
      *
      * @param prozent    Prozentualer Wert (0.0 bis 1.0) des JSliders
      * @param mindRadius Mindest Radius
-     * @return Wert für Radius
+     * @return Wert fuer Radius
      */
     public static double prozentZuRadius(double prozent, double mindRadius) {
         if (prozent == 0.5) return 0;
@@ -77,7 +77,7 @@ public abstract class ReglerEvent {
 
     /**
      * Berechnet aus einem Wert den Prozentualer Wert (0.0 bis 1.0) innerhalb des Intervalls [minimum, maximum].
-     * Rundet auf 0.0/ 1.0 bei Überschreitendes gültigen Prozentbereichs.
+     * Rundet auf 0.0/ 1.0 bei Ueberschreitendes gueltigen Prozentbereichs.
      *
      * @param wert    Wert
      * @param minimum Minimum
@@ -91,7 +91,7 @@ public abstract class ReglerEvent {
     }
 
     /**
-     * Berechnet zu einem Prozentualer Wert (0.0 bis 1.0) den Wert innerhalb des Intervalls [minimum, maximum]. Rundet auf minimum/ maximum bei Überschreiten.
+     * Berechnet zu einem Prozentualer Wert (0.0 bis 1.0) den Wert innerhalb des Intervalls [minimum, maximum]. Rundet auf minimum/ maximum bei Ueberschreiten.
      *
      * @param prozent Prozentualer Wert (0.0 bis 1.0)
      * @param minimum Minimum
@@ -105,7 +105,7 @@ public abstract class ReglerEvent {
     }
 
     /**
-     * Berechnet den Prozentualer Wert (0.0 bis 1.0) einer Brennweite zum Benutzen in einem Eigenschaftenregler. Rundet bei Überschreiten auf 0/ 1.
+     * Berechnet den Prozentualer Wert (0.0 bis 1.0) einer Brennweite zum Benutzen in einem Eigenschaftenregler. Rundet bei Ueberschreiten auf 0/ 1.
      *
      * @param wert    Brennweite
      * @param minimum Minimum
@@ -143,20 +143,20 @@ public abstract class ReglerEvent {
     }
 
     /**
-     * Wandelt die Computerinterne Länge (Pixel) in Zentimeter um. Rundet auf 1 Stelle.
+     * Wandelt die Computerinterne Laenge (Pixel) in Zentimeter um. Rundet auf 1 Stelle.
      *
-     * @param laenge Länge in Pixel
-     * @return Länge in Zentimeter
+     * @param laenge Laenge in Pixel
+     * @return Laenge in Zentimeter
      */
     public static String laengeZuCm(double laenge) {
         return String.format("%.1f", laenge / Konstanten.PIXEL_PRO_CM);
     }
 
     /**
-     * Wandelt die Computerinterne Länge eines Radius in Zentimeter um. Rundet auf 1 Stelle.
+     * Wandelt die Computerinterne Laenge eines Radius in Zentimeter um. Rundet auf 1 Stelle.
      *
      * @param radius Radius
-     * @return Radius in Zentimeter als String. 'unendlich', falls r = 0. Der Wert 0 ist extra hierfür reserviert, da er sonst physikalisch nicht möglich ist!
+     * @return Radius in Zentimeter als String. 'unendlich', falls r = 0. Der Wert 0 ist extra hierfuer reserviert, da er sonst physikalisch nicht moeglich ist!
      */
     public static String radiusZuCm(double radius) {
         if (radius == 0) {
@@ -193,7 +193,7 @@ public abstract class ReglerEvent {
      * Gibt zu einem Abstand der Netzhaut an, ob das Auge hierdurch Weit-/Normal- oder Kurzsichtig wird.
      *
      * @param normalwert    Normalwert des Abstands
-     * @param istWert       Tatsächlicher Abstand
+     * @param istWert       Tatsaechlicher Abstand
      * @param tolleranzwert Tolleranzwert um den normalwert+-tolleranzwert als Normalsichtig angesehen wird.
      * @return Sichtigkeit als String
      */

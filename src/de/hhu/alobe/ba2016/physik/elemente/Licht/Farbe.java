@@ -7,22 +7,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Farbe, die über deutsche Namen ausgewählt werden kann.
+ * Farbe, die ueber deutsche Namen ausgewaehlt werden kann.
  */
 public class Farbe extends Color {
 
     /**
-     * Name für Rotanteil im XML-Dokument.
+     * Name fuer Rotanteil im XML-Dokument.
      */
     public static final String XML_RED = "r";
 
     /**
-     * Name für Grünanteil im XML-Dokument.
+     * Name fuer Gruenanteil im XML-Dokument.
      */
     public static final String XML_GREEN = "g";
 
     /**
-     * Name für Grünanteil im XML-Dokument.
+     * Name fuer Gruenanteil im XML-Dokument.
      */
     public static final String XML_BLUE = "b";
 
@@ -44,10 +44,10 @@ public class Farbe extends Color {
     }
 
     /**
-     * Initialisiert Farbe über Farbanteile.
+     * Initialisiert Farbe ueber Farbanteile.
      *
      * @param r Rotanteil.
-     * @param g Grünanteil.
+     * @param g Gruenanteil.
      * @param b Blauanteil.
      */
     public Farbe(int r, int g, int b) {
@@ -55,7 +55,7 @@ public class Farbe extends Color {
     }
 
     /**
-     * Initialisiert Farbe über Color.
+     * Initialisiert Farbe ueber Color.
      *
      * @param farbe Farbe als Color.
      */
@@ -64,7 +64,7 @@ public class Farbe extends Color {
     }
 
     /**
-     * Initialisiert Farbe über Namen der Farbe aus der Farbenpalette
+     * Initialisiert Farbe ueber Namen der Farbe aus der Farbenpalette
      *
      * @param name Name der Farbe aus der Farbenpalette.
      */
@@ -73,9 +73,9 @@ public class Farbe extends Color {
     }
 
     /**
-     * Initialisiert Farbe über ein jdom2.Element.
+     * Initialisiert Farbe ueber ein jdom2.Element.
      *
-     * @param xmlElement jdom2.Element mit benötigten Attributen.
+     * @param xmlElement jdom2.Element mit benoetigten Attributen.
      * @throws Exception Expection, die geworfen wird, wenn bei der Initialisierung ein Fehler passiert.
      */
     public Farbe(Element xmlElement) throws Exception {
@@ -108,7 +108,7 @@ public class Farbe extends Color {
     }
 
     /**
-     * Erstellt ein jdom2.Element mit dem übergebenen Namen. So können Farben beliebig mit Namen versehen werden, um diese identifizieren zu können.
+     * Erstellt ein jdom2.Element mit dem uebergebenen Namen. So koennen Farben beliebig mit Namen versehen werden, um diese identifizieren zu koennen.
      *
      * @param name Name der Farbe im XML-Dokument.
      * @return jdom2.Element dieses Vektors.

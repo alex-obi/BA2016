@@ -21,7 +21,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
- * Bauelement Blende als Gerade mit einer Öffnung, durch die Strahlen hindurch kommen.
+ * Bauelement Blende als Gerade mit einer Oeffnung, durch die Strahlen hindurch kommen.
  */
 public class Blende extends Bauelement implements KannKollision {
 
@@ -35,7 +35,7 @@ public class Blende extends Bauelement implements KannKollision {
      */
     public static final String XML_BLENDE = "blende";
 
-    //Durchmesser der Öffnung
+    //Durchmesser der Oeffnung
     private double durchmesser;
 
     /**
@@ -44,37 +44,37 @@ public class Blende extends Bauelement implements KannKollision {
     public static final String XML_DURCHMESSER = "durchmesser";
 
     /**
-     * Mindestwert für Durchmesser.
+     * Mindestwert fuer Durchmesser.
      */
     public static final double MIND_DURCHMESSER = 0;
 
     /**
-     * Mindestlänge der Außenbegrenzungen der Blende.
+     * Mindestlaenge der Aussenbegrenzungen der Blende.
      */
     public static final double MIND_ABSTAND = 10;
 
-    //Höhe der gesamten Blende.
+    //Hoehe der gesamten Blende.
     private double hoehe;
 
     /**
-     * Name der Höhe im XML-Dokument.
+     * Name der Hoehe im XML-Dokument.
      */
     public static final String XML_HOEHE = "hoehe";
 
     /**
-     * Mindestwert für die Höhe.
+     * Mindestwert fuer die Hoehe.
      */
     public static final double MIND_HOEHE = 20;
 
     /**
-     * Maximalwert für die Höhe.
+     * Maximalwert fuer die Hoehe.
      */
     public static final double MAX_HOEHE = 500;
 
-    //Obere Hälfte der Blende als Grenzfläche.
+    //Obere Haelfte der Blende als Grenzflaeche.
     private Grenzflaeche obereHaelfte;
 
-    //Untere Hälfte der Blende als Grenzfläche.
+    //Untere Haelfte der Blende als Grenzflaeche.
     private Grenzflaeche untereHaelfte;
 
     //Eigenschaftenregler zur Manipulation des Schirms durch den Benutzer.
@@ -82,11 +82,11 @@ public class Blende extends Bauelement implements KannKollision {
     private Eigenschaftenregler_Slider slide_durchmesser;
 
     /**
-     * Initialisiert neue Blende mit Höhe und Durchmesser.
+     * Initialisiert neue Blende mit Hoehe und Durchmesser.
      * @param optischeBank Referenz auf Optische Bank.
      * @param mittelPunkt Mittelpunkt der Blende.
-     * @param hoehe Höhe der Blende.
-     * @param durchmesser Durchmesser der Öffnung der Blende.
+     * @param hoehe Hoehe der Blende.
+     * @param durchmesser Durchmesser der Oeffnung der Blende.
      */
     public Blende(OptischeBank optischeBank, Vektor mittelPunkt, double hoehe, double durchmesser) {
         super(optischeBank, mittelPunkt, Bauelement.TYP_BLENDE);
@@ -96,7 +96,7 @@ public class Blende extends Bauelement implements KannKollision {
     /**
      * Initialisiert neue Blende mit einem jdom-Element.
      * @param optischeBank Referenz auf Optische Bank
-     * @param xmlElement jdom2.Element, was benötigte Werte enthält.
+     * @param xmlElement jdom2.Element, was benoetigte Werte enthaelt.
      * @throws Exception Exception, die geworfen wird, wenn ein Fehler bei der Initialisierung passiert.
      */
     public Blende(OptischeBank optischeBank, Element xmlElement) throws Exception {
@@ -171,14 +171,14 @@ public class Blende extends Bauelement implements KannKollision {
     }
 
     /**
-     * @param nDurchmesser Neuer Durchmesser der Öffnung der Blende.
+     * @param nDurchmesser Neuer Durchmesser der Oeffnung der Blende.
      */
     public void setDurchmesser(double nDurchmesser) {
         formatAktualisieren(hoehe, nDurchmesser);
     }
 
     /**
-     * @param nHoehe Neue Höhe der Blende.
+     * @param nHoehe Neue Hoehe der Blende.
      */
     public void setHoehe(double nHoehe) {
         formatAktualisieren(nHoehe, durchmesser);

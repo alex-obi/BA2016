@@ -5,32 +5,32 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Repräsentiert einen Eigenschaftenregler. Dem Eigenschaftenregler kann ein JComponent als Manipulationswerkzeug übergeben werden.
+ * Repraesentiert einen Eigenschaftenregler. Dem Eigenschaftenregler kann ein JComponent als Manipulationswerkzeug uebergeben werden.
  */
 public class Eigenschaftenregler extends JPanel {
 
-    //Name der Regelgröße:
+    //Name der Regelgroesse:
     private String name;
 
-    //Einheit der verändernden Regelgröße:
+    //Einheit der veraendernden Regelgroesse:
     private String einheit;
 
-    //Wert der verändernden Regelgröße:
+    //Wert der veraendernden Regelgroesse:
     private String groesse;
 
-    //Titel des Eigenschaftenreglers zusammengesetzt aus Name, Einheit und Größe:
+    //Titel des Eigenschaftenreglers zusammengesetzt aus Name, Einheit und Groesse:
     private JLabel label_titel;
 
-    //Regler als JComponent. Es ist also jede Art von Regler möglich, der von JComponent erbt:
+    //Regler als JComponent. Es ist also jede Art von Regler moeglich, der von JComponent erbt:
     JComponent regler;
 
     /**
-     * Initialisiere einen Eigenschaftenregler, der eine Regelgröße mit einer bestimmten Einheit verwaltet.
+     * Initialisiere einen Eigenschaftenregler, der eine Regelgroesse mit einer bestimmten Einheit verwaltet.
      *
-     * @param name    Name der Regelgröße.
-     * @param einheit Einheit der Regelgröße.
-     * @param groesse Momentaner Wert der Regelgröße.
-     * @param regler  Regler zur Manipulation der Regelgröße.
+     * @param name    Name der Regelgroesse.
+     * @param einheit Einheit der Regelgroesse.
+     * @param groesse Momentaner Wert der Regelgroesse.
+     * @param regler  Regler zur Manipulation der Regelgroesse.
      */
     public Eigenschaftenregler(String name, String einheit, String groesse, JComponent regler) {
         super(new BorderLayout());
@@ -38,10 +38,10 @@ public class Eigenschaftenregler extends JPanel {
     }
 
     /**
-     * Initialisiere einen Eigenschaftenregler, der eine Regelgröße verwaltet, die keinen bestimmten Wert mit Einheit beistzt. Bspw. Farben.
+     * Initialisiere einen Eigenschaftenregler, der eine Regelgroesse verwaltet, die keinen bestimmten Wert mit Einheit beistzt. Bspw. Farben.
      *
-     * @param name   Name der Regelgröße
-     * @param regler Regler zur Manipulation der Regelgröße
+     * @param name   Name der Regelgroesse
+     * @param regler Regler zur Manipulation der Regelgroesse
      */
     public Eigenschaftenregler(String name, JComponent regler) {
         super(new BorderLayout());
@@ -51,10 +51,10 @@ public class Eigenschaftenregler extends JPanel {
     /**
      * Methode zum initialisieren der Datenfelder
      *
-     * @param nName    Name der Regelgröße.
-     * @param nEinheit Einheit der Regelgröße.
-     * @param nGroesse Wert der Regelgröße.
-     * @param nRegler  Regler zur Manipulation der Regelgröße.
+     * @param nName    Name der Regelgroesse.
+     * @param nEinheit Einheit der Regelgroesse.
+     * @param nGroesse Wert der Regelgroesse.
+     * @param nRegler  Regler zur Manipulation der Regelgroesse.
      */
     private void initialisiere(String nName, String nEinheit, String nGroesse, JComponent nRegler) {
         name = nName;
@@ -74,9 +74,9 @@ public class Eigenschaftenregler extends JPanel {
     }
 
     /**
-     * Aktualisiert den Titel des Reglers mit einer neuen Regelgröße.
+     * Aktualisiert den Titel des Reglers mit einer neuen Regelgroesse.
      *
-     * @param nGroesse Neue Regelgröße.
+     * @param nGroesse Neue Regelgroesse.
      */
     public void aktualisiereGroesse(String nGroesse) {
         groesse = nGroesse;

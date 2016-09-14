@@ -11,7 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Werkzeugleiste zum schnellen Auswählen durch den Benutzer. Verwaltet Buttons als ActionListener
+ * Werkzeugleiste zum schnellen Auswaehlen durch den Benutzer. Verwaltet Buttons als ActionListener
  */
 public class Panel_Werkzeuge extends JPanel implements ActionListener {
 
@@ -30,7 +30,7 @@ public class Panel_Werkzeuge extends JPanel implements ActionListener {
     /**
      * Initialisiert eine neue Werkzeugleiste
      *
-     * @param hauptFenster Zugehöriges Hauptfenster
+     * @param hauptFenster Zugehoeriges Hauptfenster
      */
     public Panel_Werkzeuge(HauptFenster hauptFenster) {
         this.hauptFenster = hauptFenster;

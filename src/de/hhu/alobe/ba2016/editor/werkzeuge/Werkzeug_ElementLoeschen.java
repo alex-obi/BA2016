@@ -16,24 +16,24 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Werkzeug zum Löschen eines Elements (Bauelement oder Strahl) aus der Optischen Bank.
- * Über die rechte Maustaste lässt sich wieder zum Auswahlwerkzeug wechseln.
+ * Werkzeug zum Loeschen eines Elements (Bauelement oder Strahl) aus der Optischen Bank.
+ * Ueber die rechte Maustaste laesst sich wieder zum Auswahlwerkzeug wechseln.
  */
 public class Werkzeug_ElementLoeschen extends Werkzeug {
 
-    //Befindet sich der Cursor über einem Strahlengang, wird dieses Datenfeld initialisiert
+    //Befindet sich der Cursor ueber einem Strahlengang, wird dieses Datenfeld initialisiert
     private Strahlengang letzterStrahlengang;
 
-    //Die, zum letzten Strahlengang zugehörige Lichtquelle
+    //Die, zum letzten Strahlengang zugehoerige Lichtquelle
     private Lichtquelle lezteLichtquelle;
 
     /**
-     * Radius um den Cursor, in dem Strahlen eingefangen und gelöscht werden können.
+     * Radius um den Cursor, in dem Strahlen eingefangen und geloescht werden koennen.
      */
     public static final double FANGRADIUS_STRAHL = 10;
 
     /**
-     * Initialisiere ein neues Werkzeug Löschen zu der übergebenen Optischen Bank.
+     * Initialisiere ein neues Werkzeug Loeschen zu der uebergebenen Optischen Bank.
      *
      * @param optischeBank Referenz auf Optische Bank
      */
@@ -58,16 +58,16 @@ public class Werkzeug_ElementLoeschen extends Werkzeug {
 
     @Override
     public void auswaehlen() {
-        //Ändert den Cursor, wenn dieses Werkzeug ausgewählt wurde
-        //todo: passenderen Cursor zeichnen und einfügen
+        //Aendert den Cursor, wenn dieses Werkzeug ausgewaehlt wurde
+        //todo: passenderen Cursor zeichnen und einfuegen
         optischeBank.getZeichenBrett().setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
     }
 
     @Override
     public void mouseReleased(MouseEvent e, Vektor realePosition) {
-        //Löscht beim Loslassen der linken Maustaste ein Element, falls sich der Cursor darüber befindet
+        //Loescht beim Loslassen der linken Maustaste ein Element, falls sich der Cursor darueber befindet
         if (SwingUtilities.isLeftMouseButton(e)) {
-            //Prüfe zuerst, ob ein Bauelement angeklickt wurde und lösche dieses
+            //Pruefe zuerst, ob ein Bauelement angeklickt wurde und loesche dieses
             boolean elementGefunden = false;
             for (Bauelement cBauEl : optischeBank.getBauelemente()) {
                 if (cBauEl.istAngeklickt(realePosition)) {
@@ -77,7 +77,7 @@ public class Werkzeug_ElementLoeschen extends Werkzeug {
                     break;
                 }
             }
-            //Falls kein Bauelement gefunden wurde lösche -falls vorhanden- den zuletzt ausgewählten Strahlengang
+            //Falls kein Bauelement gefunden wurde loesche -falls vorhanden- den zuletzt ausgewaehlten Strahlengang
             if (!elementGefunden && lezteLichtquelle != null && lezteLichtquelle != null) {
                 letzterStrahlengang.setAktiviert(false);
                 optischeBank.neueAktionDurchfuehren(new Aktion_StrahlengangLoeschen(lezteLichtquelle, letzterStrahlengang));
@@ -111,7 +111,7 @@ public class Werkzeug_ElementLoeschen extends Werkzeug {
                 cBauEl.rahmenAusblenden();
             }
         }
-        //Falls kein Bauelement unterhalb des Cursors gefunden wurde suche innerhalb von FANGRADIUS_STRAHL nach einem Strahlengang und lösche diesen
+        //Falls kein Bauelement unterhalb des Cursors gefunden wurde suche innerhalb von FANGRADIUS_STRAHL nach einem Strahlengang und loesche diesen
         Kreis pruefKreis = new Kreis(realePosition, FANGRADIUS_STRAHL);
         if (letzterStrahlengang != null) {
             letzterStrahlengang.setAktiviert(false);

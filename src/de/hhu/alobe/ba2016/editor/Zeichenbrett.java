@@ -8,12 +8,12 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Zeichenbrett einer Optischen Bank, der alle Objekte übergeben werden, die Zeichenbar sind.
+ * Zeichenbrett einer Optischen Bank, der alle Objekte uebergeben werden, die Zeichenbar sind.
  * Das Zeichenbrett verwaltet das Zeichnen dieser Objekte.
  */
 public class Zeichenbrett extends JPanel {
 
-    //Referenz auf die zugehörige optische Bank:
+    //Referenz auf die zugehoerige optische Bank:
     private OptischeBank optischeBank;
 
     //Liste aller Objekte der Optischen Bank, die gezeichnet werden sollen:
@@ -22,7 +22,7 @@ public class Zeichenbrett extends JPanel {
     /**
      * Initialisiere neues Zeichenbrett.
      *
-     * @param optischeBank Referenz auf zugehörige Optische Bank.
+     * @param optischeBank Referenz auf zugehoerige Optische Bank.
      */
     public Zeichenbrett(OptischeBank optischeBank) {
         this.optischeBank = optischeBank;
@@ -32,7 +32,7 @@ public class Zeichenbrett extends JPanel {
     }
 
     /**
-     * Fügt ein neues Zeichenobjekt der Liste hinzu, welches gezeichnet werden soll.
+     * Fuegt ein neues Zeichenobjekt der Liste hinzu, welches gezeichnet werden soll.
      *
      * @param zeichenObjekt Objekt als Zeichenbar.
      */
@@ -43,7 +43,7 @@ public class Zeichenbrett extends JPanel {
     /**
      * Entfernt ein Zeichenobjekt aus der Liste, damit es nicht mehr gezeichnet wird.
      *
-     * @param zeichenObjekt Zu löschendes Objekt als Zeichenbar.
+     * @param zeichenObjekt Zu loeschendes Objekt als Zeichenbar.
      */
     public void zeichenObjektLoeschen(Zeichenbar zeichenObjekt) {
         zeichenObjekte.remove(zeichenObjekt);
@@ -54,7 +54,7 @@ public class Zeichenbrett extends JPanel {
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D) g;
 
-        //Aktiviere Kantenglättung:
+        //Aktiviere Kantenglaettung:
         g2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         //Stelle Zoom ein:

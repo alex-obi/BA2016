@@ -16,14 +16,14 @@ import java.awt.event.*;
 import java.io.File;
 
 /**
- * Menüleiste des Hauptfensters mit Optionsmenüs Datei, Bearbeiten, Ansicht, etc.
+ * Menueleiste des Hauptfensters mit Optionsmenues Datei, Bearbeiten, Ansicht, etc.
  */
 public class Menueleiste extends JMenuBar implements ActionListener, MenuListener {
 
     //Referenz auf das Hauptfenster
     private HauptFenster hauptFenster;
 
-    //Menüs und Menüoptionen:
+    //Menues und Menueoptionen:
     private JMenu datei;
     private JMenuItem neu;
     private JMenuItem laden;
@@ -53,14 +53,14 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
     private JRadioButtonMenuItem hauptebenenAktivieren;
 
     /**
-     * Initialisiert eine neue Menüleiste.
+     * Initialisiert eine neue Menueleiste.
      *
-     * @param hauptFenster Referenz auf das zugehörige Hauptfenster
+     * @param hauptFenster Referenz auf das zugehoerige Hauptfenster
      */
     public Menueleiste(HauptFenster hauptFenster) {
         this.hauptFenster = hauptFenster;
 
-        //Initialisiere Menü Datei:
+        //Initialisiere Menue Datei:
         datei = new JMenu("Datei");
         datei.addMenuListener(this);
         this.add(datei);
@@ -82,7 +82,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         speichernUnter.addActionListener(this);
         datei.add(speichernUnter);
 
-        //Initialisiere Menü Bearbeiten:
+        //Initialisiere Menue Bearbeiten:
         bearbeiten = new JMenu("Bearbeiten");
         this.add(bearbeiten);
         rueckgaengig = new JMenuItem("Rueckgaengig");
@@ -99,7 +99,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
         elLoeschen.addActionListener(this);
         bearbeiten.add(elLoeschen);
 
-        //Initialisiere Menü Ansicht:
+        //Initialisiere Menue Ansicht:
         ansicht = new JMenu("Ansicht");
         ansicht.addMenuListener(this);
         this.add(ansicht);
@@ -149,7 +149,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
     }
 
     /**
-     * Aktualisiert die Lokalen ".SAVE_ENDUNG" Dateien im lokalen SAVE_ORDNER im Menü "lokal"
+     * Aktualisiert die Lokalen ".SAVE_ENDUNG" Dateien im lokalen SAVE_ORDNER im Menue "lokal"
      * @see Konstanten
      */
     public void aktualisiereLokaleDateien() {

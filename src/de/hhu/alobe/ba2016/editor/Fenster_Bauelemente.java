@@ -21,7 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Fenster zum Auswählen und Erstellen von neuen Bauelementen.
+ * Fenster zum Auswaehlen und Erstellen von neuen Bauelementen.
  * Verwaltet die Buttons als ActionListener.
  */
 public class Fenster_Bauelemente extends JDialog implements ActionListener {
@@ -32,7 +32,7 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener {
     public final int BUTTON_BREITE = 60;
 
     /**
-     * Höhe der Buttons
+     * Hoehe der Buttons
      */
     public final int BUTTON_HOEHE = 60;
 

@@ -26,7 +26,7 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
      */
     public static final String XML_BASISVEKTOR = "basisVektor";
 
-    //Richtungsvektor des Strahls. Die Länge muss auf 1 normiert werden.
+    //Richtungsvektor des Strahls. Die Laenge muss auf 1 normiert werden.
     Vektor richtungsVektor;
 
     /**
@@ -54,11 +54,11 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
     }
 
     /**
-     * Initialisiere Strahl mit Quelle, aus der der Strahl zu kommen scheint, für Abbildungen durch Hauptebenen.
+     * Initialisiere Strahl mit Quelle, aus der der Strahl zu kommen scheint, fuer Abbildungen durch Hauptebenen.
      *
      * @param basisVektor       Basisvektor
      * @param richtung          Richtungsvektor. Die Richtung wird automatisch auf 1 normiert.
-     * @param quellEntfernung   Distanz bezüglich des Basisvektors, aus dem der Strahl zu kommen scheint.
+     * @param quellEntfernung   Distanz bezueglich des Basisvektors, aus dem der Strahl zu kommen scheint.
      * @param ausDemUnendlichen Gibt an, ob der Strahl aus dem Unendlichen zu kommen scheint.
      */
     public Strahl(Vektor basisVektor, Vektor richtung, double quellEntfernung, boolean ausDemUnendlichen) {
@@ -69,9 +69,9 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
     }
 
     /**
-     * Initialisiert Strahl über ein jdom-Element.
+     * Initialisiert Strahl ueber ein jdom-Element.
      *
-     * @param xmlElement Element, dass die Werte enthält.
+     * @param xmlElement Element, dass die Werte enthaelt.
      * @throws Exception Expection, die geworfen wird, wenn bei der Initialisierung ein Fehler passiert.
      */
     public Strahl(Element xmlElement) throws Exception {
@@ -82,10 +82,10 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
     }
 
     /**
-     * Gibt an welche Strecke ein Strahl zurücklegen muss bis er den jeweils anderen trifft.
+     * Gibt an welche Strecke ein Strahl zuruecklegen muss bis er den jeweils anderen trifft.
      *
-     * @param s2 Strahl, mit dem Schnittpunkt überprüft werden soll.
-     * @return Array, mit Element 0 = Entfernung dieser Strahl, Element 1 = Entfernung übergebener Strahl. Gibt null zurück, wenn Strahlen parallel verlaufen.
+     * @param s2 Strahl, mit dem Schnittpunkt ueberprueft werden soll.
+     * @return Array, mit Element 0 = Entfernung dieser Strahl, Element 1 = Entfernung uebergebener Strahl. Gibt null zurueck, wenn Strahlen parallel verlaufen.
      */
     public double[] gibSchnittentfernungen(Strahl s2) {
         double b1x = basisVektor.getX();
@@ -110,18 +110,18 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
     }
 
     /**
-     * Statische Methode um den Schnittpunkt zweier Strahlen auszuwerten. Die zurückgegebenen Werte entsprechen den Distanzen, die jeder Strahl bis zum dem jeweils anderen Strahl zurücklegen muss.
+     * Statische Methode um den Schnittpunkt zweier Strahlen auszuwerten. Die zurueckgegebenen Werte entsprechen den Distanzen, die jeder Strahl bis zum dem jeweils anderen Strahl zuruecklegen muss.
      *
      * @param s1 Strahl 1.
      * @param s2 Strahls 2.
-     * @return Array, mit Element 0 = Entfernung Strahl 1, Element 1 = Entfernung Strahl 2. Gibt null zurück, wenn Strahlen parallel verlaufen.
+     * @return Array, mit Element 0 = Entfernung Strahl 1, Element 1 = Entfernung Strahl 2. Gibt null zurueck, wenn Strahlen parallel verlaufen.
      */
     public static double[] gibSchnittentfernungen(Strahl s1, Strahl s2) {
         return s1.gibSchnittentfernungen(s2);
     }
 
     /**
-     * Gibt den Punkt, von dem aus dieser Strahl zu kommen scheint. Wird zur Abbildung durch Hauptebenen benötigt.
+     * Gibt den Punkt, von dem aus dieser Strahl zu kommen scheint. Wird zur Abbildung durch Hauptebenen benoetigt.
      *
      * @return Quellpunkt, aus dem dieser Strahl zu kommen scheint.
      */
@@ -182,21 +182,21 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
     }
 
     /**
-     * @return Entfernung bezüglich Basisvektor, aus der der Strahl zu kommen scheint. Wird zur Abbildung durch Hauptebenen benötigt.
+     * @return Entfernung bezueglich Basisvektor, aus der der Strahl zu kommen scheint. Wird zur Abbildung durch Hauptebenen benoetigt.
      */
     public double getQuellEntfernung() {
         return quellEntfernung;
     }
 
     /**
-     * @return Gibt an, ob der Strahl aus dem Unendlichen zu kommen scheint. Wird zur Abbildung durch Hauptebenen benötigt.
+     * @return Gibt an, ob der Strahl aus dem Unendlichen zu kommen scheint. Wird zur Abbildung durch Hauptebenen benoetigt.
      */
     public boolean isAusDemUnendlichen() {
         return ausDemUnendlichen;
     }
 
     /**
-     * @param ausDemUnendlichen Gibt an, ob der Strahl aus dem Unendlichen zu kommen scheint. Wird zur Abbildung durch Hauptebenen benötigt.
+     * @param ausDemUnendlichen Gibt an, ob der Strahl aus dem Unendlichen zu kommen scheint. Wird zur Abbildung durch Hauptebenen benoetigt.
      */
     public void setAusDemUnendlichen(boolean ausDemUnendlichen) {
         this.ausDemUnendlichen = ausDemUnendlichen;

@@ -8,17 +8,17 @@ import de.hhu.alobe.ba2016.mathe.Vektor;
 import java.awt.*;
 
 /**
- * Stellt eine reale Grenzfläche als zweidimensionale Ebene, also einer Geraden, dar.
+ * Stellt eine reale Grenzflaeche als zweidimensionale Ebene, also einer Geraden, dar.
  */
 public class Grenzflaeche_Ebene extends Grenzflaeche {
 
-    //Fläche als Gerade
+    //Flaeche als Gerade
     private Gerade ebene;
 
     /**
-     * Initialisiert Grenzfläche mit Brechzahlen. Die Ebene wird durch Anfangs- und Endpunkt definiert.
+     * Initialisiert Grenzflaeche mit Brechzahlen. Die Ebene wird durch Anfangs- und Endpunkt definiert.
      *
-     * @param modus      Berechnungsmodus der Fläche.
+     * @param modus      Berechnungsmodus der Flaeche.
      * @param n1         Brechzahl aussen (In Richtung des Normalvektors).
      * @param n2         Brechzahl innen.
      * @param von_Vektor Anfangspunkt der Ebene.
@@ -30,9 +30,9 @@ public class Grenzflaeche_Ebene extends Grenzflaeche {
     }
 
     /**
-     * Initialisiert Grenzfäche ohne Brechzahlen (Für Reflektion und Absorbtion). Die Ebene wird durch Anfangs- und Endpunkt definiert.
+     * Initialisiert Grenzfaeche ohne Brechzahlen (Fuer Reflektion und Absorbtion). Die Ebene wird durch Anfangs- und Endpunkt definiert.
      *
-     * @param modus      Berechnungsmodus der Fläche.
+     * @param modus      Berechnungsmodus der Flaeche.
      * @param von_Vektor Anfangspunkt der Ebene.
      * @param bis_Vektor Endpunkt der Ebene.
      */

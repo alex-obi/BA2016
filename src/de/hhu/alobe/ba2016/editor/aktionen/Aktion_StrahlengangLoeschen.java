@@ -5,21 +5,21 @@ import de.hhu.alobe.ba2016.physik.elemente.Licht.Lichtquelle;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 /**
- * Aktion zum Löschen eines Strahlengangs aus einer Lichtquelle.
+ * Aktion zum Loeschen eines Strahlengangs aus einer Lichtquelle.
  */
 public class Aktion_StrahlengangLoeschen implements Aktion {
 
-    //Zu löschender Strahlengang:
+    //Zu loeschender Strahlengang:
     private Strahlengang strahlengang;
 
-    //Zugehörige Lichtquelle:
+    //Zugehoerige Lichtquelle:
     private Lichtquelle lichtquelle;
 
     /**
      * Initialisiert die Aktion StrahlengangLoeschen.
      *
-     * @param lichtquelle  Zum Strahlengang zugehörige Lichtquelle.
-     * @param strahlengang Strahlengang, der gelöscht werden soll.
+     * @param lichtquelle  Zum Strahlengang zugehoerige Lichtquelle.
+     * @param strahlengang Strahlengang, der geloescht werden soll.
      */
     public Aktion_StrahlengangLoeschen(Lichtquelle lichtquelle, Strahlengang strahlengang) {
         this.strahlengang = strahlengang;
@@ -28,13 +28,13 @@ public class Aktion_StrahlengangLoeschen implements Aktion {
 
     @Override
     public void aktionDurchfuehren() {
-        //Lösche den Strahlengang aus der Lichtquelle:
+        //Loesche den Strahlengang aus der Lichtquelle:
         lichtquelle.loescheStrahl(strahlengang);
     }
 
     @Override
     public void aktionRueckgaengig() {
-        //Füge den Strahlengang wieder in die Lichtquelle ein:
+        //Fuege den Strahlengang wieder in die Lichtquelle ein:
         lichtquelle.neuerStrahl(strahlengang);
     }
 

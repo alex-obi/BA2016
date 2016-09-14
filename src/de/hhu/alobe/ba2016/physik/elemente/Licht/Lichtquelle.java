@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Lichtquelle als abstrakte Klasse. Erbende Klassen erhalten Funtkionen um ihre Strahlengänge zu verwalten.
+ * Lichtquelle als abstrakte Klasse. Erbende Klassen erhalten Funtkionen um ihre Strahlengaenge zu verwalten.
  */
 public abstract class Lichtquelle extends Bauelement {
 
@@ -30,7 +30,7 @@ public abstract class Lichtquelle extends Bauelement {
     private boolean aktiv;
 
     /**
-     * Name für Aktivitätswert im XML-Dokument.
+     * Name fuer Aktivitaetswert im XML-Dokument.
      */
     public static final String XML_ISTAKTIV = "istAktiv";
 
@@ -41,7 +41,7 @@ public abstract class Lichtquelle extends Bauelement {
     protected Farbe farbe;
 
     /**
-     * Name für die Farbe im XML-Dokument.
+     * Name fuer die Farbe im XML-Dokument.
      */
     public static final String XML_FARBE = "farbe";
 
@@ -59,10 +59,10 @@ public abstract class Lichtquelle extends Bauelement {
     }
 
     /**
-     * Initialisiere Lichtquelle über ein jdom2.Element
+     * Initialisiere Lichtquelle ueber ein jdom2.Element
      *
      * @param optischeBank Referenz auf Optische Bank.
-     * @param xmlElement   jdom2.Element, was die benötigten Attribute enthält.
+     * @param xmlElement   jdom2.Element, was die benoetigten Attribute enthaelt.
      * @throws Exception Exception, die geworfen wird, wenn beim Initialisieren ein Fehler passiert.
      */
     public Lichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
@@ -82,15 +82,15 @@ public abstract class Lichtquelle extends Bauelement {
     }
 
     /**
-     * Berechnet neuen Strahlengang, der abhängig von der erbenden Lichtquelle durch den übergebenen Strahlenpunkt verlaufen soll.
+     * Berechnet neuen Strahlengang, der abhaengig von der erbenden Lichtquelle durch den uebergebenen Strahlenpunkt verlaufen soll.
      *
      * @param strahlPunkt Punkt, durch den der erste Strahl des Strahlengangs verlaufen soll.
-     * @return Strahlengang in Richtung des übergebenen Punktes.
+     * @return Strahlengang in Richtung des uebergebenen Punktes.
      */
     public abstract Strahlengang berechneNeuenStrahl(Vektor strahlPunkt);
 
     /**
-     * Fügt einen neuen Strahlengang der Lichtquelle hinzu.
+     * Fuegt einen neuen Strahlengang der Lichtquelle hinzu.
      *
      * @param strahl Neuer Strahlengang.
      */
@@ -108,7 +108,7 @@ public abstract class Lichtquelle extends Bauelement {
     }
 
     /**
-     * Zeichnet die Strahlen dieser Lichtquelle im übergebenen Graphics Element.
+     * Zeichnet die Strahlen dieser Lichtquelle im uebergebenen Graphics Element.
      *
      * @param g Grafikelement, in das gezeichnet werden soll.
      */
@@ -121,7 +121,7 @@ public abstract class Lichtquelle extends Bauelement {
     }
 
     /**
-     * Gibt alle Bildpunkte, die von dieser Lichtquelle durch die Strahlengänge entstehen. Voraussetzung ist, dass sich an jedem Bildpunkt mindestens 2 Strahlengänge kreuzen.
+     * Gibt alle Bildpunkte, die von dieser Lichtquelle durch die Strahlengaenge entstehen. Voraussetzung ist, dass sich an jedem Bildpunkt mindestens 2 Strahlengaenge kreuzen.
      *
      * @param auchVirtuell Gibt an, ob auch virtuelle Bildpunkte gesammelt werden sollen.
      * @return Liste der Bildpunkte dieser Lichtquelle.
@@ -215,7 +215,7 @@ public abstract class Lichtquelle extends Bauelement {
     }
 
     /**
-     * @return Alle Strahlengänge, die durch diese Lichtquelle erzeugt werden.
+     * @return Alle Strahlengaenge, die durch diese Lichtquelle erzeugt werden.
      */
     public ArrayList<Strahlengang> getStrahlengaenge() {
         return strahlengaenge;

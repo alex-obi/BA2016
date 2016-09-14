@@ -17,13 +17,13 @@ public class Augenlinse extends Linse {
      */
     public static final String XML_AUGENLINSE = "augenlinse";
 
-    //Höhe der Augenlinse
+    //Hoehe der Augenlinse
     private static final double HOEHE = 80;
 
     /**
      * Initialisiert eine neue Augenlinse mit Brechzahl und Radis
      *
-     * @param auge      Referenz auf das zugehörige Auge.
+     * @param auge      Referenz auf das zugehoerige Auge.
      * @param position  Position der Linse.
      * @param brechzahl Brechzahl der Augenlinse.
      * @param radius    Radius der Augenlinse.
@@ -33,9 +33,9 @@ public class Augenlinse extends Linse {
     }
 
     /**
-     * Initialisiert das Auge mit einem jdom2.Element, das die benötigten Attribute enthält.
+     * Initialisiert das Auge mit einem jdom2.Element, das die benoetigten Attribute enthaelt.
      *
-     * @param auge       Referenz auf das zugehörige Auge.
+     * @param auge       Referenz auf das zugehoerige Auge.
      * @param xmlElement jdom2.Element.
      * @throws Exception Exception, die geworfen wird, wenn beim Initialisieren ein Fehler passiert.
      */

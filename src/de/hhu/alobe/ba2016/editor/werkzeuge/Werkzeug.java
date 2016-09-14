@@ -8,17 +8,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Implementierende Klassen stellen Methoden zur Verfügung, um die optische Bank zu bearbeiten.
- * Maus und Tastatur können hierzu mit einem Werkzeug interagieren.
+ * Implementierende Klassen stellen Methoden zur Verfuegung, um die optische Bank zu bearbeiten.
+ * Maus und Tastatur koennen hierzu mit einem Werkzeug interagieren.
  * Die Klasse verwaltet Mausaktionen als MouseAdapter.
  */
 public abstract class Werkzeug extends MouseAdapter {
 
-    //Referenz auf die zugehörigen Optische Bank
+    //Referenz auf die zugehoerigen Optische Bank
     OptischeBank optischeBank;
 
     /**
-     * Aufruf durch erbende Klassen garantiert die Initialisierung der Referenz auf die zugehörige Optische Bank.
+     * Aufruf durch erbende Klassen garantiert die Initialisierung der Referenz auf die zugehoerige Optische Bank.
      *
      * @param optischeBank Referenz auf Optische Bank
      */
@@ -81,7 +81,7 @@ public abstract class Werkzeug extends MouseAdapter {
     public abstract void mouseReleased(MouseEvent e, Vektor realePosition);
 
     /**
-     * Aufruf bei Bewegung des Mauszeigers mit gedrückter Maustaste.
+     * Aufruf bei Bewegung des Mauszeigers mit gedrueckter Maustaste.
      *
      * @param e             Maus Interaktion als MouseEvent
      * @param realePosition Reale Position im Koordinatensystem der optischen Bank
@@ -97,12 +97,12 @@ public abstract class Werkzeug extends MouseAdapter {
     public abstract void mouseMoved(MouseEvent e, Vektor realePosition);
 
     /**
-     * Implementiert Funktionen, die aufgerufen werden sollen, wenn ein Element mit diesem Werkzeug ausgewählt wird.
+     * Implementiert Funktionen, die aufgerufen werden sollen, wenn ein Element mit diesem Werkzeug ausgewaehlt wird.
      */
     public abstract void auswahlAufheben();
 
     /**
-     * Implementiert Funktionen, die aufgerufen werden sollen, wenn das ausgewählte Element nicht mehr mit diesem Werkzeug ausgewählt ist.
+     * Implementiert Funktionen, die aufgerufen werden sollen, wenn das ausgewaehlte Element nicht mehr mit diesem Werkzeug ausgewaehlt ist.
      */
     public abstract void auswaehlen();
 

@@ -10,29 +10,11 @@ import java.io.File;
  * Klasse zum Programmeinstieg
  */
 public class Main {
-    /*
-        Todoliste:
-         * todo: Auswahlwerkzeug überarbeiten
-
-         Bugs:
-
-         Optional:
-         * todo: Scrollen mit Maus und Ausschnitt optimieren
-
-         * todo: Parallel-, Zenit-, Brennpunktstrahl markieren und einfangen
-         * todo: Strahlen nummerieren und oder farblich kennzeichnen
-
-         * todo: Eigenschaftenänderung rücknehmbar
-
-         Zweitrangig:
-         * todo: Garbage vermeiden
-
-    */
 
     /**
      * Programmeinstieg. Laden von Ordnern und Dateien.
      *
-     * @param args Übergabeparameter
+     * @param args Uebergabeparameter durch Konsole.
      */
     public static void main(String[] args) {
         saveOrdnerErstellen();
@@ -41,7 +23,7 @@ public class Main {
     }
 
     /**
-     * Überprüft ob der SAVE_ORDNER existiert und versucht ihn bei Nichtexistenz zu erstellen.
+     * Ueberprueft ob der SAVE_ORDNER existiert und versucht ihn bei Nichtexistenz zu erstellen.
      *
      * @return Konnte Ordner erstellt werden oder existiert bereits.
      */

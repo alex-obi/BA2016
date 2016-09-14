@@ -12,7 +12,7 @@ import java.io.IOException;
 public abstract class Dateifunktionen {
 
     /**
-     * Gibt die Dateiendung ohne "."  der übergebnen Datei.
+     * Gibt die Dateiendung ohne "."  der uebergebnen Datei.
      *
      * @param datei Datei, dessen Dateiendung erfragt werden soll.
      * @return Dateiendung der Datei.
@@ -31,11 +31,11 @@ public abstract class Dateifunktionen {
     }
 
     /**
-     * Gibt eine Liste aller Dateien mit der übergebenen Dateiendung im übergebenen Ordner
+     * Gibt eine Liste aller Dateien mit der uebergebenen Dateiendung im uebergebenen Ordner
      *
      * @param ordner Ordner, in dem gesucht werden soll.
      * @param endung Dateiendung, nach der gefiltert werden soll.
-     * @return Array mit allen Dateien mit der übergebenen Dateiendung als File[].
+     * @return Array mit allen Dateien mit der uebergebenen Dateiendung als File[].
      */
     public static File[] getLokaleDateienMitEndung(File ordner, String endung) {
         File[] saves = ordner.listFiles(new FilenameFilter() {
@@ -66,11 +66,11 @@ public abstract class Dateifunktionen {
     }
 
     /**
-     * Liefert true wenn Datei erfolgreich neu erstellt wurde oder zum Überschreiben freigegeben
+     * Liefert true wenn Datei erfolgreich neu erstellt wurde oder zum Ueberschreiben freigegeben
      *
-     * @param parent Komponente, zu der eine mögliche Meldung ausgegeben werden soll.
+     * @param parent Komponente, zu der eine moegliche Meldung ausgegeben werden soll.
      * @param pfad   Pfad zu der Datei, die erstellt werden soll.
-     * @return Wahrheitswert, ob Datei erfolgreich erstellt wurde oder überschrieben werden kann.
+     * @return Wahrheitswert, ob Datei erfolgreich erstellt wurde oder ueberschrieben werden kann.
      */
     public static boolean erstelleDatei(Component parent, File pfad) {
         try {
@@ -78,7 +78,7 @@ public abstract class Dateifunktionen {
                 return true;
             } else {
                 if (pfad.exists()) {
-                    int ergebnis = JOptionPane.showConfirmDialog(parent, "Datei existiert bereits. Überschreiben?", "Speichern", JOptionPane.YES_NO_OPTION);
+                    int ergebnis = JOptionPane.showConfirmDialog(parent, "Datei existiert bereits. Ueberschreiben?", "Speichern", JOptionPane.YES_NO_OPTION);
                     if (ergebnis == JOptionPane.YES_OPTION) return true;
                 }
                 return false;

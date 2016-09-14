@@ -19,7 +19,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 /**
- * Hohlspiegel als sphärischer Kreisbogen, der Strahlen reflektiert.
+ * Hohlspiegel als sphaerischer Kreisbogen, der Strahlen reflektiert.
  */
 public class Hohlspiegel extends Bauelement implements KannKollision {
 
@@ -33,21 +33,21 @@ public class Hohlspiegel extends Bauelement implements KannKollision {
      */
     public static final String XML_HOHLSPIEGEL = "hohlspiegel";
 
-    //Höhe des Spiegels
+    //Hoehe des Spiegels
     double hoehe;
 
     /**
-     * Name der Höhe im XML-Dokument.
+     * Name der Hoehe im XML-Dokument.
      */
     public static final String XML_HOEHE = "hoehe";
 
     /**
-     * Mindestwert für die Höhe.
+     * Mindestwert fuer die Hoehe.
      */
     public static final double MIND_HOEHE = 100;
 
     /**
-     * Maximalwert für die Höhe.
+     * Maximalwert fuer die Hoehe.
      */
     public static final double MAX_HOEHE = 510;
 
@@ -63,16 +63,16 @@ public class Hohlspiegel extends Bauelement implements KannKollision {
     public static final String XML_RADIUS = "radius";
 
     /**
-     * Mindestwert für den Radius.
+     * Mindestwert fuer den Radius.
      */
     public static final double MIND_RADIUS = 50;
 
     /**
-     * Maximalerwert für Radius bis Kreis als ebene Fläche approximiert wird
+     * Maximalerwert fuer Radius bis Kreis als ebene Flaeche approximiert wird
      */
     public static final double MAX_RADIUS = 100000;
 
-    //Grenzfläche des Hohlspiegels
+    //Grenzflaeche des Hohlspiegels
     private Grenzflaeche spiegelFlaeche;
 
     //Hauptebene des Hohlspiegels
@@ -83,12 +83,12 @@ public class Hohlspiegel extends Bauelement implements KannKollision {
     private Eigenschaftenregler_Slider slide_radius;
 
     /**
-     * Initialisiere Hohlspiegel über Radius und Höhe.
+     * Initialisiere Hohlspiegel ueber Radius und Hoehe.
      *
      * @param optischeBank Referenz auf Optische Bank.
      * @param mittelPunkt  Mittelpunkt des Hohlspiegels.
      * @param radius       Radius des Hohlspiegels.
-     * @param hoehe        Höhe des Hohlspiegels.
+     * @param hoehe        Hoehe des Hohlspiegels.
      */
     public Hohlspiegel(OptischeBank optischeBank, Vektor mittelPunkt, double radius, double hoehe) {
         super(optischeBank, mittelPunkt, TYP_SPIEGEL);
@@ -96,10 +96,10 @@ public class Hohlspiegel extends Bauelement implements KannKollision {
     }
 
     /**
-     * Initialisiere Hohlspiegel über ein jdom2.Element.
+     * Initialisiere Hohlspiegel ueber ein jdom2.Element.
      *
      * @param optischeBank Referenz auf Optische Bank.
-     * @param xmlElement   jdom2.Element, das die benötigten Attribute enthält.
+     * @param xmlElement   jdom2.Element, das die benoetigten Attribute enthaelt.
      * @throws Exception Exception, die geworfen wird, wenn bei der Initialisierung ein Fehler passiert.
      */
     public Hohlspiegel(OptischeBank optischeBank, Element xmlElement) throws Exception {
@@ -194,7 +194,7 @@ public class Hohlspiegel extends Bauelement implements KannKollision {
     }
 
     /**
-     * @param nHoehe Neue Höhe des Hohlspiegels.
+     * @param nHoehe Neue Hoehe des Hohlspiegels.
      */
     public void setHoehe(double nHoehe) {
         formatAktualisieren(nHoehe, radius);

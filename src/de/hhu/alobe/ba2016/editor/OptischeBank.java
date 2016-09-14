@@ -49,7 +49,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     //Name des Zooms in XML
     private static final String XML_ZOOM = "zoom";
 
-    //Größe der Optischen Bank, die durch Scrollen benutzbar ist
+    //Groesse der Optischen Bank, die durch Scrollen benutzbar ist
     private Point groesse;
 
     //Rahmen um die Optische Bank zum Scrollen des Bildausschnittes
@@ -66,12 +66,12 @@ public class OptischeBank extends JPanel implements Speicherbar {
     private static final String XML_MODUS = "modus";
 
     /**
-     * Wert zum Übergeben an Funktionen für die Berechnung durch reale Brechung und Reflektion)
+     * Wert zum Uebergeben an Funktionen fuer die Berechnung durch reale Brechung und Reflektion)
      */
     public static final int MODUS_SNELLIUS = 1;
 
     /**
-     * Wert zum Übergeben an Funktionen für die Berechnung durch Hauptebenen
+     * Wert zum Uebergeben an Funktionen fuer die Berechnung durch Hauptebenen
      */
     public static final int MODUS_HAUPTEBENE = 2;
 
@@ -80,19 +80,19 @@ public class OptischeBank extends JPanel implements Speicherbar {
     //Name von virtuelleStrahlenAktiv in XML
     private static final String XML_VIRTUELLE_STRAHLEN = "virtuelle_strahlen";
 
-    //Liste aller Bauelemente, die dieser Optischen Bank hinzugefügt wurden
+    //Liste aller Bauelemente, die dieser Optischen Bank hinzugefuegt wurden
     private ArrayList<Bauelement> bauelemente;
 
-    //Liste aller Lichtquellen, die dieser Optischen Bank hinzugefügt wurden
+    //Liste aller Lichtquellen, die dieser Optischen Bank hinzugefuegt wurden
     private ArrayList<Lichtquelle> lichtquellen;
 
-    //Liste aller Schirme, die dieser Optischen Bank hinzugefügt wurden
+    //Liste aller Schirme, die dieser Optischen Bank hinzugefuegt wurden
     private ArrayList<Schirm> schirme;
 
-    //Liste aller Objekte, die Kollision mit Lichtstrahlen ausführen, die dieser Optischen Bank hinzugefügt wurden
+    //Liste aller Objekte, die Kollision mit Lichtstrahlen ausfuehren, die dieser Optischen Bank hinzugefuegt wurden
     private ArrayList<KannKollision> kollisionsObjekte;
 
-    //Aktionsliste zum Ausführen und rückgängig machen von Aktionen
+    //Aktionsliste zum Ausfuehren und rueckgaengig machen von Aktionen
     private AktionsListe aktionsListe;
 
     //Die optische Achse
@@ -112,11 +112,11 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Initialisiere neue Optische Bank über Ein jdom Element, welches die notwendigen Attribute enthalten muss.
+     * Initialisiere neue Optische Bank ueber Ein jdom Element, welches die notwendigen Attribute enthalten muss.
      *
      * @param xmlElement jdom Element zum Initialisieren
      * @param dateiPfad  Ort, von dem die Optische Bank geladen wurde
-     * @throws Exception Fehler der zurückgegeben wird, falls Laden nicht erfolgreich durchgeführt werden konnte
+     * @throws Exception Fehler der zurueckgegeben wird, falls Laden nicht erfolgreich durchgefuehrt werden konnte
      */
     public OptischeBank(Element xmlElement, File dateiPfad) throws Exception {
         this.dateiPfad = dateiPfad;
@@ -193,12 +193,12 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Fügt ein neues Bauelement hinzu.
+     * Fuegt ein neues Bauelement hinzu.
      *
      * @param bauelement Neues Bauelement
      */
     public void bauelementHinzufuegen(Bauelement bauelement) {
-        //Fügt -je nach Typ- das Bauelement den Listen lichtquellen, kollisionsObjekte und dem zeichenBrett hinzu
+        //Fuegt -je nach Typ- das Bauelement den Listen lichtquellen, kollisionsObjekte und dem zeichenBrett hinzu
         switch (bauelement.getTyp()) {
             case Bauelement.TYP_LAMPE:
                 lichtquellen.add((Lichtquelle) bauelement);
@@ -225,9 +225,9 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Löscht ein Bauelement aus der Optischen Bank.
+     * Loescht ein Bauelement aus der Optischen Bank.
      *
-     * @param bauelement Zu Löschendes Bauelement
+     * @param bauelement Zu Loeschendes Bauelement
      */
     public void bauelementLoeschen(Bauelement bauelement) {
         if (bauelement.getTyp() == Bauelement.TYP_AUGE) {
@@ -241,7 +241,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Führt eine neue Aktion in der Optischen Bank aus, fügt sie der Aktionsliste hinzu und aktualisiert die Optische Bank.
+     * Fuehrt eine neue Aktion in der Optischen Bank aus, fuegt sie der Aktionsliste hinzu und aktualisiert die Optische Bank.
      *
      * @param aktion Aktion
      */
@@ -252,7 +252,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Überschreibt die letzte Aktion der Aktionsliste und führt die neue Aktion danach aus. Aktualisiert die Optische Bank
+     * Ueberschreibt die letzte Aktion der Aktionsliste und fuehrt die neue Aktion danach aus. Aktualisiert die Optische Bank
      *
      * @param aktion Aktion
      */
@@ -263,7 +263,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Macht die zuletzt ausgeführte Aktion rückgängig und aktualisiert die Optische Bank
+     * Macht die zuletzt ausgefuehrte Aktion rueckgaengig und aktualisiert die Optische Bank
      */
     public void aktionRueckgaengig() {
         aktionsListe.undo();
@@ -271,7 +271,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Führt die zuletzt rückgängig gemachte Aktion erneut aus und aktualisiert die Optische Bank
+     * Fuehrt die zuletzt rueckgaengig gemachte Aktion erneut aus und aktualisiert die Optische Bank
      */
     public void aktionWiederholen() {
         aktionsListe.redo();
@@ -279,7 +279,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Berechnet die Strahlengänge von allen Lichtquellen neu
+     * Berechnet die Strahlengaenge von allen Lichtquellen neu
      */
     public void strahlenNeuBerechnen() {
         for (Lichtquelle cLicht : lichtquellen) {
@@ -292,8 +292,8 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Berechnet einen einzigen Strahlengang neu, indem nacheinander alle möglichen Kollisionen mit Elementen der Liste kollisionsObjekte durchgegangen werden.
-     * Der Strahlengang wird solange durch die jeweils erste Kollision mit einem KollisionsElement manipuliert, bis er seine maximale Anzahl an Teilstücken
+     * Berechnet einen einzigen Strahlengang neu, indem nacheinander alle moeglichen Kollisionen mit Elementen der Liste kollisionsObjekte durchgegangen werden.
+     * Der Strahlengang wird solange durch die jeweils erste Kollision mit einem KollisionsElement manipuliert, bis er seine maximale Anzahl an Teilstuecken
      * (MAX_STRAHLLAENGE) erreicht hat oder keine Kollision mehr findet.
      *
      * @param strahlengang Zu Berechnender Strahlengang
@@ -312,10 +312,10 @@ public class OptischeBank extends JPanel implements Speicherbar {
                 }
             }
             if (ersteKoll != null) {
-                //Strahlengang ist auf eine Fläche getroffen
+                //Strahlengang ist auf eine Flaeche getroffen
                 ersteKoll.kollisionDurchfuehren();
             } else {
-                //Strahlengang ist auf keine Fläche mehr getroffen
+                //Strahlengang ist auf keine Flaeche mehr getroffen
                 break;
             }
         }
@@ -324,7 +324,7 @@ public class OptischeBank extends JPanel implements Speicherbar {
     /**
      * Aktualisiert die Optische Bank.
      * Es werden alle Strahlen neu Berechnet.
-     * Anschließend werden alle Elemente durch den Aufruf von repaint neu gezeichnet.
+     * Anschliessend werden alle Elemente durch den Aufruf von repaint neu gezeichnet.
      */
     public void aktualisieren() {
         strahlenNeuBerechnen();
@@ -333,23 +333,23 @@ public class OptischeBank extends JPanel implements Speicherbar {
     }
 
     /**
-     * Erhöht die Vergrößerung der Optischen Bank
+     * Erhoeht die Vergroesserung der Optischen Bank
      */
     public void zoomStufeRein() {
         setZoom(zoom *= (1 + Konstanten.ZOOM_STUFE));
     }
 
     /**
-     * Verringert die Vergrößerung der Optischen Bank
+     * Verringert die Vergroesserung der Optischen Bank
      */
     public void zoomStufeRaus() {
         setZoom(zoom / (1 + Konstanten.ZOOM_STUFE));
     }
 
     /**
-     * Setzt die Vergrößerung der Optischen Bank auf einen bestimmten Wert in dem Intervall [Konstanten.ZOOM_MIN, Konstanten.ZOOM_MAX]
+     * Setzt die Vergroesserung der Optischen Bank auf einen bestimmten Wert in dem Intervall [Konstanten.ZOOM_MIN, Konstanten.ZOOM_MAX]
      *
-     * @param nZoom Wert der Vergrößerung
+     * @param nZoom Wert der Vergroesserung
      * @see Konstanten
      */
     public void setZoom(double nZoom) {

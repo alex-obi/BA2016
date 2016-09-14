@@ -16,16 +16,16 @@ import java.util.ArrayList;
  */
 public class Strahlengang implements Zeichenbar {
 
-    //Speichert den Startwert um Strahlengang zurücksetzen zu können
+    //Speichert den Startwert um Strahlengang zuruecksetzen zu koennen
     private Strahl anfangsStrahl;
 
     //Speichert, ob dieser Strahl gezeichnet werden soll.
     private boolean aktiviert;
 
-    //Speichert aktuelle Strahlenabschnitte und die Richtung des letzten, ungehinderten Abschnittes, der das Bild verlässt.
+    //Speichert aktuelle Strahlenabschnitte und die Richtung des letzten, ungehinderten Abschnittes, der das Bild verlaesst.
     private ArrayList<Gerade> strahlenAbschnitte;
 
-    //Strahl am Ende der verbundenen Geraden, mit dem Kollisionen überprüft werden.
+    //Strahl am Ende der verbundenen Geraden, mit dem Kollisionen ueberprueft werden.
     private Strahl aktuellerStrahl;
 
     /**
@@ -40,9 +40,9 @@ public class Strahlengang implements Zeichenbar {
     }
 
     /**
-     * Hängt einen neuen Strahl an diesen Strahlengang an. Der aktuelle Strahl wird dann zu einer Geraden mit Länge bis zum Basisvektors des neuen Strahls.
+     * Haengt einen neuen Strahl an diesen Strahlengang an. Der aktuelle Strahl wird dann zu einer Geraden mit Laenge bis zum Basisvektors des neuen Strahls.
      *
-     * @param neuerStrahl Neuer Strahl, der angehängt werden soll.
+     * @param neuerStrahl Neuer Strahl, der angehaengt werden soll.
      */
     public void neuenStrahlAnhaengen(Strahl neuerStrahl) {
         if (strahlenAbschnitte.size() >= Konstanten.MAX_STRAHLLAENGE) {
@@ -54,8 +54,8 @@ public class Strahlengang implements Zeichenbar {
     }
 
     /**
-     * Beendet diesen Strahlengang. Dies kann zum Beispiel durch Absorption oder dem Erreichen der maximalen Strahlenlänge erfolgen.
-     * Der aktuelle Strahl wird als Gerade in die Liste der Strahlenabschnitte eingefügt und auf null gesetzt.
+     * Beendet diesen Strahlengang. Dies kann zum Beispiel durch Absorption oder dem Erreichen der maximalen Strahlenlaenge erfolgen.
+     * Der aktuelle Strahl wird als Gerade in die Liste der Strahlenabschnitte eingefuegt und auf null gesetzt.
      *
      * @param letztePosition Position, die den aktuellen Strahl zu einer Geraden begrenzt, und dem letzten Punkt des Strahlengangs entspricht.
      */
@@ -65,16 +65,16 @@ public class Strahlengang implements Zeichenbar {
     }
 
     /**
-     * Setzt den Strahlengang zurück. Er besteht danach nur noch aus einem Anfangsstrahl.
+     * Setzt den Strahlengang zurueck. Er besteht danach nur noch aus einem Anfangsstrahl.
      */
     public void resetteStrahlengang() {
         this.aktuellerStrahl = anfangsStrahl;
-        //Lösche die alte Liste der Strahlenabschnitte:
+        //Loesche die alte Liste der Strahlenabschnitte:
         strahlenAbschnitte = new ArrayList<>();
     }
 
     /**
-     * Gibt die Quellpunkte der Geraden und des aktuellen Strahls in einer Liste zurück.
+     * Gibt die Quellpunkte der Geraden und des aktuellen Strahls in einer Liste zurueck.
      *
      * @param auchVirtuell Gibt an, ob auch virtuelle Bilder ausgegebenen werden sollen.
      * @return Liste aller Bilder, die durch diesen Strahlengang entstehen.
@@ -98,7 +98,7 @@ public class Strahlengang implements Zeichenbar {
      * Gibt an, ob dieser Strahl innerhalb eines Toleranzradius angeklickt wurde.
      *
      * @param pruefKreis Kreis um den Mauszeiger mit Toleranzradius.
-     * @return Wahrheitswert, ob dieser Strahlengang innerhalb des Prüfkreises verläuft.
+     * @return Wahrheitswert, ob dieser Strahlengang innerhalb des Pruefkreises verlaeuft.
      */
     public boolean istAngeklickt(Kreis pruefKreis) {
         if (aktuellerStrahl != null) {

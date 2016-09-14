@@ -21,7 +21,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /**
- * Linse, die aus zwei brechenden, sphärischen Grenzflächen besteht.
+ * Linse, die aus zwei brechenden, sphaerischen Grenzflaechen besteht.
  */
 public class Linse extends Bauelement implements KannKollision {
 
@@ -35,25 +35,25 @@ public class Linse extends Bauelement implements KannKollision {
      */
     public static final String XML_LINSE = "linse";
 
-    //Höhe der Linse
+    //Hoehe der Linse
     private double hoeheLinse;
 
     /**
-     * Name der Höhe im XML-Dokument.
+     * Name der Hoehe im XML-Dokument.
      */
     public static final String XML_HOEHE_LINSE = "hoeheLinse";
 
     /**
-     * Mindestwert für die Höhe der Linse.
+     * Mindestwert fuer die Hoehe der Linse.
      */
     public static final int MIND_HOEHE_LINSE = 100;
 
     /**
-     * Maximalwert für die Höhe der Linse.
+     * Maximalwert fuer die Hoehe der Linse.
      */
     public static final int MAX_HOEHE_LINSE = 500;
 
-    //Mindestdicke der Linse zwischen den Scheitelpunkten ihrer beiden brechenden Flächen.
+    //Mindestdicke der Linse zwischen den Scheitelpunkten ihrer beiden brechenden Flaechen.
     private double dicke;
 
     /**
@@ -62,7 +62,7 @@ public class Linse extends Bauelement implements KannKollision {
     public static final String XML_DICKE = "dicke";
 
     /**
-     * Vordere Linsenseite als Grenzfläche
+     * Vordere Linsenseite als Grenzflaeche
      */
     protected Grenzflaeche linsenseite1;
 
@@ -74,11 +74,11 @@ public class Linse extends Bauelement implements KannKollision {
      */
     public static final String XML_RADIUS1 = "radius1";
 
-    //Abstand bezüglich Mittelpunkt von Radius1
+    //Abstand bezueglich Mittelpunkt von Radius1
     private double breite1;
 
     /**
-     * Hintere Linsenseite als Grenzfläche
+     * Hintere Linsenseite als Grenzflaeche
      */
     protected Grenzflaeche linsenseite2;
 
@@ -90,16 +90,16 @@ public class Linse extends Bauelement implements KannKollision {
      */
     public static final String XML_RADIUS2 = "radius2";
 
-    //Abstand bezüglich Mittelpunkt von Radius2
+    //Abstand bezueglich Mittelpunkt von Radius2
     private double breite2;
 
     /**
-     * Betragsmäßiger Mindestwert für die Radien der Linsenseiten.
+     * Betragsmaessiger Mindestwert fuer die Radien der Linsenseiten.
      */
     public static final double MIND_RADIUS = 50;
 
     /**
-     * Betragsmäßiger Maximalwert für die Radien der Linsenseiten.
+     * Betragsmaessiger Maximalwert fuer die Radien der Linsenseiten.
      */
     public static final double MAX_RADIUS = 1000;
 
@@ -122,12 +122,12 @@ public class Linse extends Bauelement implements KannKollision {
     public static final String XML_BRECHZAHL = "brechzahl";
 
     /**
-     * Mindestwert für die Brechzahl.
+     * Mindestwert fuer die Brechzahl.
      */
     public static final double MIND_BRECHZAHL = 1;
 
     /**
-     * Maximalwert für die Brechzahl.
+     * Maximalwert fuer die Brechzahl.
      */
     public static final double MAX_BRECHZAHL = 4;
 
@@ -135,12 +135,12 @@ public class Linse extends Bauelement implements KannKollision {
     private double brennweite;
 
     /**
-     * Betragsmäßiger Mindestwert für die Brennweite der Linse.
+     * Betragsmaessiger Mindestwert fuer die Brennweite der Linse.
      */
     public static final double MIND_BRENNWEITE = 25;
 
     /**
-     * Betragsmäßiger Maximalwert für die Brennweite der Linse
+     * Betragsmaessiger Maximalwert fuer die Brennweite der Linse
      */
     public static final double MAX_BRENNWEITE = 2000;
 
@@ -149,21 +149,21 @@ public class Linse extends Bauelement implements KannKollision {
      */
     protected Hauptebene hauptebene;
 
-    //Höhe der Hauptebene der Linse
+    //Hoehe der Hauptebene der Linse
     private double hoeheHauptebene;
 
     /**
-     * Name der Höhe für Hauptebene im XML-Dokument.
+     * Name der Hoehe fuer Hauptebene im XML-Dokument.
      */
     public static final String XML_HOEHE_HAUPTEBENE = "hoeheHauptebene";
 
     /**
-     * Mindestwert für die Höhe der Hauptebene.
+     * Mindestwert fuer die Hoehe der Hauptebene.
      */
     public static final int MIND_HOEHE_HAUPTEBENE = 80;
 
     /**
-     * Maximalwert für die Höhe der Hauptebene.
+     * Maximalwert fuer die Hoehe der Hauptebene.
      */
     public static final int MAX_HOEHE_HAUPTEBENE = 500;
 
@@ -177,7 +177,7 @@ public class Linse extends Bauelement implements KannKollision {
     private Eigenschaftenregler_Slider slide_radius2;
 
     /**
-     * Initialisiere die Linse über eine Brennweite
+     * Initialisiere die Linse ueber eine Brennweite
      *
      * @param optischeBank Referenz auf Optische Bank.
      * @param mittelPunkt  Mittelpunkt der Linse.
@@ -193,15 +193,15 @@ public class Linse extends Bauelement implements KannKollision {
     }
 
     /**
-     * Initialisiere die Linse mit Radien, Brechzahl, Höhe und Dicke.
+     * Initialisiere die Linse mit Radien, Brechzahl, Hoehe und Dicke.
      *
      * @param optischeBank Refrenz auf Optische Bank.
      * @param mittelPunkt  Mittelpunkt der Linse.
      * @param brechzahl    Brechzahl des Materials der Linse.
-     * @param hoehe        Höhe der Linse.
-     * @param dicke        Mindestabstand der Scheitelpunkte der beiden brechenden Flächen.
+     * @param hoehe        Hoehe der Linse.
+     * @param dicke        Mindestabstand der Scheitelpunkte der beiden brechenden Flaechen.
      * @param radius1      Radius Vorderseite.
-     * @param radius2      Radius Rückseite.
+     * @param radius2      Radius Rueckseite.
      */
     public Linse(OptischeBank optischeBank, Vektor mittelPunkt, double brechzahl, double hoehe, double dicke, double radius1, double radius2) {
         super(optischeBank, mittelPunkt, TYP_LINSE);
@@ -209,10 +209,10 @@ public class Linse extends Bauelement implements KannKollision {
     }
 
     /**
-     * Initialisiere Linse über jdom2.Element.
+     * Initialisiere Linse ueber jdom2.Element.
      *
      * @param optischeBank Referenz auf Optische Bank.
-     * @param xmlElement   jdom2.Element, das die benötigten Attribute enthält.
+     * @param xmlElement   jdom2.Element, das die benoetigten Attribute enthaelt.
      * @throws Exception Exception, die geworfen wird, wenn bei der Initialisierung ein Fehler passiert.
      */
     public Linse(OptischeBank optischeBank, Element xmlElement) throws Exception {
@@ -478,12 +478,12 @@ public class Linse extends Bauelement implements KannKollision {
     }
 
     /**
-     * Berechnet die Brennweite der Linse durch Linsenschleiferformel für dünne Linsen.
+     * Berechnet die Brennweite der Linse durch Linsenschleiferformel fuer duenne Linsen.
      *
      * @param brechzahl Brechzahl des Materials
      * @param radius1   Radius Vorderseite. r = 0 -> r gegen Unendlich.
-     * @param radius2   Radius Rückseite. r = 0 -> r gegen Unendlich.
-     * @return Näherung der Brennweite der Linse
+     * @param radius2   Radius Rueckseite. r = 0 -> r gegen Unendlich.
+     * @return Naeherung der Brennweite der Linse
      */
     public static double berechneBrennweite(double brechzahl, double radius1, double radius2) {
         if (radius1 == 0) {
@@ -497,7 +497,7 @@ public class Linse extends Bauelement implements KannKollision {
     }
 
     /**
-     * @param nHoehe Maximale Höhe der Linse.
+     * @param nHoehe Maximale Hoehe der Linse.
      */
     public void setMaxLinsenHoehe(double nHoehe) {
         formatAktualisieren(brechzahl, hoeheHauptebene, nHoehe, dicke, radius1, radius2);
@@ -511,7 +511,7 @@ public class Linse extends Bauelement implements KannKollision {
     }
 
     /**
-     * @param nRadius2 Radius Rückseite.
+     * @param nRadius2 Radius Rueckseite.
      */
     public void setRadius2(double nRadius2) {
         formatAktualisieren(brechzahl, hoeheHauptebene, hoeheLinse, dicke, radius1, nRadius2);
@@ -524,7 +524,7 @@ public class Linse extends Bauelement implements KannKollision {
         formatAktualisieren(nBrechzahl, hoeheHauptebene, hoeheLinse, dicke, radius1, radius2);
     }
 
-    //Formatänderungen unter Einhaltung einer möglichst geringen Dicke
+    //Formataenderungen unter Einhaltung einer moeglichst geringen Dicke
 
     private void setMaxLinsenHoeheHoehe_minDicke(double nHoehe) {
         formatAktualisieren(brechzahl, hoeheHauptebene, nHoehe, 0, radius1, radius2);

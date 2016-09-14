@@ -38,7 +38,7 @@ public abstract class Auswahlobjekt implements Zeichenbar {
     }
 
     /**
-     * Gibt an, ob der übergebene Punkt innerhalb des Rahmens liegt.
+     * Gibt an, ob der uebergebene Punkt innerhalb des Rahmens liegt.
      *
      * @param pruefVektor Position, an dem geklickt wurde.
      * @return Wahrheitswert, ob Punkt innerhalb des Rahmens liegt.
@@ -62,7 +62,7 @@ public abstract class Auswahlobjekt implements Zeichenbar {
     }
 
     /**
-     * Abstrakte Funktion, die durch erbende Klassen implementiert wird und ausgeführt wird, wenn das Objekt angeklickt wurde.
+     * Abstrakte Funktion, die durch erbende Klassen implementiert wird und ausgefuehrt wird, wenn das Objekt angeklickt wurde.
      */
     public abstract void waehleAus();
 

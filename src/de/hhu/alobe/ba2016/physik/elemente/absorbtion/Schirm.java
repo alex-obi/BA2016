@@ -34,25 +34,25 @@ public class Schirm extends Bauelement implements KannKollision {
      */
     public static final String XML_SCHIRM = "schirm";
 
-    //Höhe des Schirms
+    //Hoehe des Schirms
     private double hoehe;
 
     /**
-     * Name der Höhe im XML-Dokument.
+     * Name der Hoehe im XML-Dokument.
      */
     public static final String XML_HOEHE = "hoehe";
 
     /**
-     * Mindestwert für die Höhe.
+     * Mindestwert fuer die Hoehe.
      */
     public static final double MIND_HOEHE = 20;
 
     /**
-     * Maximalwert für die Höhe.
+     * Maximalwert fuer die Hoehe.
      */
     public static final double MAX_HOEHE = 500;
 
-    //Fläche des Schirms
+    //Flaeche des Schirms
     private Grenzflaeche_Ebene schirmFlaeche;
 
     //Eigenschaftenregler zur Manipulation des Schirms durch den Benutzer.

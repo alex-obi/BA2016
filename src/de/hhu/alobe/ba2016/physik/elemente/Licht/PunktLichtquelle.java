@@ -20,7 +20,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 /**
- * Punktförmige Lichtquelle.
+ * Punktfoermige Lichtquelle.
  */
 public class PunktLichtquelle extends Lichtquelle {
 
@@ -57,8 +57,8 @@ public class PunktLichtquelle extends Lichtquelle {
      * Initialisiere Punktlichtquelle mit einem jdom2.Element.
      *
      * @param optischeBank Referenz auf Optische Bank.
-     * @param xmlElement   jdom2.Element, das die benötigten Attribute enthält.
-     * @throws Exception Exception, die geworfen wird, wenn bei der Initialisierung etwas schief läuft.
+     * @param xmlElement   jdom2.Element, das die benoetigten Attribute enthaelt.
+     * @throws Exception Exception, die geworfen wird, wenn bei der Initialisierung etwas schief laeuft.
      */
     public PunktLichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement);

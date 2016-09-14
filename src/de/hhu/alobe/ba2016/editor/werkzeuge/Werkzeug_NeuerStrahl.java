@@ -10,15 +10,15 @@ import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 
 /**
- * Nach Auswahl einer Lichtquelle können mit diesem Werkzeug neue Strahlen der optischen Bank hinzugefuegt werden.
+ * Nach Auswahl einer Lichtquelle koennen mit diesem Werkzeug neue Strahlen der optischen Bank hinzugefuegt werden.
  * Mit der rechten Maustaste kann wieder zum Werkzeug Auswahl gewechselt werden.
  */
 public class Werkzeug_NeuerStrahl extends Werkzeug {
 
-    //Ausgewählte Lichtquelle, von der die Strahlen erzeugt werden sollen
+    //Ausgewaehlte Lichtquelle, von der die Strahlen erzeugt werden sollen
     private Lichtquelle lichtquelle;
 
-    //Speichert den Strahl, der aktuell durch den Mauscursor erzeugt werden würde
+    //Speichert den Strahl, der aktuell durch den Mauscursor erzeugt werden wuerde
     private Strahlengang strahlDummy;
 
     /**
@@ -41,17 +41,17 @@ public class Werkzeug_NeuerStrahl extends Werkzeug {
     @Override
     public void auswaehlen() {
         lichtquelle.rahmenEinblenden();
-        //Ändere bei Auswahl des Werkzeugs den Cursor
+        //Aendere bei Auswahl des Werkzeugs den Cursor
         optischeBank.getZeichenBrett().setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
     }
 
     @Override
     public void mouseReleased(MouseEvent e, Vektor realePosition) {
-        //Bei Loslassen der linken Maustaste erstelle Aktion um einen neuen Strahl zu erstellen, der durch die Position des Cursors verläuft.
+        //Bei Loslassen der linken Maustaste erstelle Aktion um einen neuen Strahl zu erstellen, der durch die Position des Cursors verlaeuft.
         if (SwingUtilities.isLeftMouseButton(e)) {
-            //Lösche das alte Dummy Element
+            //Loesche das alte Dummy Element
             lichtquelle.loescheStrahl(strahlDummy);
-            //Berechne neuen Strahl und erstelle Aktion für die Optische Bank
+            //Berechne neuen Strahl und erstelle Aktion fuer die Optische Bank
             if (strahlDummy != null) {
                 optischeBank.neueAktionDurchfuehren(new Aktion_NeuerStrahl(lichtquelle, strahlDummy));
                 strahlDummy = null;
@@ -75,7 +75,7 @@ public class Werkzeug_NeuerStrahl extends Werkzeug {
 
     @Override
     public void mouseDragged(MouseEvent e, Vektor realePosition) {
-        //Erzeuge Dummy Strahl bei Bewegung der Maus bei gedrückter linker Maustaste. Aktualisiere das Dummy Element bei jeder Bewegung
+        //Erzeuge Dummy Strahl bei Bewegung der Maus bei gedrueckter linker Maustaste. Aktualisiere das Dummy Element bei jeder Bewegung
         if (SwingUtilities.isLeftMouseButton(e)) {
             dummyElementAktualisieren(realePosition);
         }

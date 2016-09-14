@@ -8,18 +8,18 @@ import java.awt.geom.Line2D;
 
 /**
  * Gerade als Verbindung zweier Punkte.
- * Die Gerade entspricht einem Strahl mit endlicher Länge.
+ * Die Gerade entspricht einem Strahl mit endlicher Laenge.
  */
 public class Gerade extends Strahl implements KannStrahlenSchnitt {
 
-    //Länge der Geraden
+    //Laenge der Geraden
     private double laenge;
 
     /**
-     * Initialisiere die Gerade über einen Strahl mit einer endlichen Länge
+     * Initialisiere die Gerade ueber einen Strahl mit einer endlichen Laenge
      *
      * @param strahl Strahl, aus dem Gerade gebaut wird.
-     * @param laenge Länge der neuen Gerade.
+     * @param laenge Laenge der neuen Gerade.
      */
     public Gerade(Strahl strahl, double laenge) {
         super(strahl.getBasisVektor(), strahl.getRichtungsVektor(), strahl.getQuellEntfernung(), strahl.isAusDemUnendlichen());
@@ -48,7 +48,7 @@ public class Gerade extends Strahl implements KannStrahlenSchnitt {
         double[] lamdas = gibSchnittentfernungen(strahl);
         if (lamdas == null) return -1; //Die Strahlen sind parallel
 
-        //Gebe die Schnittentfernung nur zurück, wenn der übergebene Strahl diese Gerade innerhalb ihrer Grenzen schneidet. Ansonsten -1.
+        //Gebe die Schnittentfernung nur zurueck, wenn der uebergebene Strahl diese Gerade innerhalb ihrer Grenzen schneidet. Ansonsten -1.
         if (lamdas[0] >= 0 && lamdas[0] <= laenge && lamdas[1] >= 0) {
             return lamdas[1];
         } else {
@@ -72,14 +72,14 @@ public class Gerade extends Strahl implements KannStrahlenSchnitt {
     }
 
     /**
-     * @return Länge der Geraden.
+     * @return Laenge der Geraden.
      */
     public double getLaenge() {
         return laenge;
     }
 
     /**
-     * @param laenge Neue Länge der Geraden vom Basisvektor aus.
+     * @param laenge Neue Laenge der Geraden vom Basisvektor aus.
      */
     public void setLaenge(double laenge) {
         this.laenge = laenge;

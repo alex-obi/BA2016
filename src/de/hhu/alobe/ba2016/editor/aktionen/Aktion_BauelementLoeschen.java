@@ -5,21 +5,21 @@ import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 
 /**
- * Aktion zum Löschen eines Bauelements in der Optischen Bank.
+ * Aktion zum Loeschen eines Bauelements in der Optischen Bank.
  */
 public class Aktion_BauelementLoeschen implements Aktion {
 
     //Referenz auf die Optische Bank:
     private OptischeBank optischeBank;
 
-    //Bauelement, das gelöscht werden soll.
+    //Bauelement, das geloescht werden soll.
     private Bauelement bauelement;
 
     /**
      * Initialisiert die Aktion BauelementLoeschen
      *
-     * @param optischeBank Optische Bank, von der das Bauelement gelöscht werden soll
-     * @param bauelement   Bauelement, das gelöscht werden soll.
+     * @param optischeBank Optische Bank, von der das Bauelement geloescht werden soll
+     * @param bauelement   Bauelement, das geloescht werden soll.
      */
     public Aktion_BauelementLoeschen(OptischeBank optischeBank, Bauelement bauelement) {
         this.optischeBank = optischeBank;
@@ -28,7 +28,7 @@ public class Aktion_BauelementLoeschen implements Aktion {
 
     @Override
     public void aktionDurchfuehren() {
-        //Löscht das Bauelement:
+        //Loescht das Bauelement:
         optischeBank.bauelementLoeschen(bauelement);
     }
 

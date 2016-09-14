@@ -32,7 +32,7 @@ public abstract class Grafiken {
     private static ImageIcon grafik_zoom100;
 
     /**
-     * Lädt alle benutzten Grafiken und initialisiert ihre Datenfelder
+     * Laedt alle benutzten Grafiken und initialisiert ihre Datenfelder
      */
     public static void grafikenLaden() {
         //Bauelemente:
@@ -56,10 +56,10 @@ public abstract class Grafiken {
     }
 
     /**
-     * Lädt eine Grafikdatei als BufferedImage
+     * Laedt eine Grafikdatei als BufferedImage
      *
      * @param ort Pfad zu der Datei
-     * @return Grafik als BufferedImage, null wenn Laden nicht möglich war
+     * @return Grafik als BufferedImage, null wenn Laden nicht moeglich war
      */
     private static BufferedImage ladeBild(String ort) {
         try {
@@ -71,7 +71,7 @@ public abstract class Grafiken {
     }
 
     /**
-     * Lädt eine Grafikdatei als ImageIcon
+     * Laedt eine Grafikdatei als ImageIcon
      *
      * @param ort Pfad zu der Datei
      * @return Grafik als ImageIcon
@@ -82,105 +82,105 @@ public abstract class Grafiken {
     }
 
     /**
-     * @return Grafik für Bauelement Auge als ImageIcon
+     * @return Grafik fuer Bauelement Auge als ImageIcon
      */
     public static ImageIcon getGrafik_auge() {
         return grafik_auge;
     }
 
     /**
-     * @return Grafik für Bauelement Blende als ImageIcon
+     * @return Grafik fuer Bauelement Blende als ImageIcon
      */
     public static ImageIcon getGrafik_blende() {
         return grafik_blende;
     }
 
     /**
-     * @return Grafik für Bauelement Hohlspiegel als ImageIcon
+     * @return Grafik fuer Bauelement Hohlspiegel als ImageIcon
      */
     public static ImageIcon getGrafik_hohlspiegel() {
         return grafik_hohlspiegel;
     }
 
     /**
-     * @return Grafik für Bauelement Lampe als ImageIcon
+     * @return Grafik fuer Bauelement Lampe als ImageIcon
      */
     public static ImageIcon getGrafik_lampe() {
         return grafik_lampe;
     }
 
     /**
-     * @return Grafik für Bauelement Laser als ImageIcon
+     * @return Grafik fuer Bauelement Laser als ImageIcon
      */
     public static ImageIcon getGrafik_laser() {
         return grafik_laser;
     }
 
     /**
-     * @return Grafik für Bauelement Linse als ImageIcon
+     * @return Grafik fuer Bauelement Linse als ImageIcon
      */
     public static ImageIcon getGrafik_linse() {
         return grafik_linse;
     }
 
     /**
-     * @return Grafik für Bauelement Schirm als ImageIcon
+     * @return Grafik fuer Bauelement Schirm als ImageIcon
      */
     public static ImageIcon getGrafik_schirm() {
         return grafik_schirm;
     }
 
     /**
-     * @return Grafik für Bauelement Spiegel als ImageIcon
+     * @return Grafik fuer Bauelement Spiegel als ImageIcon
      */
     public static ImageIcon getGrafik_spiegel() {
         return grafik_spiegel;
     }
 
     /**
-     * @return Grafik für Auswahl Button als ImageIcon
+     * @return Grafik fuer Auswahl Button als ImageIcon
      */
     public static ImageIcon getGrafik_auswahl() {
         return grafik_auswahl;
     }
 
     /**
-     * @return Grafik für Löschen Button als ImageIcon
+     * @return Grafik fuer Loeschen Button als ImageIcon
      */
     public static ImageIcon getGrafik_loeschen() {
         return grafik_loeschen;
     }
 
     /**
-     * @return Grafik für Schritt Rückwärts Button als ImageIcon
+     * @return Grafik fuer Schritt Rueckwaerts Button als ImageIcon
      */
     public static ImageIcon getGrafik_zurueck() {
         return grafik_zurueck;
     }
 
     /**
-     * @return Grafik für Schritt Vorwärts Button als ImageIcon
+     * @return Grafik fuer Schritt Vorwaerts Button als ImageIcon
      */
     public static ImageIcon getGrafik_vorwaerts() {
         return grafik_vorwaerts;
     }
 
     /**
-     * @return rafik für Zoom Rein Button als ImageIcon
+     * @return rafik fuer Zoom Rein Button als ImageIcon
      */
     public static ImageIcon getGrafik_zoomRein() {
         return grafik_zoomRein;
     }
 
     /**
-     * @return Grafik für Zoom Raus Button als ImageIcon
+     * @return Grafik fuer Zoom Raus Button als ImageIcon
      */
     public static ImageIcon getGrafik_zoomRaus() {
         return grafik_zoomRaus;
     }
 
     /**
-     * @return Grafik für Zoom100 Button als ImageIcon
+     * @return Grafik fuer Zoom100 Button als ImageIcon
      */
     public static ImageIcon getGrafik_zoom100() {
         return grafik_zoom100;

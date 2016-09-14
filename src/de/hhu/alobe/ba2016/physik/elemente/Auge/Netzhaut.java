@@ -10,11 +10,11 @@ import de.hhu.alobe.ba2016.physik.elemente.absorbtion.Schirm;
 public class Netzhaut extends Schirm {
 
     /**
-     * Initialisiere Netzhaut mit Position und Höhe.
+     * Initialisiere Netzhaut mit Position und Hoehe.
      *
-     * @param auge     Referenz auf zugehöriges Auge.
+     * @param auge     Referenz auf zugehoeriges Auge.
      * @param position Position der Netzhaut.
-     * @param hoehe    Höhe der Netzhaut.
+     * @param hoehe    Hoehe der Netzhaut.
      */
     public Netzhaut(Auge auge, Vektor position, double hoehe) {
         super(auge.getOptischeBank(), position, hoehe);

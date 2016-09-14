@@ -17,11 +17,11 @@ public class Hauptebene extends Flaeche {
     //Mittelpunkt der Hauptebene, auf den die Gerade zentriert wird
     private Vektor mittelpunkt;
 
-    //Kollisionsfläche der Hauptebne als Gerade
+    //Kollisionsflaeche der Hauptebne als Gerade
     private Gerade hauptebene;
 
     /**
-     * Mindesthöhe der Hauptebene um zu kleine grafische Anzeige zu verhindern.
+     * Mindesthoehe der Hauptebene um zu kleine grafische Anzeige zu verhindern.
      */
     public static final int HAUPTEBENE_MINDESTHOEHE = 80;
 
@@ -37,7 +37,7 @@ public class Hauptebene extends Flaeche {
      * @param modus        Berechnungsmodus der Hauptebene (Reflektion, Brechung, Absorbtion, ...).
      * @param nMittelpunkt Mittelpunkt der Hauptebene.
      * @param nBrennweite  Beidseitige Brennweite.
-     * @param hoehe        Höhe der Hauptebene.
+     * @param hoehe        Hoehe der Hauptebene.
      */
     public Hauptebene(int modus, Vektor nMittelpunkt, double nBrennweite, double hoehe) {
         this.modus = modus;
@@ -53,7 +53,7 @@ public class Hauptebene extends Flaeche {
      * @param nMittelpunkt      Mittelpunkt der Hauptebene.
      * @param nBrennweiteVor    Brennweite vor der Hauptebene (negative X-Richtung).
      * @param nBrennweiteHinter Brennweite hinter der Hauptebene (positive X-Richtung).
-     * @param hoehe             Höhe der Hauptebene.
+     * @param hoehe             Hoehe der Hauptebene.
      */
     public Hauptebene(int modus, Vektor nMittelpunkt, double nBrennweiteVor, double nBrennweiteHinter, double hoehe) {
         this.modus = modus;
@@ -64,9 +64,9 @@ public class Hauptebene extends Flaeche {
     }
 
     /**
-     * Setzt die Höhe der Hauptebene neu
+     * Setzt die Hoehe der Hauptebene neu
      *
-     * @param nHoehe Neue Höhe.
+     * @param nHoehe Neue Hoehe.
      */
     public void setHoehe(double nHoehe) {
         hauptebene.verschiebeUm(new Vektor(0, (nHoehe - hauptebene.getLaenge()) / 2));
@@ -74,7 +74,7 @@ public class Hauptebene extends Flaeche {
     }
 
     /**
-     * Setzt Brennweite vor und hinter der Hauptebene auf den übergebenen Wert.
+     * Setzt Brennweite vor und hinter der Hauptebene auf den uebergebenen Wert.
      *
      * @param nBrennweite Neue Brennweite.
      */
@@ -142,7 +142,7 @@ public class Hauptebene extends Flaeche {
                 nQuellWeite = neueRichtung.gibLaenge();
             }
         } else if (Math.abs(gegenstandsweite) < 0.000001) {
-            //Spezialfall 3: Quellpunkt liegt genau auf der Linse -> übernimmt Funktion einer Feldlinse
+            //Spezialfall 3: Quellpunkt liegt genau auf der Linse -> uebernimmt Funktion einer Feldlinse
             double einfallswinkel = cStrGng.getAktuellerStrahl().getRichtungsVektor().gibRichtungsWinkel();
             if (richtungsVZ < 0) {
                 einfallswinkel = Math.PI - einfallswinkel;
@@ -154,7 +154,7 @@ public class Hauptebene extends Flaeche {
             istVirtuell = false;
             nQuellWeite = 0;
         } else if (Math.abs(brennweiteG - gegenstandsweite) < Konstanten.TOLERANZ_ABBILDUNG_UNENDLICH && !cStrGng.getAktuellerStrahl().isAusDemUnendlichen()) {
-            //Spezialfall 1: (g ist ungefähr f)
+            //Spezialfall 1: (g ist ungefaehr f)
             neueRichtung = new Vektor(reflFakt * richtungsVZ * brennweiteB, -gegenstandshoehe);
             neueRichtung.multipliziere(Math.signum(brennweiteB));
             inUnendlich = true;

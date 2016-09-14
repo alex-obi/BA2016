@@ -7,17 +7,17 @@ import de.hhu.alobe.ba2016.mathe.Vektor;
 import org.jdom2.Element;
 
 /**
- * Bauelement als Oberklasse für alle Objekte, die durch den Benutzer der Optischen Bank hinzugefügt werden können und mit den Strahlengängen interagieren.
+ * Bauelement als Oberklasse fuer alle Objekte, die durch den Benutzer der Optischen Bank hinzugefuegt werden koennen und mit den Strahlengaengen interagieren.
  */
 public abstract class Bauelement extends Auswahlobjekt implements Speicherbar {
 
     /**
-     * Name für untypisierte Bauelemente im XML-Dokumente
+     * Name fuer untypisierte Bauelemente im XML-Dokumente
      */
     public static final String XML_BAUELEMENT = "bauelement";
 
     /**
-     * Referenz auf die zugehörige Optische Bank.
+     * Referenz auf die zugehoerige Optische Bank.
      */
     protected OptischeBank optischeBank;
 
@@ -25,32 +25,32 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar {
     private int typ = 0;
 
     /**
-     * Wert für Typ Lampe.
+     * Wert fuer Typ Lampe.
      */
     public static final int TYP_LAMPE = 1;
 
     /**
-     * Wert für Typ Linse.
+     * Wert fuer Typ Linse.
      */
     public static final int TYP_LINSE = 2;
 
     /**
-     * Wert für Typ Spiegel.
+     * Wert fuer Typ Spiegel.
      */
     public static final int TYP_SPIEGEL = 3;
 
     /**
-     * Wert für Typ Blende.
+     * Wert fuer Typ Blende.
      */
     public static final int TYP_BLENDE = 4;
 
     /**
-     * Wert für Typ Schirm.
+     * Wert fuer Typ Schirm.
      */
     public static final int TYP_SCHIRM = 5;
 
     /**
-     * Wert für Typ Auge.
+     * Wert fuer Typ Auge.
      */
     public static final int TYP_AUGE = 6;
 
@@ -68,7 +68,7 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar {
     }
 
     /**
-     * Initialisiere Bauelement über ein jdom-Element.
+     * Initialisiere Bauelement ueber ein jdom-Element.
      *
      * @param optischeBank Referenz auf Optische Bank
      * @param xmlElement   Element als jdom2.Element.
@@ -82,21 +82,21 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar {
     }
 
     /**
-     * Verschiebt das Bauelement um den übergebenen Vektor.
+     * Verschiebt das Bauelement um den uebergebenen Vektor.
      *
      * @param verschiebung Verschiebungsvektor.
      */
     public abstract void verschiebeUm(Vektor verschiebung);
 
     /**
-     * Generiert einen neuen Rahmen, der an die Größe des Elements angepasst ist.
+     * Generiert einen neuen Rahmen, der an die Groesse des Elements angepasst ist.
      *
      * @return Neuer Rahmen.
      */
     public abstract Rahmen generiereRahmen();
 
     /**
-     * Gibt eine Liste der Eigenschaftenregler, die benötigt werden um die Werte des Bauelements durch den Benutzer zu manipulieren.
+     * Gibt eine Liste der Eigenschaftenregler, die benoetigt werden um die Werte des Bauelements durch den Benutzer zu manipulieren.
      *
      * @return Liste der Eigenschaftenregler.
      */
@@ -110,7 +110,7 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar {
     public abstract String gibBauelementNamen();
 
     /**
-     * Gibt an, ob dieses Element durch Verschieben in der Nähe der Optischen Achse auf diese gesetzt werden soll.
+     * Gibt an, ob dieses Element durch Verschieben in der Naehe der Optischen Achse auf diese gesetzt werden soll.
      *
      * @return Soll das Element auf die Optische Achse zentriert werden.
      */
@@ -119,7 +119,7 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar {
     }
 
     /**
-     * Ändere den Mittelpunkt dieses Elments.
+     * Aendere den Mittelpunkt dieses Elments.
      *
      * @param nMittelpunkt Neuer Mittelpunkt.
      */
@@ -128,7 +128,7 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar {
     }
 
     /**
-     * Aktualisiere den Rahmen dieses Elements durch einen neuen Rahmen, der an die Größe des Elements angepasst ist.
+     * Aktualisiere den Rahmen dieses Elements durch einen neuen Rahmen, der an die Groesse des Elements angepasst ist.
      */
     public void rahmenAktualisieren() {
         setRahmen(generiereRahmen());
@@ -159,7 +159,7 @@ public abstract class Bauelement extends Auswahlobjekt implements Speicherbar {
     }
 
     /**
-     * @return Referenz auf die zugehörige Optische Bank.
+     * @return Referenz auf die zugehoerige Optische Bank.
      */
     public OptischeBank getOptischeBank() {
         return optischeBank;

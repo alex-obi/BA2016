@@ -38,21 +38,21 @@ public class ParallelLichtquelle extends Lichtquelle {
     //Breite der Parallellichtquelle
     private double breite = 20;
 
-    //Höhe der Parallellichtquelle
+    //Hoehe der Parallellichtquelle
     private double hoehe;
 
     /**
-     * Name für die Höhe im XML-Dokument.
+     * Name fuer die Hoehe im XML-Dokument.
      */
     public static final String XML_HOEHE = "hoehe";
 
     /**
-     * Mindestwert für die Höhe.
+     * Mindestwert fuer die Hoehe.
      */
     public static final int MIND_HOEHE = 100;
 
     /**
-     * Maximalwert für die Höhe.
+     * Maximalwert fuer die Hoehe.
      */
     public static final int MAX_HOEHE = 600;
 
@@ -60,17 +60,17 @@ public class ParallelLichtquelle extends Lichtquelle {
     private double neigungsWinkel;
 
     /**
-     * Name für den Neigungswinkel im XML-Dokument.
+     * Name fuer den Neigungswinkel im XML-Dokument.
      */
     public static final String XML_NEIGUNG = "neigung";
 
     /**
-     * Mindestwert für den Neigungswinkel.
+     * Mindestwert fuer den Neigungswinkel.
      */
     public static final double MIND_NEIGUNG = -Math.PI / 4;
 
     /**
-     * Maximalwert für den Neigungswinkel.
+     * Maximalwert fuer den Neigungswinkel.
      */
     public static final double MAX_NEIGUNG = Math.PI / 4;
 
@@ -81,12 +81,12 @@ public class ParallelLichtquelle extends Lichtquelle {
     private Eigenschaftenregler_Slider slide_hoehe;
 
     /**
-     * Initialisiere Parallellichtquelle miz Farbe, Höhe und Neigungswinkel.
+     * Initialisiere Parallellichtquelle miz Farbe, Hoehe und Neigungswinkel.
      *
      * @param optischeBank   Referenz auf Optische Bank.
      * @param mittelPunkt    Mittelpunkt der Parallellichtquelle.
      * @param farbe          Farbe der Parallellichtquelle.
-     * @param hoehe          Höhe der Parallellichtquelle.
+     * @param hoehe          Hoehe der Parallellichtquelle.
      * @param neigungsWinkel Neigungswinkel der Parallellichtquelle.
      */
     public ParallelLichtquelle(OptischeBank optischeBank, Vektor mittelPunkt, Farbe farbe, int hoehe, double neigungsWinkel) {
@@ -98,8 +98,8 @@ public class ParallelLichtquelle extends Lichtquelle {
      * Initialisiere Parallellichtquelle mit einem jdom2.Element
      *
      * @param optischeBank Referenz auf Optische Bank.
-     * @param xmlElement   jdom2.Element mit den benötigten Attributen.
-     * @throws Exception Exception, die geworfen wird, wenn beim Initialisieren etwas schief läuft.
+     * @param xmlElement   jdom2.Element mit den benoetigten Attributen.
+     * @throws Exception Exception, die geworfen wird, wenn beim Initialisieren etwas schief laeuft.
      */
     public ParallelLichtquelle(OptischeBank optischeBank, Element xmlElement) throws Exception {
         super(optischeBank, xmlElement);
@@ -212,7 +212,7 @@ public class ParallelLichtquelle extends Lichtquelle {
     }
 
     /**
-     * @param nHoehe Neue Höhe.
+     * @param nHoehe Neue Hoehe.
      */
     public void setHoehe(double nHoehe) {
         hoehe = nHoehe;

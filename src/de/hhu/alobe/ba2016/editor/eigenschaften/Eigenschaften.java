@@ -8,14 +8,14 @@ import java.awt.*;
 
 /**
  * Optionsleiste zum Manipulieren von Eigenschaften von Elementen der Optische Bank.
- * Der Optionsleiste können Eigenschaftenregler übergeben werden, die durch diese Leiste angezeigt und verwaltet werden.
+ * Der Optionsleiste koennen Eigenschaftenregler uebergeben werden, die durch diese Leiste angezeigt und verwaltet werden.
  */
 public class Eigenschaften extends JPanel {
 
-    //Höhe der Optionsleiste:
+    //Hoehe der Optionsleiste:
     private static final int HOEHE = 100;
 
-    //Höhe für Titel:
+    //Hoehe fuer Titel:
     private static final int TITEL_HOEHE = 25;
 
     //Titel der Optionsleiste
@@ -47,7 +47,7 @@ public class Eigenschaften extends JPanel {
      * @param komponenten Eigenschaftenregler als Array.
      */
     public void setOptionen(String nTitel, Eigenschaftenregler[] komponenten) {
-        //Lösche alte Regler:
+        //Loesche alte Regler:
         optionenLoeschen();
 
         //Setze neue Regler:
@@ -58,7 +58,7 @@ public class Eigenschaften extends JPanel {
     }
 
     /**
-     * Löscht die aktuellen Eigenschaftenregler und den Titel.
+     * Loescht die aktuellen Eigenschaftenregler und den Titel.
      */
     public void optionenLoeschen() {
         titel.setText("");

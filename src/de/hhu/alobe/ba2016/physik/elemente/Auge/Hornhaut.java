@@ -21,10 +21,10 @@ public class Hornhaut implements KannKollision, Zeichenbar {
     //Brechzahl des Kammerwassers hinter der Hornhaut
     private static final double BRECHZAHL_HORNHAUT = 1.376;
 
-    //Refrenz auf das zugehörige Auge
+    //Refrenz auf das zugehoerige Auge
     private Auge auge;
 
-    //Fläche der Hornhaut
+    //Flaeche der Hornhaut
     private Grenzflaeche grenzflaeche;
 
     //Hauptebene der Hornhaut
@@ -36,7 +36,7 @@ public class Hornhaut implements KannKollision, Zeichenbar {
     /**
      * Initialisiere neue Hornhaut mit einem Radius.
      *
-     * @param auge     Referenz auf das zugehörige Auge.
+     * @param auge     Referenz auf das zugehoerige Auge.
      * @param position Position der Hornhaut.
      * @param radius   Radius der Hornhaut.
      */
@@ -50,7 +50,7 @@ public class Hornhaut implements KannKollision, Zeichenbar {
     }
 
     /**
-     * Verschiebt die Position der Hornhaut um den übergebenen Vektor.
+     * Verschiebt die Position der Hornhaut um den uebergebenen Vektor.
      *
      * @param verschiebung Vektor, um den die Hornhaut verschoben werden soll.
      */

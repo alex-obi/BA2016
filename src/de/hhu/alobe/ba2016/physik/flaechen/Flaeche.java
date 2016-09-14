@@ -8,28 +8,28 @@ import de.hhu.alobe.ba2016.physik.strahlen.StrahlenKollision;
 import de.hhu.alobe.ba2016.physik.strahlen.Strahlengang;
 
 /**
- * Abstrake Klasse zum Bereitstellen von Methoden um Strahlenkollision an Flächen zu verarbeiten.
- * Eine Fläche ist ein Zweidimendionales Objekt, das aus einer (gekrümmten) Linie besteht.
+ * Abstrake Klasse zum Bereitstellen von Methoden um Strahlenkollision an Flaechen zu verarbeiten.
+ * Eine Flaeche ist ein Zweidimendionales Objekt, das aus einer (gekruemmten) Linie besteht.
  */
 public abstract class Flaeche extends GeomertrischeFigur {
 
     /**
-     * Speichert die Art des Berechnungsmodus, mit dem eintreffende Strahlen verändert werden.
+     * Speichert die Art des Berechnungsmodus, mit dem eintreffende Strahlen veraendert werden.
      */
     protected int modus;
 
     /**
-     * Modus, in dem die Fläche eintreffende Strahlen absorbiert, also den Strahlengang beendet.
+     * Modus, in dem die Flaeche eintreffende Strahlen absorbiert, also den Strahlengang beendet.
      */
     public static final int MODUS_ABSORB = 1;
 
     /**
-     * Modus, in dem die Fläche eintreffende Strahlen reflektiert.
+     * Modus, in dem die Flaeche eintreffende Strahlen reflektiert.
      */
     public static final int MODUS_REFLEKT = 2;
 
     /**
-     * Modus, in dem die Fläche eintreffende Strahlen bricht.
+     * Modus, in dem die Flaeche eintreffende Strahlen bricht.
      */
     public static final int MODUS_BRECHUNG = 3;
 
@@ -39,9 +39,9 @@ public abstract class Flaeche extends GeomertrischeFigur {
     public static final int MODUS_SCHIRM = 4;
 
     /**
-     * Gibt ein StrahlenKollisions Objekt zurück, das zum Verwalten der Kollision eines Strahlengangs mit dieser Fläche benutzt wird.
+     * Gibt ein StrahlenKollisions Objekt zurueck, das zum Verwalten der Kollision eines Strahlengangs mit dieser Flaeche benutzt wird.
      *
-     * @param cStrGng Zu überprüfender Strahl
+     * @param cStrGng Zu ueberpruefender Strahl
      * @return StrahlenKollisions Objekt, falls Kollision existiert. null sonst.
      */
     public StrahlenKollision gibKollision(Strahlengang cStrGng) {
@@ -55,18 +55,18 @@ public abstract class Flaeche extends GeomertrischeFigur {
     }
 
     /**
-     * Gibt die Entfernung zurück, die der übergebene Strahl zurückgelegt hat, bis er auf diese Fläche trifft.
+     * Gibt die Entfernung zurueck, die der uebergebene Strahl zurueckgelegt hat, bis er auf diese Flaeche trifft.
      *
-     * @param strahl Strahl, mit dem Kollision überprüft werden soll
-     * @return Distanz, die der Strahl bis zum Auftreffen zurückgelegt hat. Ein negativer Wert bedeutet, dass der Strahl nicht mit dieser Fläche zusammentrifft!
+     * @param strahl Strahl, mit dem Kollision ueberprueft werden soll
+     * @return Distanz, die der Strahl bis zum Auftreffen zurueckgelegt hat. Ein negativer Wert bedeutet, dass der Strahl nicht mit dieser Flaeche zusammentrifft!
      */
     public abstract double kollisionUeberpruefen(Strahl strahl);
 
     /**
-     * Führt die Kollision eines Strahlengangs auf Basis eines Kollisionspunktes aus.
+     * Fuehrt die Kollision eines Strahlengangs auf Basis eines Kollisionspunktes aus.
      *
      * @param cStrGng  Strahlengang, der betrachtet wird
-     * @param position Punkt, an dem der Strahlengang auf diese Fläche getroffen ist
+     * @param position Punkt, an dem der Strahlengang auf diese Flaeche getroffen ist
      */
     public abstract void kollisionDurchfuehren(Strahlengang cStrGng, Vektor position);
 

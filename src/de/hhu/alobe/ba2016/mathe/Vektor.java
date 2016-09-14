@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 /**
- * Vektorklasse, die Point2D.Double um Funktionen zur Vektorarithmetik ergänzt.
+ * Vektorklasse, die Point2D.Double um Funktionen zur Vektorarithmetik ergaenzt.
  */
 public class Vektor extends Point2D.Double {
 
@@ -21,7 +21,7 @@ public class Vektor extends Point2D.Double {
     public static final String XML_YKOORDINATE = "y";
 
     /**
-     * Initialisiere Vektor über die Koordinaten eines Point2D.Double.
+     * Initialisiere Vektor ueber die Koordinaten eines Point2D.Double.
      *
      * @param point Point2D.Double.
      */
@@ -30,7 +30,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Initialisiere Vektor über die Koordinaten eines Point.
+     * Initialisiere Vektor ueber die Koordinaten eines Point.
      *
      * @param point Point.
      */
@@ -39,7 +39,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Initialisiere Vektor über double Werte.
+     * Initialisiere Vektor ueber double Werte.
      *
      * @param x X-Koordinate.
      * @param y Y-Koordinate.
@@ -49,7 +49,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Initialisiere Vektor über int Werte.
+     * Initialisiere Vektor ueber int Werte.
      *
      * @param x X-Koordinate.
      * @param y Y-Koordinate.
@@ -59,7 +59,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Initialisiere Vektor über jdom-Element, das die benötigten Werte enthält.
+     * Initialisiere Vektor ueber jdom-Element, das die benoetigten Werte enthaelt.
      *
      * @param xmlElement jdom-Element.
      * @throws Exception Exception, die geworfen wird, wenn bei der Initialisierung ein Fehler passiert.
@@ -70,7 +70,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Statische Methode um zu überprüfen, ob zwei Vektoren gleich sind.
+     * Statische Methode um zu ueberpruefen, ob zwei Vektoren gleich sind.
      *
      * @param vektor1 Vektor 1.
      * @param vektor2 Vektor 2.
@@ -81,7 +81,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Gibt an, ob die Werte dieses Vektors mit dem übergebenen Vektor übereinstimmten.
+     * Gibt an, ob die Werte dieses Vektors mit dem uebergebenen Vektor uebereinstimmten.
      *
      * @param vergleichsVektor Vektor, mit dem die Werte verglichen werden sollen.
      * @return Wahrheitswert, ob beide Vektoren gleiche Werte besitzen.
@@ -102,9 +102,9 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Berechnet die Länge des Vektors.
+     * Berechnet die Laenge des Vektors.
      *
-     * @return Länge des Vektors als double.
+     * @return Laenge des Vektors als double.
      */
     public double gibLaenge() {
         return Math.pow(x * x + y * y, 0.5);
@@ -124,7 +124,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Addiert diesen Vektor mit dem übergebenen Vektor.
+     * Addiert diesen Vektor mit dem uebergebenen Vektor.
      *
      * @param addVektor Vektor, dessen Werte auf diesen Vektor addiert werden sollen.
      */
@@ -201,7 +201,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Skalarprodukt dieses Vektors mit dem übergebenen Vektor.
+     * Skalarprodukt dieses Vektors mit dem uebergebenen Vektor.
      *
      * @param vektor Vektor, mit dem Skalarprodukt berechnet werden soll.
      * @return Ergebnis des Skalarprodukts als double.
@@ -220,7 +220,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Normiert diesen Vektor auf Länge 1.
+     * Normiert diesen Vektor auf Laenge 1.
      */
     public void zuEinheitsVektor() {
         double laenge = gibLaenge();
@@ -259,7 +259,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Gibt den Vektor zurück, diesem Vektor gedreht entspricht.
+     * Gibt den Vektor zurueck, diesem Vektor gedreht entspricht.
      *
      * @param winkel Winkel, um den Vektor in mathematisch positive Richtung gedreht werden soll.
      * @return Vektor, der durch die Drehung entsteht.
@@ -271,7 +271,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Dreht diesen Vektor um den übergebenen Winkel.
+     * Dreht diesen Vektor um den uebergebenen Winkel.
      *
      * @param winkel Winkel, um den Vektor in mathematisch positive Richtung gedreht werden soll.
      */
@@ -283,7 +283,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Gibt den Winkel dieses Vektor bezüglich des Einheitsvektors in X-Richtung (1,0).
+     * Gibt den Winkel dieses Vektor bezueglich des Einheitsvektors in X-Richtung (1,0).
      *
      * @return Richtungswinkel.
      */
@@ -390,7 +390,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Erstellt ein jdom-Element mit dem übergebenen Namen. So können Vektor beliebig mit Namen versehen werden, um diese identifizieren zu können.
+     * Erstellt ein jdom-Element mit dem uebergebenen Namen. So koennen Vektor beliebig mit Namen versehen werden, um diese identifizieren zu koennen.
      *
      * @param name Name des Vektors im XML-Dokument.
      * @return jdom-Element dieses Vektors.

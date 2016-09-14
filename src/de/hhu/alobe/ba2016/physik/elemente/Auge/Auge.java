@@ -34,7 +34,7 @@ public class Auge extends Bauelement implements KannKollision {
     public static final String XML_AUGE = "auge";
 
     /**
-     * Höhe des Auges.
+     * Hoehe des Auges.
      */
     public static final double HOEHE_AUGE = 125;
 
@@ -51,27 +51,27 @@ public class Auge extends Bauelement implements KannKollision {
     //Brechzahl der Augenlinse
     private static final double AUGENLINSE_BRECHZAHL = 1.25;
 
-    //Krümmungsradius Augenlinse
+    //Kruemmungsradius Augenlinse
     private double kruemmungsradius_linse;
 
     /**
-     * Name des Krümmungsradius im XML-Dokument.
+     * Name des Kruemmungsradius im XML-Dokument.
      */
     public static final String XML_KRUEMMUNG_LINSE = "kruemmungLinse";
 
     /**
-     * Mindestwert für den Krümmungsradius.
+     * Mindestwert fuer den Kruemmungsradius.
      */
     public static final double MIND_RADIUS_LINSE = 60;
 
     /**
-     * Maximalradius für den Krümmungsradius.
+     * Maximalradius fuer den Kruemmungsradius.
      */
     public static final double MAX_RADIUS_LINSE = 535.8 / 2; //Radius bei entspanntem Auge
 
     //Netzhaut
     private Netzhaut netzhaut;
-    //Höhe der Netzhaut
+    //Hoehe der Netzhaut
     private static final double HOEHE_NETZHAUT = 64.65;
 
     //Abstand der Netzhaut relativ zu Augenlinse
@@ -83,17 +83,17 @@ public class Auge extends Bauelement implements KannKollision {
     public static final String XML_NETZHAUT_ABSTAND = "abstandNetzhaut";
 
     /**
-     * Mindestwert für den Abstand der Netzhaut.
+     * Mindestwert fuer den Abstand der Netzhaut.
      */
     public static final double MIND_ABSTAND_NETZHAUT = 46.3;
 
     /**
-     * Wert für den Abstand der Netzhaut für Normalsichtigkeit.
+     * Wert fuer den Abstand der Netzhaut fuer Normalsichtigkeit.
      */
     public static final double ABSTAND_NETZHAUT_NORMAL = 96.3;
 
     /**
-     * Maximalwert für den Abstand der Netzhaut.
+     * Maximalwert fuer den Abstand der Netzhaut.
      */
     public static final double MAX_ABSTAND_NETZHAUT = 146.3;
 
@@ -106,7 +106,7 @@ public class Auge extends Bauelement implements KannKollision {
     private Eigenschaftenregler_Slider slide_radius;
 
     /**
-     * Initialisiere neues Auge am übergebenen Mittelpunkt.
+     * Initialisiere neues Auge am uebergebenen Mittelpunkt.
      * @param optischeBank Referenz auf Optische Bank.
      * @param mittelpunkt Mittelpunkt des Auges.
      */
@@ -116,9 +116,9 @@ public class Auge extends Bauelement implements KannKollision {
     }
 
     /**
-     * Initialisiere neues Auge über ein jdom2.Element.
+     * Initialisiere neues Auge ueber ein jdom2.Element.
      * @param optischeBank Referenz auf Optische Bank.
-     * @param xmlElement jdom2.Element, das die benötigten Attribute enthält.
+     * @param xmlElement jdom2.Element, das die benoetigten Attribute enthaelt.
      * @throws Exception Expection, die geworfen wird, wenn beim Initialisieren ein Fehler passiert.
      */
     public Auge(OptischeBank optischeBank, Element xmlElement) throws Exception {
@@ -206,7 +206,7 @@ public class Auge extends Bauelement implements KannKollision {
     }
 
     /**
-     * @param nKruemmungsradius Neuer Krümmungsradius der Augenlinse.
+     * @param nKruemmungsradius Neuer Kruemmungsradius der Augenlinse.
      */
     public void setze_kruemmungsradius(double nKruemmungsradius) {
         kruemmungsradius_linse = Math.max(MIND_RADIUS_LINSE, Math.min(MAX_RADIUS_LINSE, nKruemmungsradius));
@@ -214,7 +214,7 @@ public class Auge extends Bauelement implements KannKollision {
         augenlinse.setRadius2(nKruemmungsradius);
     }
 
-    //Generiert die sphärischen Begrenzungslinien des Auges als absorbierende Grenzflächen
+    //Generiert die sphaerischen Begrenzungslinien des Auges als absorbierende Grenzflaechen
     private void generiereBegrenzungen() {
         double d = abstand_netzhaut + HORNHAUT_ABSTAND - 14.59;
         double a = netzhaut.getHoehe() / 2;
