@@ -8,7 +8,7 @@ public abstract class Konstanten {
     /**
      * Pfad zum Ordner, in dem lokale Optische Baenke gespeichert werden sollen.
      */
-    public static final String SAVE_ORDNER = "saves/";
+    public static final String SAVE_ORDNER = "lokal/";
 
     /**
      * Dateiendung fuer Speicherdateien.
