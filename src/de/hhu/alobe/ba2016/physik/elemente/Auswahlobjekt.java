@@ -19,7 +19,7 @@ public abstract class Auswahlobjekt implements Zeichenbar {
     /**
      * Name des Mittelpunkts im XML-Dokument.
      */
-    public static final String XML_MITTELPUNKT = "Mittelpunkt";
+    public static final String XML_MITTELPUNKT = "mittelpunkt";
 
     //Gibt an, ob der Rahmen sichtbar ist, also gezeichnet werden soll.
     private boolean rahmenSichtbar;

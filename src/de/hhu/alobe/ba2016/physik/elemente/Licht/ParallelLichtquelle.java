@@ -235,7 +235,7 @@ public class ParallelLichtquelle extends Lichtquelle {
     public Strahlengang berechneNeuenStrahl(Vektor strahlPunkt) {
         Vektor richtung = new Vektor(Math.signum(strahlPunkt.getX() - mittelPunkt.getX()), 0);
         richtung.dreheUmWinkel(neigungsWinkel);
-        Vektor basis = new Vektor(-Math.cos(neigungsWinkel) * (strahlPunkt.getX() - mittelPunkt.getX()), -Math.sin(neigungsWinkel) * (strahlPunkt.getX() - mittelPunkt.getX()));
+        Vektor basis = new Vektor(-(strahlPunkt.getX() - mittelPunkt.getX()), -Math.tan(neigungsWinkel) * (strahlPunkt.getX() - mittelPunkt.getX()));
         basis.addiere(strahlPunkt);
         if (Math.abs(basis.getYint() - mittelPunkt.getYint()) < hoehe / 2) {
             return new Strahlengang(new Strahl(basis, richtung, 0, true));

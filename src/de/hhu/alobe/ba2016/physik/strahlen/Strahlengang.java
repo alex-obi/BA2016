@@ -60,7 +60,7 @@ public class Strahlengang implements Zeichenbar {
      * @param letztePosition Position, die den aktuellen Strahl zu einer Geraden begrenzt, und dem letzten Punkt des Strahlengangs entspricht.
      */
     public void strahlengangBeenden(Vektor letztePosition) {
-        strahlenAbschnitte.add(new Gerade(aktuellerStrahl.getBasisVektor(), letztePosition));
+        strahlenAbschnitte.add(new Gerade(aktuellerStrahl, Vektor.gibAbstand(letztePosition, aktuellerStrahl.getBasisVektor())));
         aktuellerStrahl = null;
     }
 

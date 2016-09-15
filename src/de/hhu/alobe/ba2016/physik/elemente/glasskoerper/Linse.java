@@ -129,7 +129,7 @@ public class Linse extends Bauelement implements KannKollision {
     /**
      * Maximalwert fuer die Brechzahl.
      */
-    public static final double MAX_BRECHZAHL = 4;
+    public static final double MAX_BRECHZAHL = 2.5;
 
     //Brennweite der Linse
     private double brennweite;
