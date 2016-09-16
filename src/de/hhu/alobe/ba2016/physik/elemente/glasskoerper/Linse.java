@@ -480,9 +480,9 @@ public class Linse extends Bauelement implements KannKollision {
     /**
      * Berechnet die Brennweite der Linse durch Linsenschleiferformel fuer duenne Linsen.
      *
-     * @param brechzahl Brechzahl des Materials
-     * @param radius1   Radius Vorderseite. r = 0 -> r gegen Unendlich.
-     * @param radius2   Radius Rueckseite. r = 0 -> r gegen Unendlich.
+     * @param brechzahl Brechzahl des Materials.
+     * @param radius1   Radius Vorderseite. r = 0 also r gegen Unendlich.
+     * @param radius2   Radius Rueckseite. r = 0 also r gegen Unendlich.
      * @return Naeherung der Brennweite der Linse
      */
     public static double berechneBrennweite(double brechzahl, double radius1, double radius2) {

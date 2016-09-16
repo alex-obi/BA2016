@@ -112,8 +112,8 @@ public class Schirm extends Bauelement implements KannKollision {
 
     /**
      * Prueft, ob der uebergebene Punkt in der Naehe dieses Schirms liegt und gebe einen Punkt zurueck, der auf dem Schirm in der Naehe liegt.
-     * @param bildpunkt
-     * @return
+     * @param bildpunkt Punkt, der ueberprueft werden soll.
+     * @return Punkt auf dem Schirm in der Naehe des uebergebenen Punktes.
      */
     public Vektor gibKollisionsPunkt(Vektor bildpunkt) {
         Kreis k = new Kreis(bildpunkt, 3);

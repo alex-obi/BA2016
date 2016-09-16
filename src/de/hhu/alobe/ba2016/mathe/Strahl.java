@@ -14,7 +14,7 @@ import java.awt.geom.Line2D;
 public class Strahl extends GeomertrischeFigur implements Speicherbar {
 
     /**
-     * Name des Strahls im XML-Dokument
+     * Name des Strahls im XML-Dokument.
      */
     public static final String XML_STRAHL = "strahl";
 
@@ -22,7 +22,7 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
     Vektor basisVektor;
 
     /**
-     * Name des Basisvektors im XML-Dokument
+     * Name des Basisvektors im XML-Dokument.
      */
     public static final String XML_BASISVEKTOR = "basisVektor";
 
@@ -30,7 +30,7 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
     Vektor richtungsVektor;
 
     /**
-     * Name des Richtungsvektor im XML-Dokument
+     * Name des Richtungsvektor im XML-Dokument.
      */
     public static final String XML_RICHTUNGSVEKTOR = "richtungsVektor";
 
@@ -43,7 +43,7 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
     /**
      * Initialisiere Strahl mit Basisvektor und Richtung und setze Quellentfernung auf 0.
      *
-     * @param basisVektor Basisvektor
+     * @param basisVektor Basisvektor.
      * @param richtung    Richtung des Strahls. Die Richtung wird automatisch auf 1 normiert.
      */
     public Strahl(Vektor basisVektor, Vektor richtung) {
@@ -56,7 +56,7 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
     /**
      * Initialisiere Strahl mit Quelle, aus der der Strahl zu kommen scheint, fuer Abbildungen durch Hauptebenen.
      *
-     * @param basisVektor       Basisvektor
+     * @param basisVektor       Basisvektor.
      * @param richtung          Richtungsvektor. Die Richtung wird automatisch auf 1 normiert.
      * @param quellEntfernung   Distanz bezueglich des Basisvektors, aus dem der Strahl zu kommen scheint.
      * @param ausDemUnendlichen Gibt an, ob der Strahl aus dem Unendlichen zu kommen scheint.

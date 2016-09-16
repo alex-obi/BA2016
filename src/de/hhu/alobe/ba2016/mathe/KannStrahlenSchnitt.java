@@ -8,7 +8,7 @@ public interface KannStrahlenSchnitt {
 
     /**
      * Gibt die Entfernung zurueck, die der uebergebene Strahl zuruecklegen muss, bis er auf dieses Objekt trifft. Dieser Funktion muss durch implementierende Klassen implementiert werden.
-     * Existieren mehrere Schnittpunkte mit diesem Objekt, so ist die kleinste Entfernung des Strahls zu einem dieser Punkte zurueckzugeben. Der Wert muss aber >= 0 sein.
+     * Existieren mehrere Schnittpunkte mit diesem Objekt, so ist die kleinste Entfernung des Strahls zu einem dieser Punkte zurueckzugeben. Der Wert muss aber kleiner oder gleich 0 sein.
      * Existiert kein Schnittpunkt mit diesem Objekt, so ist -1 zurueckzugeben.
      *
      * @param strahl Strahl, der auf Schnittpunkte mit diesem Objekt ausgewertet werden soll.

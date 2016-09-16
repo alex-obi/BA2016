@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<optische_bank modus="1" modusAchse="2" virtuelle_strahlen="false" zoom="1.0">
+  <hohlspiegel hoehe="415.7" radius="294.11764705882365">
+    <mittelpunkt x="832.0" y="300.0" />
+  </hohlspiegel>
+  <parallel_licht istAktiv="true" hoehe="445.0" neigung="0.0">
+    <mittelpunkt x="80.0" y="309.0" />
+    <farbe r="0" g="0" b="0" />
+    <strahl>
+      <basisVektor x="80.0" y="342.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="265.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="414.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="194.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="137.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="472.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="308.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="379.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="228.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="445.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="80.0" y="165.0" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+  </parallel_licht>
+</optische_bank>

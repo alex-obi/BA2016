@@ -36,12 +36,12 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
     }
 
     /**
-     * Initialisiert einen Kreisbogen
+     * Initialisiert einen Kreisbogen.
      *
      * @param mittelpunktVektor Mittelpunkt des Kreisobgens.
      * @param radius            Radius des Kreisbogens.
      * @param vonWinkel         Winkel, ab dem Kreisbogen definiert ist.
-     * @param extWinkel         Laenge des Kreisbogens als Winkelangabe in rad
+     * @param extWinkel         Laenge des Kreisbogens als Winkelangabe in rad.
      */
     public Kreis(Vektor mittelpunktVektor, double radius, double vonWinkel, double extWinkel) {
         this.mittelpunkt = mittelpunktVektor;
@@ -93,7 +93,7 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
     }
 
     /**
-     * Gibt an, ob dieser Kreis einen Strahl schneidet
+     * Gibt an, ob dieser Kreis einen Strahl schneidet.
      *
      * @param strahl Strahl, mit dem Schnittpunkt geprueft werden soll.
      * @return Wahrheitswert, ob der Strahl den Kreis schneidet.
@@ -104,7 +104,7 @@ public class Kreis extends GeomertrischeFigur implements KannStrahlenSchnitt {
     }
 
     /**
-     * Gibt an, ob dieser Kreis eine Gerade schneidet
+     * Gibt an, ob dieser Kreis eine Gerade schneidet.
      *
      * @param gerade Gerade, mit der Schnittpunkt geprueft werden soll.
      * @return Wahrheitswert, ob der Strahl den Kreis schneidet.

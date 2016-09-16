@@ -7,7 +7,7 @@ import de.hhu.alobe.ba2016.physik.flaechen.Flaeche;
 import java.util.ArrayList;
 
 /**
- * Klasse zum Verwalten der Kollision eines Strahls mit einer Flaeche
+ * Klasse zum Verwalten der Kollision eines Strahls mit einer Flaeche.
  */
 public class StrahlenKollision {
 
@@ -21,11 +21,11 @@ public class StrahlenKollision {
     private Flaeche kollFlaeche;
 
     /**
-     * Initialisiert ein neues StrahlenKollisions Objekt
+     * Initialisiert ein neues StrahlenKollisions Objekt.
      *
-     * @param distanz      Distanz, die der aktuelle Strahl des Strahlengangs bis zur Flaeche zurueckgelegt hat
-     * @param strahlengang Strahlengang, der betrachtet wird
-     * @param kollFlaeche  Flaeche, mit dem der Strahlengang kollidiert ist
+     * @param distanz      Distanz, die der aktuelle Strahl des Strahlengangs bis zur Flaeche zurueckgelegt hat.
+     * @param strahlengang Strahlengang, der betrachtet wird.
+     * @param kollFlaeche  Flaeche, mit dem der Strahlengang kollidiert ist.
      */
     public StrahlenKollision(double distanz, Strahlengang strahlengang, Flaeche kollFlaeche) {
         this.distanz = distanz;
@@ -47,7 +47,7 @@ public class StrahlenKollision {
      * Statische Methode, um aus einer Liste von Strahlen Kollisionen das Element zu finden, das die kleinste zurueckgelegte Distanz des aktuellen Strahls des Strahlengangs hat.
      *
      * @param kollisionen Liste von StrahlenKollisions Objekten. null als Objekt in der Liste erlaubt.
-     * @return Das StrahlenKollisions Objekt mit der kleinsten Distanz
+     * @return Das StrahlenKollisions Objekt mit der kleinsten Distanz.
      */
     public static StrahlenKollision getErsteKollision(ArrayList<StrahlenKollision> kollisionen) {
         if (kollisionen == null) return null;
@@ -64,14 +64,14 @@ public class StrahlenKollision {
     }
 
     /**
-     * @return Distanz, die der aktuelle Strahl des Strahlengangs bis zur Flaeche zurueckgelegt hat
+     * @return Distanz, die der aktuelle Strahl des Strahlengangs bis zur Flaeche zurueckgelegt hat.
      */
     public double getDistanz() {
         return distanz;
     }
 
     /**
-     * @return Strahlengang, der betrachtet wird
+     * @return Strahlengang, der betrachtet wird.
      */
     public Strahlengang getStrahlengang() {
         return strahlengang;

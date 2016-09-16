@@ -34,9 +34,10 @@ public class OptischeAchse implements Zeichenbar {
     private double hoehe;
 
     /**
-     * Initialisiere Optische Achse
+     * Initialisiere Optische Achse.
      *
-     * @param hoehe Neue Hoehe
+     * @param hoehe Neue Hoehe.
+     * @param modus Modus, in dem die Optische Achse gezeichnet werden soll.
      */
     public OptischeAchse(double hoehe, int modus) {
         this.modus = modus;
@@ -44,21 +45,21 @@ public class OptischeAchse implements Zeichenbar {
     }
 
     /**
-     * @return Hoehe der Optischen Achse als double
+     * @return Hoehe der Optischen Achse als double.
      */
     public double getHoehe() {
         return hoehe;
     }
 
     /**
-     * @return Modus zum Zeichnen
+     * @return Modus zum Zeichnen.
      */
     public int getModus() {
         return modus;
     }
 
     /**
-     * @param modus Modus zum Zeichnen
+     * @param modus Modus zum Zeichnen.
      */
     public void setModus(int modus) {
         this.modus = modus;

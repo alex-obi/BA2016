@@ -77,12 +77,12 @@ public abstract class Konstanten {
     public static final double PIXEL_PRO_CM = 36;
 
     /**
-     * Legt die Breite des Fensters beim Start fest
+     * Legt die Breite des Fensters beim Start fest.
      */
     public static final int FENSTER_X = 1024;
 
     /**
-     * Legt die Hoehe des Fensters beim Start fest
+     * Legt die Hoehe des Fensters beim Start fest.
      */
     public static final int FENSTER_Y = 768;
 

@@ -16,7 +16,7 @@ public class Gerade extends Strahl implements KannStrahlenSchnitt {
     private double laenge;
 
     /**
-     * Initialisiere die Gerade ueber einen Strahl mit einer endlichen Laenge
+     * Initialisiere die Gerade ueber einen Strahl mit einer endlichen Laenge.
      *
      * @param strahl Strahl, aus dem Gerade gebaut wird.
      * @param laenge Laenge der neuen Gerade.

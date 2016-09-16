@@ -28,9 +28,9 @@ public class Panel_Werkzeuge extends JPanel implements ActionListener {
     private JButton button_zoom_100;
 
     /**
-     * Initialisiert eine neue Werkzeugleiste
+     * Initialisiert eine neue Werkzeugleiste.
      *
-     * @param hauptFenster Zugehoeriges Hauptfenster
+     * @param hauptFenster Zugehoeriges Hauptfenster.
      */
     public Panel_Werkzeuge(HauptFenster hauptFenster) {
         this.hauptFenster = hauptFenster;

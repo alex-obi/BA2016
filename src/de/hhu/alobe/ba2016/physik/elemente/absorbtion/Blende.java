@@ -26,12 +26,12 @@ import java.util.ArrayList;
 public class Blende extends Bauelement implements KannKollision {
 
     /**
-     * Name des Bauelements
+     * Name des Bauelements.
      */
     public static final String NAME = "Blende";
 
     /**
-     * Name der Blende im XML-Dokument
+     * Name der Blende im XML-Dokument.
      */
     public static final String XML_BLENDE = "blende";
 

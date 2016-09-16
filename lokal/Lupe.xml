@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<optische_bank modus="2" modusAchse="2" virtuelle_strahlen="false" zoom="1.2">
+  <punkt_licht istAktiv="true">
+    <mittelpunkt x="54.0" y="270.1666666666667" />
+    <farbe r="0" g="0" b="255" />
+    <strahl>
+      <basisVektor x="54.0" y="270.1666666666667" />
+      <richtungsVektor x="1.0" y="0.0" />
+    </strahl>
+    <strahl>
+      <basisVektor x="54.0" y="270.1666666666667" />
+      <richtungsVektor x="0.9541781015815521" y="0.2992392862948063" />
+    </strahl>
+    <strahl>
+      <basisVektor x="54.0" y="270.1666666666667" />
+      <richtungsVektor x="0.8427647765037071" y="0.5382820185410774" />
+    </strahl>
+    <strahl>
+      <basisVektor x="54.0" y="270.1666666666667" />
+      <richtungsVektor x="0.9689681151274986" y="-0.24718574365497414" />
+    </strahl>
+    <strahl>
+      <basisVektor x="54.0" y="270.1666666666667" />
+      <richtungsVektor x="0.9918661229195348" y="-0.12728548308652637" />
+    </strahl>
+    <strahl>
+      <basisVektor x="54.0" y="270.1666666666667" />
+      <richtungsVektor x="0.9929650316379451" y="0.1184079640237717" />
+    </strahl>
+    <strahl>
+      <basisVektor x="54.0" y="270.1666666666667" />
+      <richtungsVektor x="0.9070874321277599" y="0.42094226501489074" />
+    </strahl>
+  </punkt_licht>
+  <linse brechzahl="2.5" dicke="0.0" hoeheHauptebene="200.0" hoeheLinse="200.0" radius1="600.0" radius2="600.0">
+    <mittelpunkt x="254.0" y="300.0" />
+  </linse>
+  <auge kruemmungLinse="267.9" abstandNetzhaut="96.3">
+    <mittelpunkt x="494.66666666666663" y="300.0" />
+  </auge>
+</optische_bank>

@@ -9,7 +9,7 @@ import org.jdom2.Element;
 
 
 /**
- * Spiegel als Hohlspiegel mit Radius -> unendlich.
+ * Spiegel als Hohlspiegel mit Radius gegen unendlich.
  */
 public class Spiegel extends Hohlspiegel {
 

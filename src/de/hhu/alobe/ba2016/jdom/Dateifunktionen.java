@@ -31,7 +31,7 @@ public abstract class Dateifunktionen {
     }
 
     /**
-     * Gibt eine Liste aller Dateien mit der uebergebenen Dateiendung im uebergebenen Ordner
+     * Gibt eine Liste aller Dateien mit der uebergebenen Dateiendung im uebergebenen Ordner.
      *
      * @param ordner Ordner, in dem gesucht werden soll.
      * @param endung Dateiendung, nach der gefiltert werden soll.
@@ -48,7 +48,7 @@ public abstract class Dateifunktionen {
     }
 
     /**
-     * Gibt den Namen der Datei ohne "."
+     * Gibt den Namen der Datei ohne Punkt.
      *
      * @param datei Datei, dessen Namen erfragt werden soll.
      * @return Name der Datei.

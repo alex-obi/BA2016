@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.io.File;
 
 /**
- * Klasse zum Programmeinstieg
+ * Klasse zum Programmeinstieg.
  */
 public class Main {
 

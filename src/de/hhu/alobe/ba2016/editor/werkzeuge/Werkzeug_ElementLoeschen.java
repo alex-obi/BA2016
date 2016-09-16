@@ -35,7 +35,7 @@ public class Werkzeug_ElementLoeschen extends Werkzeug {
     /**
      * Initialisiere ein neues Werkzeug Loeschen zu der uebergebenen Optischen Bank.
      *
-     * @param optischeBank Referenz auf Optische Bank
+     * @param optischeBank Referenz auf Optische Bank.
      */
     public Werkzeug_ElementLoeschen(OptischeBank optischeBank) {
         super(optischeBank);

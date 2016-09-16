@@ -55,7 +55,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
     /**
      * Initialisiert eine neue Menueleiste.
      *
-     * @param hauptFenster Referenz auf das zugehoerige Hauptfenster
+     * @param hauptFenster Referenz auf das zugehoerige Hauptfenster.
      */
     public Menueleiste(HauptFenster hauptFenster) {
         this.hauptFenster = hauptFenster;
@@ -149,7 +149,7 @@ public class Menueleiste extends JMenuBar implements ActionListener, MenuListene
     }
 
     /**
-     * Aktualisiert die Lokalen ".SAVE_ENDUNG" Dateien im lokalen SAVE_ORDNER im Menue "lokal"
+     * Aktualisiert die Lokalen ".SAVE_ENDUNG" Dateien im lokalen SAVE_ORDNER im Menue "lokal".
      * @see Konstanten
      */
     public void aktualisiereLokaleDateien() {

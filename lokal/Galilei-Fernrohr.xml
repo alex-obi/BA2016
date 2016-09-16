@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<optische_bank modus="2" modusAchse="2" virtuelle_strahlen="false" zoom="1.0">
+  <linse brechzahl="2.5" dicke="0.0" hoeheHauptebene="200.0" hoeheLinse="200.0" radius1="1022.9999999999995" radius2="1022.9999999999995">
+    <mittelpunkt x="302.0" y="300.0" />
+  </linse>
+  <parallel_licht istAktiv="true" hoehe="220.0" neigung="0.1256637061435918">
+    <mittelpunkt x="167.0" y="289.0" />
+    <farbe r="0" g="0" b="255" />
+    <strahl>
+      <basisVektor x="167.0" y="289.0" />
+      <richtungsVektor x="0.9921147013144783" y="0.1253332335643049" />
+    </strahl>
+    <strahl>
+      <basisVektor x="167.0" y="313.0" />
+      <richtungsVektor x="0.9921147013144783" y="0.1253332335643049" />
+    </strahl>
+    <strahl>
+      <basisVektor x="167.0" y="340.0" />
+      <richtungsVektor x="0.9921147013144783" y="0.1253332335643049" />
+    </strahl>
+    <strahl>
+      <basisVektor x="167.0" y="368.0" />
+      <richtungsVektor x="0.9921147013144783" y="0.1253332335643049" />
+    </strahl>
+    <strahl>
+      <basisVektor x="167.0" y="265.0" />
+      <richtungsVektor x="0.9921147013144783" y="0.1253332335643049" />
+    </strahl>
+    <strahl>
+      <basisVektor x="167.0" y="238.0" />
+      <richtungsVektor x="0.9921147013144783" y="0.1253332335643049" />
+    </strahl>
+    <strahl>
+      <basisVektor x="167.0" y="211.0" />
+      <richtungsVektor x="0.9921147013144783" y="0.1253332335643049" />
+    </strahl>
+  </parallel_licht>
+  <linse brechzahl="2.5" dicke="51.162911014534984" hoeheHauptebene="200.0" hoeheLinse="200.0" radius1="-211.89120000000003" radius2="-211.89120000000003">
+    <mittelpunkt x="572.0" y="300.0" />
+  </linse>
+  <blende durchmesser="192.0" hoehe="500.0">
+    <mittelpunkt x="293.0" y="300.0" />
+  </blende>
+</optische_bank>

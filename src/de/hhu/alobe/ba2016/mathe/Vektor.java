@@ -11,12 +11,12 @@ import java.awt.geom.Point2D;
 public class Vektor extends Point2D.Double {
 
     /**
-     * Name der X-Koordinate im XML-Dokument
+     * Name der X-Koordinate im XML-Dokument.
      */
     public static final String XML_XKOORDINATE = "x";
 
     /**
-     * Name der Y-Koordinate im XML-Dokument
+     * Name der Y-Koordinate im XML-Dokument.
      */
     public static final String XML_YKOORDINATE = "y";
 
@@ -91,7 +91,7 @@ public class Vektor extends Point2D.Double {
     }
 
     /**
-     * Statische Methode, um den Abstand zwischen zwei Vektoren zu berechnen
+     * Statische Methode, um den Abstand zwischen zwei Vektoren zu berechnen.
      *
      * @param v1 Vektor 1.
      * @param v2 Vektor 2.

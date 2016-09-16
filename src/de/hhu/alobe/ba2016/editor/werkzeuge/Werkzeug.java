@@ -57,42 +57,42 @@ public abstract class Werkzeug extends MouseAdapter {
     }
 
     /**
-     * Aufruf bei Mausklick
+     * Aufruf bei Mausklick.
      *
-     * @param e             Maus Interaktion als MouseEvent
-     * @param realePosition Reale Position im Koordinatensystem der optischen Bank
+     * @param e             Maus Interaktion als MouseEvent.
+     * @param realePosition Reale Position im Koordinatensystem der optischen Bank.
      */
     public abstract void mouseClicked(MouseEvent e, Vektor realePosition);
 
     /**
      * Aufruf bei Druck auf Maustaste
      *
-     * @param e             Maus Interaktion als MouseEvent
-     * @param realePosition Reale Position im Koordinatensystem der optischen Bank
+     * @param e             Maus Interaktion als MouseEvent.
+     * @param realePosition Reale Position im Koordinatensystem der optischen Bank.
      */
     public abstract void mousePressed(MouseEvent e, Vektor realePosition);
 
     /**
      * Aufruf bei Loslassen der Maustaste
      *
-     * @param e             Maus Interaktion als MouseEvent
-     * @param realePosition Reale Position im Koordinatensystem der optischen Bank
+     * @param e             Maus Interaktion als MouseEvent.
+     * @param realePosition Reale Position im Koordinatensystem der optischen Bank.
      */
     public abstract void mouseReleased(MouseEvent e, Vektor realePosition);
 
     /**
      * Aufruf bei Bewegung des Mauszeigers mit gedrueckter Maustaste.
      *
-     * @param e             Maus Interaktion als MouseEvent
-     * @param realePosition Reale Position im Koordinatensystem der optischen Bank
+     * @param e             Maus Interaktion als MouseEvent.
+     * @param realePosition Reale Position im Koordinatensystem der optischen Bank.
      */
     public abstract void mouseDragged(MouseEvent e, Vektor realePosition);
 
     /**
      * Aufruf bei Bewegung des Mauszeigers
      *
-     * @param e             Maus Interaktion als MouseEvent
-     * @param realePosition Reale Position im Koordinatensystem der optischen Bank
+     * @param e             Maus Interaktion als MouseEvent.
+     * @param realePosition Reale Position im Koordinatensystem der optischen Bank.
      */
     public abstract void mouseMoved(MouseEvent e, Vektor realePosition);
 

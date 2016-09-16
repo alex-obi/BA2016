@@ -21,7 +21,7 @@ public class Augenlinse extends Linse {
     private static final double HOEHE = 80;
 
     /**
-     * Initialisiert eine neue Augenlinse mit Brechzahl und Radis
+     * Initialisiert eine neue Augenlinse mit Brechzahl und Radis.
      *
      * @param auge      Referenz auf das zugehoerige Auge.
      * @param position  Position der Linse.

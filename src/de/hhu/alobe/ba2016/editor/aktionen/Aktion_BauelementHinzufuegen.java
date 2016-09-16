@@ -5,11 +5,11 @@ import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.physik.elemente.Bauelement;
 
 /**
- * Aktion zum Hinzufuegen eines neuen Bauelements zur Optischen Bank
+ * Aktion zum Hinzufuegen eines neuen Bauelements zur Optischen Bank.
  */
 public class Aktion_BauelementHinzufuegen implements Aktion {
 
-    //Referenz auf Optische Bank
+    //Referenz auf Optische Bank.
     private OptischeBank optischeBank;
 
     //Bauelement, dass hinzugefuegt werden soll.

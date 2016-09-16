@@ -27,12 +27,12 @@ import java.awt.event.ActionListener;
 public class Fenster_Bauelemente extends JDialog implements ActionListener {
 
     /**
-     * Breite der Buttons
+     * Breite der Buttons.
      */
     public final int BUTTON_BREITE = 60;
 
     /**
-     * Hoehe der Buttons
+     * Hoehe der Buttons.
      */
     public final int BUTTON_HOEHE = 60;
 
@@ -52,7 +52,7 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener {
     /**
      * Initialisiert das Fenster mit vorgegebenen Werten.
      *
-     * @param hauptFenster Referenz auf das Hauptfenster
+     * @param hauptFenster Referenz auf das Hauptfenster.
      */
     public Fenster_Bauelemente(HauptFenster hauptFenster) {
         super(hauptFenster);

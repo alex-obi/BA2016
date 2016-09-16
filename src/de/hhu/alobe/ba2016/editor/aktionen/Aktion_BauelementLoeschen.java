@@ -16,9 +16,9 @@ public class Aktion_BauelementLoeschen implements Aktion {
     private Bauelement bauelement;
 
     /**
-     * Initialisiert die Aktion BauelementLoeschen
+     * Initialisiert die Aktion BauelementLoeschen.
      *
-     * @param optischeBank Optische Bank, von der das Bauelement geloescht werden soll
+     * @param optischeBank Optische Bank, von der das Bauelement geloescht werden soll.
      * @param bauelement   Bauelement, das geloescht werden soll.
      */
     public Aktion_BauelementLoeschen(OptischeBank optischeBank, Bauelement bauelement) {

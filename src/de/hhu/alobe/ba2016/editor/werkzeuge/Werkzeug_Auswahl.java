@@ -30,7 +30,7 @@ public class Werkzeug_Auswahl extends Werkzeug {
     /**
      * Initialisiert ein neues Werkzeug zur Auswahl von Bauelementen.
      *
-     * @param optischeBank Referenz auf OPtische Bank
+     * @param optischeBank Referenz auf OPtische Bank.
      */
     public Werkzeug_Auswahl(OptischeBank optischeBank) {
         super(optischeBank);

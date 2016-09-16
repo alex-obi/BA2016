@@ -40,8 +40,8 @@ public class Eigenschaftenregler extends JPanel {
     /**
      * Initialisiere einen Eigenschaftenregler, der eine Regelgroesse verwaltet, die keinen bestimmten Wert mit Einheit beistzt. Bspw. Farben.
      *
-     * @param name   Name der Regelgroesse
-     * @param regler Regler zur Manipulation der Regelgroesse
+     * @param name   Name der Regelgroesse.
+     * @param regler Regler zur Manipulation der Regelgroesse.
      */
     public Eigenschaftenregler(String name, JComponent regler) {
         super(new BorderLayout());

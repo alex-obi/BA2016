@@ -22,9 +22,9 @@ public class Werkzeug_NeuerStrahl extends Werkzeug {
     private Strahlengang strahlDummy;
 
     /**
-     * Initialisiere ein neues Werkzeug NeuerStrahl zu einer bestimmten Lichtquelle
+     * Initialisiere ein neues Werkzeug NeuerStrahl zu einer bestimmten Lichtquelle.
      *
-     * @param licht Erzeugende Lichtquelle
+     * @param licht Erzeugende Lichtquelle.
      */
     public Werkzeug_NeuerStrahl(Lichtquelle licht) {
         super(licht.getOptischeBank());
@@ -64,7 +64,7 @@ public class Werkzeug_NeuerStrahl extends Werkzeug {
     }
 
     /**
-     * Aktualisiert das Dummy Element
+     * Aktualisiert das Dummy Element.
      */
     private void dummyElementAktualisieren(Vektor position) {
         lichtquelle.loescheStrahl(strahlDummy);

@@ -18,7 +18,7 @@ public class Werkzeug_NeuesBauelement extends Werkzeug {
     private Bauelement bauelement;
 
     /**
-     * Initialisiert das Werkzeug Erstellen mit einem neuen Bauelement
+     * Initialisiert das Werkzeug Erstellen mit einem neuen Bauelement.
      *
      * @param bauelement Neues Bauelement.
      */

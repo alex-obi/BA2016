@@ -19,15 +19,15 @@ public class Eigenschaftenregler_Slider extends Eigenschaftenregler implements C
     private double maximum;
 
     /**
-     * Initialisiere neuen Eigenschaftenregler mit einem JSlider als Regler
+     * Initialisiere neuen Eigenschaftenregler mit einem JSlider als Regler.
      *
-     * @param name           Name der Regelgroesse
-     * @param einheit        Einheit der Regelgroesse
-     * @param anzahlWerte    Anzahl der diskreten Werte, die durch diesen Regler eingestellt werden koennen (ideal zwischen 100 und 500)
-     * @param momentanerWert Momentaner Wert der Regelgroesse zur Initialisierung des Reglers
-     * @param minimum        Minimum der Regelgroesse bei Stellung auf 0 Prozent
-     * @param maximum        Maximum der Regelgroesse bei Stellung auf 1.0 (100) Prozent
-     * @param event          Schnittstelle als ReglerEvent
+     * @param name           Name der Regelgroesse.
+     * @param einheit        Einheit der Regelgroesse.
+     * @param anzahlWerte    Anzahl der diskreten Werte, die durch diesen Regler eingestellt werden koennen (ideal zwischen 100 und 500).
+     * @param momentanerWert Momentaner Wert der Regelgroesse zur Initialisierung des Reglers.
+     * @param minimum        Minimum der Regelgroesse bei Stellung auf 0 Prozent.
+     * @param maximum        Maximum der Regelgroesse bei Stellung auf 1.0 (100) Prozent.
+     * @param event          Schnittstelle als ReglerEvent.
      */
     public Eigenschaftenregler_Slider(String name, String einheit, int anzahlWerte, double momentanerWert, double minimum, double maximum, ReglerEvent event) {
         super(name, einheit, "", new JSlider(0, anzahlWerte, 0));
@@ -45,9 +45,9 @@ public class Eigenschaftenregler_Slider extends Eigenschaftenregler implements C
     }
 
     /**
-     * Setzt die Position des Reglers so, dass die eingestellte Regelgroesse dem uebergebenem Wert entspricht
+     * Setzt die Position des Reglers so, dass die eingestellte Regelgroesse dem uebergebenem Wert entspricht.
      *
-     * @param wert Neue Regelgroesse
+     * @param wert Neue Regelgroesse.
      */
     public void setWert(double wert) {
         JSlider slider = getSlider();
@@ -56,14 +56,14 @@ public class Eigenschaftenregler_Slider extends Eigenschaftenregler implements C
     }
 
     /**
-     * @return Stellung des Reglers in Prozent
+     * @return Stellung des Reglers in Prozent.
      */
     public double getProzent() {
         return getSlider().getValue() / (double) getSlider().getMaximum();
     }
 
     /**
-     * @return Regler als JSlider
+     * @return Regler als JSlider.
      */
     public JSlider getSlider() {
         return (JSlider) regler;
