@@ -192,16 +192,17 @@ public abstract class ReglerEvent {
     /**
      * Gibt zu einem Abstand der Netzhaut an, ob das Auge hierdurch Weit-/Normal- oder Kurzsichtig wird.
      *
-     * @param normalwert    Normalwert des Abstands.
-     * @param istWert       Tatsaechlicher Abstand.
-     * @param tolleranzwert Tolleranzwert um den normalwert+-tolleranzwert als Normalsichtig angesehen wird.
+     * @param normalwert          Normalwert des Abstands.
+     * @param istWert             Tatsaechlicher Abstand.
+     * @param tolleranzwertVor    Tolleranzwert des Abstands der Netzhaut vor dem Normalwert an dem Auge als Normalsichtig angesehen wird.
+     * @param tolleranzwertHinter Tolleranzwert des Abstands der Netzhaut hinter dem Normalwert an dem Auge als Normalsichtig angesehen wird.
      * @return Sichtigkeit als String.
      */
-    public static String abstandNetzhautSicht(double normalwert, double istWert, double tolleranzwert) {
-        if (istWert - normalwert > tolleranzwert) {
+    public static String abstandNetzhautSicht(double normalwert, double istWert, double tolleranzwertHinter, double tolleranzwertVor) {
+        if (istWert - normalwert > tolleranzwertVor) {
             return "Kurzsichtig";
         }
-        if (istWert - normalwert < -tolleranzwert) {
+        if (istWert - normalwert < -tolleranzwertHinter) {
             return "Weitsichtig";
         }
         return "Normalsichtig";

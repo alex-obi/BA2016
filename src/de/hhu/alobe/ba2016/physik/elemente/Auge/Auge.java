@@ -1,5 +1,6 @@
 package de.hhu.alobe.ba2016.physik.elemente.Auge;
 
+import de.hhu.alobe.ba2016.Konstanten;
 import de.hhu.alobe.ba2016.editor.OptischeBank;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler;
 import de.hhu.alobe.ba2016.editor.eigenschaften.Eigenschaftenregler_Slider;
@@ -155,7 +156,8 @@ public class Auge extends Bauelement implements KannKollision {
 
             @Override
             public String berechnePhysikalischenWert(double zahl) {
-                return ReglerEvent.abstandNetzhautSicht(ABSTAND_NETZHAUT_NORMAL, zahl, 5);
+                System.out.println(ABSTAND_NETZHAUT_NORMAL - zahl);
+                return ReglerEvent.abstandNetzhautSicht(ABSTAND_NETZHAUT_NORMAL, zahl, 0.1, 3.1);
             }
         });
 
