@@ -97,13 +97,16 @@ public class Strahl extends GeomertrischeFigur implements Speicherbar {
         double r2x = s2.getRichtungsVektor().getX();
         double r2y = s2.getRichtungsVektor().getY();
 
-        if (r1x * r2y == r1y * r2x) return null; //Strahlen sind parallel
+        if (Math.abs(r1x * r2y - r1y * r2x) < 0.00001) return null; //Strahlen sind parallel
 
         double lamda1 = ((b1y - b2y) * r2x - (b1x - b2x) * r2y) / (r1x * r2y - r1y * r2x);
 
         double lamda2 = 0;
-        if (r2x != 0) lamda2 = (b1x - b2x + lamda1 * r1x) / r2x;
-        if (r2y != 0) lamda2 = (b1y - b2y + lamda1 * r1y) / r2y;
+        if (Math.abs(r2x) > 0.00001) {
+            lamda2 = (b1x - b2x + lamda1 * r1x) / r2x;
+        } else if (Math.abs(r2y) > 0.00001) {
+            lamda2 = (b1y - b2y + lamda1 * r1y) / r2y;
+        }
 
         double[] lamdas = {lamda1, lamda2};
         return lamdas;
