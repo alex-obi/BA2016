@@ -63,7 +63,7 @@ public class Fenster_Bauelemente extends JDialog implements ActionListener {
         this.hauptFenster = hauptFenster;
 
         //Position relativ zum Hauptfenster
-        this.setLocation(hauptFenster.getX() - 135, hauptFenster.getY());
+        this.setLocation(Math.max(0, hauptFenster.getX() - 140), Math.max(0, hauptFenster.getY()));
 
         //Buttons initialisieren und anzeigen:
         JPanel fensterInhalt = new JPanel(new GridLayout(4, 2));
