@@ -56,7 +56,7 @@ com_crashlytics_export_strings.xml
 *.class
 
 # Package Files
-*.jar
+#*.jar
 *.war
 *.ear
 
